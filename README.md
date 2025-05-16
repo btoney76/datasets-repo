@@ -16,7 +16,7 @@ A curated collection of custom datasets in CSV format for easy access, analysis,
 ├── README.md
 ├── .gitignore
 ├── TeX
-│   ├── master.tex                  # preamble, title, and \input{} statements
+    ├── master.tex                  # preamble, title, and \input{} statements
 │   ├── abstract.tex
 │   ├── introduction.tex
 │   ├── literature.tex
