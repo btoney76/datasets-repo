@@ -1,0 +1,545 @@
+\documentclass[11pt]{article}
+
+\usepackage[paperwidth=8.5in,paperheight=11in,left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage{amsmath, amssymb, amsthm, graphicx, setspace, hyperref, appendix, soul}
+\usepackage[numbers,sort&compress]{natbib}
+
+\usepackage{times}
+\usepackage{mathptmx}
+\usepackage{newtxtext,newtxmath}
+\usepackage{xcolor}
+\usepackage{lipsum}
+\bibliographystyle{ecta}
+\setstretch{1.0}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+% --------------------------------------------------
+% TITLE, AUTHORS, DATE
+% --------------------------------------------------
+\title{\textbf{When to Delegate to Artificial Intelligence: A Constrained Resource Optimization Framework}}
+
+\author{
+\textbf{Brian A. Toney}\thanks{Department of Management and Economics, East Texas A\&M University} \\
+\texttt{Brian.Toney@tamuc.edu}
+\and
+\textbf{Gregory G. Lubiani}\footnotemark[1] \\
+\texttt{ Gregory.Lubiani@tamuc.edu}
+}
+
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+As Artificial Intelligence (AI) systems reshape industries, organizations must decide how best to deploy finite human cognition while enhancing AI-assisted workflows. This paper develops a unified framework for allocating limited cognitive resources between direct human tasks and the refinement of AI systems. The model treats both forms of effort as part of a single resource budget, highlighting the fundamental trade-off between human execution and AI-driven enhancements of tasks under standard utility assumptions. By positing a strictly concave production function for AI contributions, the analysis proves that an interior solution emerges in which direct labor and AI improvements are jointly optimized. At this interior solution, the marginal gains from investing in AI match those from relying on human expertise, ensuring that organizations capture the advantages of automation without compromising essential oversight. In contrast, if the AI production function is linear or convex, corner solutions exist that either dedicate nearly all resources to AI or exclude it altogether, potentially reducing all human oversight as AI capabilities continue to advance. Second-order conditions confirm the uniqueness and stability of this interior equilibrium, highlighting the practical contexts in which AI and human expertise achieve complementary gains. These findings offer actionable insights for managers, engineers, and researchers seeking to integrate human potential with increasingly sophisticated AI.
+\end{abstract}
+\noindent \textbf{Key Words:} Artificial Intelligence, Resource Allocation, Constrained Optimization, Diminishing Returns, Strict Concavity, Bounded Rationality
+
+\noindent \textbf{AMS subject classifications:} 90C25, 91B38, 68T20, 46N10
+\newpage
+\section{Introduction}
+The rapid advancement and deployment of artificial intelligence (AI) technologies have ushered in a new era of computational capabilities, transforming industries and reshaping the nature of work \citep{hoffmann2024generative}. Although significant strides have been made in areas such as natural language processing \citep{vaswani2017attention}, computer vision \citep{he2016deep}, and predictive analytics \citep{bzdok2018machine}, the high-dimensional nature of these systems presents critical challenges for everyday decision-makers. Specifically, the use and implementation of sophisticated AI systems require careful orchestration of cognitive resources by everyday professionals, including effort, time, and human capital. The inefficient use of AI systems can lead to spiraling operational costs, delayed deployment cycles, inconsistent outputs, or even project failure \citep{heath2019prediction}. Thus, optimizing the balance between leveraging human ingenuity and harnessing the power of AI is a central concern of modern computational optimization and a critical determinant of success in the increasingly AI-driven economy \citep{furman2019ai}.
+
+This challenge of resource allocation in the context of AI development stems from the well-established literature on resource-limited cognition in psychology and economics. Seminal work by \cite{simon1955behavioral}, \cite{kahneman1973attention}, and \cite{baumeister2018ego} established that humans possess finite cognitive bandwidth, a constraint that necessitates strategic allocation of attention and effort when managing complex tasks. Because individuals must judiciously allocate their limited cognitive resources to maximize productivity \citep{norman1975data}, organizations and individuals developing AI systems must navigate how to best allot limited resources between direct human labor on a focal task and investment in building and refining AI capacity to enhance productivity on that task. This decision is particularly salient in AI development, where tasks such as training large-scale models, curating specialized datasets, and fine-tuning algorithmic pipelines demand significant up-front effort, including, but not limited to, prompt engineering, model selection, and performance evaluation \citep{amodei2016concrete,mallen2024balancing}.
+
+This paper models the trade-off between AI adoption and completing tasks unassisted with a constrained optimization approach, outlining second-order conditions that ensure a unique interior solution in which both direct labor and AI enhancements coexist across two tasks. In this decision problem, agents must confront the trade-off between deploying AI systems and completing the task on their own behalf. The model treats cognitive and computational resources as a scarce resource from which a rationally inattentive agent strategically allocates effort \citep{sims2003implications,caplin2015revealed,dewan2020estimating,mackowiak2023rational}. In particular, the agent’s objective is to maximize a strictly increasing and quasiconcave utility function; the value of which is determined by the performance of the agent in two concurrent tasks (task 1 and task 2). In task 1, agents may exert their own effort to increase performance, or delegate this task to upwards of $n$ AI systems; in task 2, the agent must complete the task unassisted. This allocation is subject to a finite cognitive budget and a production technology underlying AI productivity, reflecting the realities of rational inattention and the limits to Moore's Law.\footnote{Moore's Law stipulates that there is an exponential increase in task performance over time due to advances in technology \citep{moore1998cramming}. However, Moore's law hasn't held in recent time \citep{waldrop2016chips}, such as with quantum computing \citep{powell2008quantum}.} Crucially, the agent must expend cognitive effort to deploy the $n$ AI systems with prompt engineering \citep{giray2023prompt}, leading to a trade-off between direct effort and AI enhancement.
+
+The contribution of this paper is the presentation of a parsimonious framework formalizing the allocation decision between direct human effort and investment in AI capability. Unlike existing studies that often treat human and computational resources in isolation, this model integrates these two concepts into a unified framework, revealing the critical interplay between cognitive limitations and AI adoption. Under the standard conditions of strict monotonicity and quasi-concavity of the utility function, it is proven here that a unique interior optimum \textit{can only exist} if the AI production function is strictly concave, representing the agent's diminishing returns to AI enhancement. This interior solution is characterized by the equalization of the marginal product of direct effort and the marginal product of AI enhancements. Notably, the results demonstrate that the adoption of AI by the agent is determined by the properties of the AI production function, not the specific form of the utility function, underscoring the central role of technological constraints in shaping optimal resource allocation in AI development.
+
+This framework provides a powerful tool for analyzing the trade-offs inherent in human-AI collaboration, with implications that extend beyond theoretical considerations. By revealing the conditions under which a balanced approach is optimal, the model offers practical insights for individuals, teams, and organizations seeking to maximize productivity in AI-related endeavors. For instance, these findings can inform the design of AI development workflows in contexts such as healthcare, where AI diagnostics complement physicians’ efforts \citep{lammermann2024managing}. Moreover, these results can help policy makers develop safeguards ensuring at least \textit{some} human oversight is involved as AI is inevitably adopted by countless sectors in the economy \citep{agrawal2019economics}. The findings also resonate with broader questions about the future of work in the age of AI, highlighting the enduring importance of human expertise even as AI systems become increasingly sophisticated and integrated into our everyday lives.
+
+The remainder of the paper is organized as follows. Section~\ref{sec:lit} reviews the relevant literature in psychology, economics, and computer science, explicitly noting how each strand informs the forthcoming theoretical model. Section~\ref{sec:Framework} presents the formal model of effort allocation. Section~\ref{sec:dis} provides a discussion with a practical example within different production technologies, applying the model to a simplified scenario of a medical doctor using AI tools, with additional remarks on how parameter changes influence allocations. Section~\ref{sec:con} offers concluding remarks and avenues for future research, including possible empirical tests of the model’s predictions.
+
+\section{Relation to Literature}
+\label{sec:lit}
+The concept of resource-limited cognition, positing that humans have finite cognitive resources for processing information and performing tasks, provides the foundation for optimization of resources amongst humans and technology. Seminal work by \cite{norman1975data} differentiated between data-limited and resource-limited processes, arguing that performance is often constrained by the availability of cognitive resources, not just information. \cite{kahneman1973attention} influential model of attention and effort further established that cognitive capacity is a limited resource that must be strategically allocated. These studies provided the groundwork for understanding cognitive resources as analogous to other scarce resources, subject to allocation decisions that impact performance. This perspective is further reinforced by more recent psychological research exploring the implications of cognitive resource limitations in various domains \citep{engle2018working}.
+
+While the core principle of resource limitation is widely accepted, its precise implications for decision-making remain an active area of research. For instance, \cite{deck2015effect} demonstrated that individuals under high cognitive load tend to rely more on heuristics, indicating suboptimal resource allocation, while \cite{hagger2010ego} showed that cognitive resource depletion can impair self-regulation. These findings suggest that cognitive limitations can lead to deviations from purely rational behavior. Although alternative perspectives on cognitive resources exist \citep{tuk2015propagation,inzlicht2021integrating}, they do not negate the fundamental constraint of limited cognitive capacity \citep{palma2018self}. Rather, scarce cognitive resources underscore the inherent limitations of human cognition.
+
+Complementing the psychological perspective, economic models have long recognized the importance of resource allocation under constraints. \cite{becker1965theory}, modelling the allocation of time, highlighted the trade-off between labor and leisure, mirroring the tension between direct task execution and AI development in the model presented here. Modern economic theory, particularly the concept of opportunity cost, emphasizes constrained optimization as a central element of decision-making, with applications ranging from consumer choice to firm behavior \citep{varian1992microeconomic}. Behavioral economics further develops these principles by demonstrating how cognitive limitations influence economic choices \citep{thaler2016behavioral}. For example, research on intertemporal choice highlights the challenges of resource allocation when decisions involve trade-offs between immediate and future benefits, a challenge central to the allocation of effort between direct tasks and AI development \citep{loewenstein1992anomalies,kim2019effect}.
+
+While research on human cognition continues, important progress has also been made in computational optimization for AI systems, notably in hyperparameter optimization aimed at determining the best parameter configurations for machine learning models. Techniques such as Bayesian optimization \citep{snoek2012practical}, evolutionary algorithms \citep{real2019regularized}, and reinforcement learning \citep{elsken2019neural} have been used to automate this process, aiming to minimize computational cost while maximizing model performance. These methods often treat computational resources as the primary constraint, without explicitly considering the interaction with human cognitive resources.
+
+Research on the management of computational resources in large-scale machine learning systems, particularly GPU utilization, focuses on dynamic resource allocation strategies \citep{grandl2014multi} and optimizing the placement and scheduling of deep learning workloads across heterogeneous GPU clusters \citep{mirhosseini2017binochs}. These studies are crucial for maximizing the efficiency of AI systems but often operate under the assumption of a fixed amount of available computing power. Other related work considers job scheduling on large-scale computing clusters, addressing the allocation of finite resources (e.g., CPU cores, memory) to a set of competing jobs, each with specific requirements. Techniques such as integer programming \citep{mittal2013general} and online learning \citep{li2022optimizing} have been used to optimize scheduling in dynamic, heterogeneous computing environments.
+
+While these efforts significantly advance the understanding of resource allocation in AI systems, they often treat computational resources in isolation, without explicitly considering the interaction with human cognitive capacity. This motivates the present framework, which integrates both human and computational resource constraints into a unified model. Although many of these studies assume that the resource constraints faced by firms are exogenously given, they do not consider how firms or individuals might endogenously alter those constraints. In Section 3, details are provided on how these AI-focused methods help inform the production function approach, wherein the agent’s AI-related returns exhibit strict concavity.
+
+Diminishing returns in AI development, where additional investments yield progressively smaller benefits, manifest in various ways. Well-established in economics \citep{dixit1990optimization}, it is captured mathematically by the strict concavity of the production function. For instance, \cite{kaplan2020scaling} demonstrated that scaling up deep learning models leads to diminishing improvements in accuracy, especially when training data is limited. Similarly, \cite{snoek2012practical} found that gains from hyperparameter tuning taper off, indicating a concave relationship between optimization effort and model performance.
+
+Empirical evidence of diminishing returns is also found in robotic process automation (RPA) \citep{syed2020robotic}. Studies suggest that while initial RPA deployments yield significant cost savings, subsequent automation projects tackle more complex tasks, resulting in decreasing marginal benefits. This concave production function perspective clarifies why each additional unit of effort toward AI enhancement eventually yields smaller marginal gains. Moreover, recent work suggests that incremental AI deployments may yield better returns on investment than large-scale, simultaneous implementations \citep{davenport2018artificial}. Incorporating strict concavity in the model therefore aligns with both theoretical and observed patterns, ensuring that interior solutions are feasible rather than overshadowed by corner solutions.
+
+The framework builds upon the mathematical foundations of constrained optimization, particularly first and second-order conditions for optimality, to derive analytical results. The method of Lagrange multipliers, a fundamental technique for finding local maxima and minima subject to equality constraints, has been extensively studied \citep{flaam2008slopes,jie2021computing}. The Lagrangian function incorporates the constraints into the objective function, and the first-order necessary conditions for optimality state that the gradient of the Lagrangian must be zero at an optimum. The second-order conditions, involving the Hessian matrix of the Lagrangian, are essential for determining whether a stationary point is a maximum, minimum, or saddle point \citep{hallak2020finding}.
+
+Modern optimization theory has refined these concepts and applied them to machine learning contexts where non-convexity is prevalent \citep{dauphin2014identifying}. By leveraging these methods, it is formally shown that the marginal products of direct labor and AI enhancement must align at an interior optimum, provided strict concavity of the AI production function. Under these conditions, negative definiteness guarantees that the solution is unique rather than degenerate. \cite{sekeris2024conflict}, \cite{dehm2023non}, and others offer comprehensive treatments of such second-order analyses in convex and non-convex optimization alike.
+
+While the literature on resource-limited cognition \citep{norman1975data,kahneman1973attention} and AI resource allocation \citep{snoek2012practical, gu2022ai} is extensive, there exists a lack of constrained optimization frameworks that integrate both human cognitive limitations and AI development efforts while permitting an endogenous increase in constraints through investment. Research on human-AI collaboration has begun to explore this intersection \citep{cappelli2023artificial,westby2023collective}, but tends to focus on qualitative aspects rather than rigorous models of resource allocation. Moreover, many existing quantitative models treat human and machine capabilities as static and exogenous, overlooking the dynamic interplay that arises as an agent devotes effort to AI enhancement.
+
+This paper addresses this gap by proposing a novel theoretical model that treats cognitive and computational resources as a unified budget which can be augmented through investment in AI capability. By proving that the relationship between direct human effort and AI performance must be strictly concave under standard assumptions imposed in optimization theory, the framework formalizes that the optimum involves distributing resources across both direct labor and AI development. This level of formalization and analytical rigor is currently lacking in prior studies on human-AI interaction. As detailed in Section~\ref{sec:Framework}, the agent’s decision problem is defined, showing how diminishing returns from AI appear via concavity.
+
+
+\section{Model}
+\label{sec:Framework}
+To formalize how an agent allocates effort between tasks, consider an agent with a fixed cognitive bandwidth $C\in\mathbb{R}_{++}$ \citep{simon1955behavioral,kahneman1973attention,norman1975data,navon1979economy,sims2003implications}. This agent allocates scarce cognitive resources between two competing tasks (Task 1 and Task 2) analogous to a dual-task paradigm studied extensively in psychology \citep{pashler1994dual} and economics \citep{holmstrom1991multitask,buser2012multitasking}. In Task 1, the agent may complete the task themselves with effort $a_1\in\mathbb{R}_+$, or deploy up to $n\in\mathbb{N}$ AI systems to complete Task 1 on their behalf, but must allocate resources $\mathbf{e}=[e_1,...,e_n]\in\mathbb{R}^n_{+}$ to write and refine prompts. The effort $\mathbf{e}$ directed towards enhancing the $n$ AI systems on Task 1 generates a product which the unassisted agent could've completed with $\alpha=f(\mathbf{e})$ units of effort s.t. $\nabla f(\mathbf{e})=[\frac{\partial f(\mathbf{e})}{\partial e_1},...,\frac{\partial f(\mathbf{e})}{\partial e_n}]^t\in\mathbb{R}^n_{++}$. At the same time, the agent must complete Task 2 on their own with the effort $a_2\in\mathbb{R}_{+}$. In both tasks, the agent derives utility from their performance. Task 1 \& 2 performances are denoted as $p_1=a_1+\alpha$ \& $p_2=a_2$, respectively, according to the utility function $U(p_1,p_2)$ \citep{drichoutis2020economic} which is assumed to be twice differentiable, strictly increasing, and quasi-concave. It follows that the decision problem faced by the agent is given by expression~\ref{eq:problem}:
+
+\begin{equation}\label{eq:problem}
+\begin{aligned}
+\max_{a_1,\mathbf{e},a_2}\quad
+& U\bigl(a_1 + f(\mathbf{e}),\, a_2\bigr)\\[6pt]
+\text{s.t.}\quad
+& a_1 + \sum_{i=1}^{n} e_i + a_2 \;=\; C,\\
+& a_1,\,e_i,\,a_2 \;\ge\; 0,\quad i = 1,\dots,n.
+\end{aligned}
+\end{equation}
+
+For the model illustration, all `prices' of effort are normalized to 1 in the `budget' constraint $a_1 + \sum_{i=1}^{n} e_i + a_2 = C$ as all forms of cognitive effort are ultimately measured in uniform ``units" drawn from the same finite resource pool (e.g. attention, working memory, mental bandwidth, etc.). This is supported by foundational work in cognitive psychology and economics on attention and working memory \citep{kahneman1973attention, baddeley1992working}, data-limited and resource-limited processes \citep{norman1975data}, and the concept of cognitive bandwidth as an economic resource \citep{navon1979economy, caplin2016measuring, loewenstein2023economics}. Fundamentally, the effort exerted to write and refine AI prompts is equivalent to the effort exerted to perform the task directly because both draw from the same limited cognitive reserves \citep{zamfirescu2023johnny}. In other words, whether an agent exerts effort crafting a prompt to elicit a desired response from an AI or is manually performing the task unassisted, both utilizing activities draw from the same constrained mental resources $C$, similar to those outlined in the limited resource model \citep{norman1975data} or in multi-task settings \citep{borghini2012assessment}. This approach mirrors standard microeconomic theory, where diverse resources are often aggregated into a single budget constraint and assigned a unitary ``price" for analytical tractability, simplifying the analysis without loss of generality \citep{becker1965theory,varian1992microeconomic}. By expressing all activities in terms of a common pool resource, the model focuses on the essential trade-offs between competing uses of effort and attention, rather than on arbitrary scaling factors that do not affect the underlying optimization problem \citep{RePEc:oxp:obooks:9780195102680}. Therefore, the cognitive effort expended to improve an AI system is directly comparable to the effort required to complete the task independently, as they are essentially interchangeable claims on the same constrained cognitive resource.
+
+This analysis examines when the choice variables are strictly positive for which the decision problem~\ref{eq:problem} has an \textit{interior solution}. Notably, when focusing on an interior solution, standard first-order optimality conditions often suffice to characterize how the agent distributes resources across tasks. Intuitively, as AI systems become increasingly advanced, corresponding to a larger $\nabla f(\mathbf{e})$, people will integrate more AI enhancements into their workflows. This increase in productivity corresponds to a greater incentive for having AI systems assist with all of the work on people's behalf. However, a drawback of reallocating cognitive resources from completing the task unassisted to improving AI systems is the reduced oversight of the latent process determining the observed performance. As people spend a greater amount of time improving the AI system to completing a task on their behalf, rather than improving their own performance on the task, there will be reduced human oversight to ensure the validity of the final product. In essence, an interior solution in the case of the model's framework guarantees that the agent leveraging AI (i.e., $\mathbf{e}^*>0$) has \textit{some} control over the process in Task 1 with their input $a_1^*>0$, while also attending to tasks which cannot be replaced with AI with their input $a^*_2>0$.
+
+Further strengthening this concept, the interior solution of the decision problem~\ref{eq:problem} can be solved using the Lagrangian multiplier method. Proposition~\ref{pro:foc} illustrates the first-order condition of the agent's decision problem~\ref{eq:problem}, providing insight into how people optimize the use of AI while ensuring that its work is accurate.
+
+\begin{proposition}
+\label{pro:foc}
+If the allocation $(a^*_1,\mathbf{e}^*,a^*_2)$ is a unique interior stationary point to the decision problem~\ref{eq:problem}, then the marginal product of enhancing $n$ AI systems equals the marginal product of completing Task 1 unassisted, i.e.
+$$\nabla f(\mathbf{e}^*)=\begin{bmatrix}
+1\\
+...\\
+1
+\end{bmatrix}$$
+\end{proposition}
+\begin{proof}
+Provided in Appendix~\ref{app:foc}.
+\end{proof}
+
+Due to chain rule, the optimal amount of effort to allocate towards AI is independent of the agent's preferences. Intuitively, since the only payoff-relevant judgment is on the performances $p_i$, the agent is indifferent to the origins of their judged performance beyond how much effort they must allocate to achieve it. For example, if a contracted developer is paid for the quality of a website, their payment doesn't depend on whether the source code was written by themselves, a sub-contractor, or generated by AI. Rather, the developer is judged based on the functionality and aesthetics of the website. Indeed, the decision problem~\ref{eq:problem} is an optimization of the \textit{process}, not the \textit{outcome}. In other words, the AI production function $f$, not $U$, determines the agent's allocation policy for prompting AI systems and completing Task 1 unassisted. The production function $f$ depends on both the AI system and the prompting ability of the agent. An increase in $\nabla f$ could correspond to the agent becoming better at prompting the AI systems to contribute more to their observed performance in Task 1, but also the AI systems becoming better at contributing the agent's Task 1 performance for the same prompt.
+
+Like the first-order condition of an interior solution outlined in Proposition~\ref{pro:foc} determined by the AI production function $f$, the second-order condition is determined by the curvature of $f$. 
+
+\begin{proposition}
+\label{pro:soc}
+The first-order condition outlined in Proposition~\ref{pro:foc} is a maximum if the agent faces diminishing returns with the $n$ AI systems:
+$$D^2f(\mathbf{e}^*)<0\quad$$
+\end{proposition}
+\begin{proof}
+Provided in Appendix~\ref{app:soc}.
+\end{proof}
+
+In particular, Proposition~\ref{pro:soc} shows that the AI production function \textit{must} exhibit diminishing returns for $(a^*_1,\mathbf{e}^*,a^*_2)$ to be unique. Intuitively, if strict concavity of $f$ doesn't hold at the stationary point $(a^*_1,\mathbf{e}^*,a^*_2)$, one of two cases must be true: the agent exhibits (1)  increasing returns to scale or (2) constant returns to scale of enhancing the $n$ AI systems. If the marginal product of AI enhancement was increasing, the agent would always have the incentive to reallocate direct effort on Task 1 ($a^*_1$) towards AI enhancement $\mathbf{e}^*$ until $a^*_1=0$.\footnote{Since $U$ is strictly increasing in Task 1 and Task 2 performance, $\nabla f(\mathbf{e}^*)=1$ and $D^2 f(\mathbf{e}^*)>0$ implies that $\tilde{a}_1+f(\tilde{\mathbf{e}})>a_1^*+f({\mathbf{e}^*})\iff U(\tilde{a}_1+f(\tilde{\mathbf{e}}),a_2^*)>U({a}_1^*+f({\mathbf{e}}^*),a_2^*)$ for each $\tilde{\mathbf{e}}>\mathbf{e}$ such that $\tilde{\mathbf{e}}\in\mathbb{R}^n_+$ is a feasible allocation (i.e. $C=\sum_{i=1}^n{e}^*_i+{a}^*_1=\sum_{i=1}^n\tilde{e}_i+\tilde{a}_1$) and for a \textit{fixed} Task 2 effort level $a^*_2$ across the two feasible allocations. Since $(a^*_1,\mathbf{e}^*,a^*_2)$ is a unique maximum in the feasible set and $U(\tilde{a}_1+f(\tilde{\mathbf{e}}),a_2^*)>U({a}_1^*+f({\mathbf{e}}^*),a_2^*)$ for some feasible allocation $(\tilde{a}_1,\tilde{\mathbf{e}},{a}_2^*)$, a contradiction arises. Therefore, the AI production function $f$ cannot (1) exhibit increasing returns to scale and (2) have the interior point satisfying Proposition~\ref{pro:foc} be utility maximizing simultaneously.} Conversely, if the marginal product of AI enhancement was constant, the agent would either completely ignore the AI systems and complete the task on their own [i.e., $\frac{\partial f(\mathbf{e})}{\partial e_i}=c<1$ $\forall e_i\in (0,C)$ and each AI system $i\in\{1,...,n\}$], be indifferent between leveraging AI and completing the task themselves since there would exist at least one AI system $j\in\{1,...,n\}$ such that $\frac{\partial f(\mathbf{e})}{\partial e_j}=1$ $\forall e_j\in(0,C)$ and $\frac{\partial f(\mathbf{e})}{\partial e_j}\geq\frac{\partial f(\mathbf{e})}{\partial e_i}$ $\forall j\neq i$, or utilize the AI to complete all of Task 1 on their behalf since there would be at least one AI system $ k\in\{1,...,n\}\text{ s.t. }\frac{\partial f(\mathbf{e})}{\partial e_k}=c>1$ $\forall e_k\in (0,C)$. All of these cases lead to non-interior solutions, meaning that $f$ cannot be linear or strictly convex so thus must be strictly concave.
+
+Proposition~\ref{pro:soc}, notably, doesn't depend on the substituability or complementariness of the $n$ AI systems being deployed to complete Task 1 on the agent's behalf. To demonstrate this point, consider the second-order conditions when the agent deploys $n=2$ AI systems: (1) $\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1^2}<0$ and (2) $\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1^2}*\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_2^2}-\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1\partial e_2}*\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_2\partial e_1}>0$. Here, the substituability of the two AI systems depends on the cross-partial derivatives of $f$ \citep{RePEc:oxp:obooks:9780195102680}, so the examination may ignore condition (1). For condition (2), Young's theorem stipulates the cross partials of $e_1$ and $e_2$ must equal, meaning the condition can be rewritten as $\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1^2}*\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_2^2}-\bigg(\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1\partial e_2}\bigg)^2>0$. Because $\bigg(\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1\partial e_2}\bigg)^2=\bigg(-\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1\partial e_2}\bigg)^2$, the \textit{sign} of the cross-partial derivative does not affect the negative definiteness of the Hessian matrix. In essence, the second-order conditions outlined in Proposition~\ref{pro:soc} are independent of whether the AI systems deployed are complements or substitutes.
+
+
+\section{Discussion}
+\label{sec:dis}
+Although the analysis in previous sections centered on an abstract formulation of direct labor and AI as variable inputs to production, the examples applied below reinforce that the model’s conclusions do not depend on a particular utility specification. Instead, they exploit how the production function governing AI enhancements exhibits the strict concavity demonstrated previously. Whether a firm or agent utilizes a familiar Cobb–Douglas or CES-style production technology, the fundamental requirement of diminishing returns to AI effort ensures that both human involvement and AI deployment remain jointly optimal. This flexibility illustrates the wide-ranging applicability of the model, covering contexts from industrial robotics to knowledge-intensive fields. Moreover, the model’s structure naturally accommodates methods to operationalize these ideas in real-world settings. For example, firms could approximate human cognitive bandwidth through metrics such as hours of qualified personnel time or validated psychometric scales for cognitive load, while AI enhancement could be measured by the frequency of model iterations, hyperparameter tuning cycles, or additional engineering sprints devoted to AI tooling. In empirical applications, whether in manufacturing or medical decision-making, researchers could track diminishing returns by examining how incremental improvements in AI output (e.g., diagnostic accuracy or production efficiency) taper off as more resources are allocated. Such measurement approaches connect the abstract framework presented here and the practical data requirements for rigorous empirical validation.
+
+By reaffirming that the model’s predictions hold without enforcing any specific functional form for the agent’s preferences, the following examples demonstrate why concavity in AI’s contribution is vital for a stable interior solution and offer guidance on how practitioners can capture and analyze these diminishing returns. Should organizations or researchers collect data on resource allocation decisions and corresponding performance outcomes, they could estimate the gradient of the AI production function at different levels of investment. Doing so would reveal whether the marginal product of AI assistance aligns with that of direct human effort, as predicted by the theoretical framework. This would highlight potential areas for efficency improvements in operational workflows. These empirical methods could also highlight scenarios where corner solutions arise (for instance, if data show constant or increasing returns to AI improvement), corroborating or contradicting the strict concavity assumption.
+
+\subsection{Example 1: Cobb-Douglas Production Function}
+\label{ssec:Cobb}
+Consider a simple example of a medical doctor deploying two AI systems to complete two tasks: (1) diagnosing and (2) seeing patients. The two AI systems can assist the physician with diagnosing, but cannot talk to patients on their behalf. The physician's cognitive bandwidth constraint is given by $a_1+e_1+e_2+a_2=C$, where $a_1$ is the doctor's direct effort in diagnosing, $e_1$ is the doctor's direct effort towards enhancing AI system 1, $e_2$ is the doctor's direct effort towards enhancing AI system 2, and $a_2$ is the doctor's direct effort dedicated to speaking with patients. Assume that the AI production function is given by $f(e_1,e_2)=e_1^\alpha e_2^{\beta}$ s.t. $p_1=a_1+e_1^\alpha e_2^{\beta}$ and $p_2=a_2$ \citep{cobb1928theory}. Then, the decision problem is given as
+\[
+\max_{a_1,e_1,e_2,a_2}U(a_1+e_1^\alpha e_2^{\beta},a_2)
+\quad
+\text{s.t.}
+\quad
+a_1+e_1+e_2+a_2=C.
+\]
+
+Substituting $a_1=C-e_1-e_2-a_2$ into the decision problem:
+\[
+\max_{e_1,e_2,a_2}U\bigl(C-e_1-e_2-a_2+e_1^\alpha e_2^{\beta},\,a_2\bigr).
+\]
+
+Then, taking the FOC with respect to $e_1$, $e_2$, and $a_2$:
+\[
+\frac{\partial U}{\partial e_1}=\frac{\partial U}{\partial p_1}\frac{\partial p_1}{\partial e_1}
+=\frac{\partial U}{\partial p_1}[\alpha e_1^{\alpha-1}e_2^{\beta}-1]=0,\quad
+\frac{\partial U}{\partial e_2}=\frac{\partial U}{\partial p_1}\frac{\partial p_1}{\partial e_2}
+=\frac{\partial U}{\partial p_1}[\beta e_1^{\alpha}e_2^{\beta-1}-1]=0,
+\]
+\[
+\frac{\partial U}{\partial a_2}
+=\frac{\partial U}{\partial p_1}\frac{\partial p_1}{\partial a_2}+\frac{\partial U}{\partial p_2}\frac{\partial p_2}{\partial a_2}
+=\frac{\partial U}{\partial p_1}(-1)+\frac{\partial U}{\partial p_2}(1)=0.
+\]
+Since $U$ is strictly increasing, the conditions above are satisfied when (1) $\alpha e^{\alpha-1}e_2^{\beta}=1$, (2) $\beta e^{\alpha}e_2^{\beta-1}=1$, and (3) $\tfrac{\partial U}{\partial p_1}=\tfrac{\partial U}{\partial p_2}$ hold. Indeed, it can be shown that the optimal amount of effort allocated towards the two AI systems must satisfy
+\[
+\tfrac{e^*_1}{e^*_2}=\tfrac{\alpha}{\beta},
+\]
+despite no specific utility functional form. In practical measurement terms, a healthcare organization could operationalize $e_1$ and $e_2$ by logging doctors' hours invested in upgrading or refining each AI diagnostic tool. The ratio $\tfrac{e_1^*}{e_2^*}$ could then be directly computed from those logs, while $a_1$ and $a_2$ might be captured by tracking time spent on “physician-led diagnostics” relative to “patient consults and communication.”
+
+To find $\alpha,\beta$ ensuring $(e^*_1,e^*_2)$ is a maximum, one estimates the SOC for $e_1$:
+\[
+\frac{\partial^2 U}{\partial e_1^2}
+=\frac{\partial^2 U}{\partial p_1^2}\bigl[\alpha e_1^{\alpha-1}e_2^{\beta}-1\bigr]^2
++\frac{\partial U}{\partial p_1}\alpha(1-\alpha)e_1^{\alpha-2}e_2^\beta,
+\]
+and similarly for $e_2$. In an empirical setting, the presence of diminishing marginal improvements could be detected by verifying $\alpha+\beta<1$ or demonstrating that direct returns to AI eventually plateau. If data collection on quality-adjusted diagnostic outputs and time allocations confirms the negative definiteness of the Hessian matrix derived from local estimates of $f$, it would confirm the concavity assumption.
+
+\subsection{Example 2: CES Production Function}
+To illustrate a more flexible specification than Cobb-Douglas, consider again the scenario where a medical doctor must allocate cognitive resources to two AI systems assisting with patient diagnoses, while also spending time speaking with patients. Let the doctor allocate $e_1$ and $e_2$ units of effort to enhance or refine the two AI diagnostic tools, while $a_1$ denotes the doctor’s own direct diagnostic effort, and $a_2$ denotes the time spent conversing with patients about treatments, results, and follow-up care. Suppose that the AI production function is given now by a CES (Constant Elasticity of Substitution) form \citep{arrow1961capital}:
+\[
+f(e_1, e_2)
+=
+\Bigl(\alpha\,e_1^\rho + \beta\,e_2^\rho\Bigr)^{\tfrac{1}{\rho}},
+\]
+where $\alpha, \beta > 0$ and $\rho < 1$ ensure diminishing returns and strict concavity in $(e_1,e_2)$. Strict concavity reflects the empirical observation that each additional unit of effort toward refining AI diagnostic tools eventually yields smaller marginal gains. In real-world data collection, the incremental time or resources devoted to each AI tool could be captured as $e_1$ and $e_2$, while $\rho$ could be derived through regression-like methods estimating how combined AI effort influences diagnostic outcomes.
+
+The doctor’s total cognitive budget is
+\[
+C \;=\; a_1 + e_1 + e_2 + a_2,
+\]
+where $C$ is a finite quantity of time or mental capacity. The optimization problem is then
+\[
+\max_{a_1,\, e_1,\, e_2,\, a_2}
+\; U\bigl(a_1 + f(e_1, e_2),\; a_2\bigr)
+\quad
+\text{s.t.}
+\quad
+a_1 + e_1 + e_2 + a_2 \;=\; C,
+\]
+under the assumption that $U(\cdot)$ is strictly increasing and quasi-concave. Here, $p_1 = a_1 + f(e_1, e_2)$ can be viewed as the doctor’s overall diagnostic output, and $p_2 = a_2$ reflects the patient-facing component of care. As before, $\nabla f(e_1, e_2)=1$ is necessary for an interior solution at the optimum, but verifying strict concavity in practice might involve a local approximation of the production function and verifying the sign of estimated second derivatives from the data.
+
+The partial derivatives with respect to $(e_1, e_2, a_2)$ follow the same pattern as the Cobb-Douglas example. Though, adjusting parameters such as $\rho$ or the weights $\alpha,\beta$ changes how effectively the AI tools can substitute for each other, thus shifting the ratio $\tfrac{e_1^*}{e_2^*}=\bigl(\tfrac{\alpha}{\beta}\bigr)^{\tfrac{1}{1-\rho}}$ at the solution. If $\rho$ approaches zero, the CES function approximates the Cobb-Douglas form. If $\rho < 0$, the function becomes more substitutable. Evidence of strong substitutability would appear if, in practice, a marginal improvement in one AI tool can nearly replace the role of the other tool entirely.
+
+Finally, the second-order (Hessian-based) conditions show that $D^2 f(e_1,e_2)<0$ is essential for a unique and stable interior optimum, just as in Section~\ref{sec:Framework}. This requirement holds with any form of $U$, underscoring that diminishing returns to AI improvement are the foundation of balanced allocations. Field data would confirm diminishing returns when incremental gains in diagnostic accuracy from additional AI tool refinement taper off beyond a certain point, reinforcing the negative definiteness condition. Therefore, when real measurements demonstrate an eventual flattening of performance improvements, the model’s interior solution is likely to manifest. By combining time allocations, patient outcome metrics, and measured changes in AI-based diagnostic proficiency, researchers and medical administrators can test whether the current workflow aligns the marginal product of AI refinement with the marginal product of direct doctor involvement for efficiency analysis and operational decision-making.
+
+In real-world settings, agents often exhibit substantial heterogeneity in their cognitive abilities, AI expertise, and task complexity. Although the present framework uses a representative agent for analytical clarity, variations in AI literacy or specialized domain knowledge could shift the marginal returns to AI enhancement. For example, an agent with advanced AI training can achieve higher $\nabla f(\mathbf{e})$ at lower $e_i$ levels, potentially moving the interior optimum more toward AI. Alternatively, agents facing tasks of widely differing complexity may prioritize direct labor if the AI tools are less tailored to those tasks. While accounting for such heterogeneity may require extensions of this basic model, the fundamental principle of balancing the marginal products of AI improvements and direct labor remains. Each agent (or task) determines to what extent returns to AI diminish and, thus, where the interior solution still emerges.
+
+Such empirical considerations reflect the model's broader significance. Verifying how resource allocations achieve optimization under data-based estimates can guide institutions, such as medical centers or other AI-driven enterprises, to optimize how specialists split their finite cognitive budgets between direct tasks and AI-oriented enhancements. This extends naturally to specialized tasks in advanced healthcare systems, engineering, or creative industries, reaffirming that the underlying production technology's concavity is key for sustaining partial human oversight and partial AI deployment rather than a radical shift to full automation or complete reliance on human labor alone.
+
+
+
+\section{Conclusion}
+\label{sec:con}
+This paper illustrates a novel theoretical framework for analyzing the optimal allocation of effort between direct human labor and the enhancement of AI systems in the context of completing a focal task. By characterizing cognitive resources and computational capacity as a scarce resource in the context of AI adoption, the model integrates insights from the psychology of resource-limited cognition, the economics of constrained optimization, and the computational literature on AI resource allocation. The framework formalizes the trade-off between investing effort directly in a task and investing in AI tools that can enhance productivity. In particular, Proposition~\ref{pro:foc} proves that an interior solution to the decision problem~\ref{eq:problem} occurs when the marginal product of direct effort equals the marginal product of AI enhancement across all available AI systems. Proposition~\ref{pro:soc} follows this result up by proving that for this unique solution to be a maximum, the AI production function \textit{must} be strictly concave.
+
+The model yields several key insights. First, it demonstrates that the optimal allocation of effort towards AI systems is fundamentally determined by the properties of the AI production technology, not the specific functional form of the agent’s utility function. This highlights the crucial role of technological advancements and education in shaping human-AI collaboration. Second, it provides a theoretical foundation for understanding why a balanced approach combining direct human input with AI assistance is often optimal in AI development. This aligns with empirical observations of diminishing returns in various AI applications, such as model scaling and hyperparameter tuning. Third, the framework can be extended to analyze how changes in AI technology or multiple tasks influence the agent’s allocation. As AI becomes more capable, the model suggests increased reliance on AI, but only to a point, due to diminishing returns and the need to address tasks that cannot be automated.
+
+Moreover, these theoretical findings invite empirical testing in specific AI development contexts, for instance by gathering data on how teams distribute hours between direct labor and AI refinement. Such an empirical approach could more precisely illustrate the concavity of the AI production function in real-world scenarios. Future research may also incorporate behavioral phenomenon such as process utility \citep{frey2005beyond}, dynamics \citep{bellman1952theory}, or uncertain AI performance. For example, researchers could expand the current framework into a multi-period environment to allow for sequential AI enhancement decisions towards optimizing long-run productivity, capturing the trade-off between effort spent learning AI today and increases in productivity due to AI adoption tomorrow \citep{arrow1962economic,argote2011organizational}. A deeper understanding of these issues is essential for maximizing AI’s benefits while preserving human expertise and oversight in the AI-driven workplace. The framework presented here stands as a rigorous analytical exploration for examining these fundamental trade-offs and optimizing the synergy between human and artificial intelligence.
+
+\section*{Acknowledgment}
+{\small The authors would like to thank Drs. Albert Okunade and Augustine (Chuck) Arize for their insightful and valuable feedback on an earlier draft of this manuscript.}
+
+\section*{Data Availability Statement}
+{\small No new data were created or analyzed during this study. Data sharing is not applicable to this article.}
+
+\newpage
+\begin{thebibliography}{70}
+\newcommand{\enquote}[1]{``#1''}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[\protect\citeauthoryear{Agrawal, Gans, and Goldfarb}{Agrawal et~al.}{2019}]{agrawal2019economics}
+\textsc{Agrawal, A., J.~Gans, and A.~Goldfarb} (2019): \emph{The economics of artificial intelligence: an agenda}, University of Chicago Press.
+
+\bibitem[\protect\citeauthoryear{Amodei, Olah, Steinhardt, Christiano, Schulman, and Man{\'e}}{Amodei et~al.}{2016}]{amodei2016concrete}
+\textsc{Amodei, D., C.~Olah, J.~Steinhardt, P.~Christiano, J.~Schulman, and D.~Man{\'e}} (2016): \enquote{Concrete problems in AI safety,} \emph{arXiv preprint arXiv:1606.06565}.
+
+\bibitem[\protect\citeauthoryear{Argote and Miron-Spektor}{Argote and Miron-Spektor}{2011}]{argote2011organizational}
+\textsc{Argote, L. and E.~Miron-Spektor} (2011): \enquote{Organizational learning: From experience to knowledge,} \emph{Organization science}, 22, 1123--1137.
+
+\bibitem[\protect\citeauthoryear{Arrow}{Arrow}{1962}]{arrow1962economic}
+\textsc{Arrow, K.~J.} (1962): \enquote{The economic implications of learning by doing,} \emph{The review of economic studies}, 29, 155--173.
+
+\bibitem[\protect\citeauthoryear{Arrow, Chenery, Minhas, and Solow}{Arrow et~al.}{1961}]{arrow1961capital}
+\textsc{Arrow, K.~J., H.~B. Chenery, B.~S. Minhas, and R.~M. Solow} (1961): \enquote{Capital-labor substitution and economic efficiency,} \emph{The review of Economics and Statistics}, 225--250.
+
+\bibitem[\protect\citeauthoryear{Baddeley}{Baddeley}{1992}]{baddeley1992working}
+\textsc{Baddeley, A.} (1992): \enquote{Working memory,} \emph{Science}, 255, 556--559.
+
+\bibitem[\protect\citeauthoryear{Baumeister, Bratslavsky, Muraven, and Tice}{Baumeister et~al.}{2018}]{baumeister2018ego}
+\textsc{Baumeister, R.~F., E.~Bratslavsky, M.~Muraven, and D.~M. Tice} (2018): \enquote{Ego depletion: Is the active self a limited resource?} in \emph{Self-regulation and self-control}, Routledge, 16--44.
+
+\bibitem[\protect\citeauthoryear{Becker}{Becker}{1965}]{becker1965theory}
+\textsc{Becker, G.~S.} (1965): \enquote{A Theory of the Allocation of Time,} \emph{The economic journal}, 75, 493--517.
+
+\bibitem[\protect\citeauthoryear{Bellman}{Bellman}{1952}]{bellman1952theory}
+\textsc{Bellman, R.} (1952): \enquote{On the theory of dynamic programming,} \emph{Proceedings of the national Academy of Sciences}, 38, 716--719.
+
+\bibitem[\protect\citeauthoryear{Borghini, Vecchiato, Toppi, Astolfi, Maglione, Isabella, Caltagirone, Kong, Wei, Zhou et~al.}{Borghini et~al.}{2012}]{borghini2012assessment}
+\textsc{Borghini, G., G.~Vecchiato, J.~Toppi, L.~Astolfi, A.~Maglione, R.~Isabella, C.~Caltagirone, W.~Kong, D.~Wei, Z.~Zhou, et~al.} (2012): \enquote{Assessment of mental fatigue during car driving by using high resolution EEG activity and neurophysiologic indices,} in \emph{2012 annual international conference of the IEEE engineering in medicine and biology society}, IEEE, 6442--6445.
+
+\bibitem[\protect\citeauthoryear{Buser and Peter}{Buser and Peter}{2012}]{buser2012multitasking}
+\textsc{Buser, T. and N.~Peter} (2012): \enquote{Multitasking,} \emph{Experimental economics}, 15, 641--655.
+
+\bibitem[\protect\citeauthoryear{Bzdok, Krzywinski, and Altman}{Bzdok et~al.}{2018}]{bzdok2018machine}
+\textsc{Bzdok, D., M.~Krzywinski, and N.~Altman} (2018): \enquote{Machine learning: supervised methods,} \emph{Nature methods}, 15, 5.
+
+\bibitem[\protect\citeauthoryear{Caplin}{Caplin}{2016}]{caplin2016measuring}
+\textsc{Caplin, A.} (2016): \enquote{Measuring and modeling attention,} \emph{Annual Review of Economics}, 8, 379--403.
+
+\bibitem[\protect\citeauthoryear{Caplin and Dean}{Caplin and Dean}{2015}]{caplin2015revealed}
+\textsc{Caplin, A. and M.~Dean} (2015): \enquote{Revealed preference, rational inattention, and costly information acquisition,} \emph{American Economic Review}, 105, 2183--2203.
+
+\bibitem[\protect\citeauthoryear{Cappelli and Rogovsky}{Cappelli and Rogovsky}{2023}]{cappelli2023artificial}
+\textsc{Cappelli, P. and N.~G. Rogovsky} (2023): \emph{Artificial intelligence in human resource management: A challenge for the human-centred agenda?}, 95, ILO Working Paper.
+
+\bibitem[\protect\citeauthoryear{Cobb and Douglas}{Cobb and Douglas}{1928}]{cobb1928theory}
+\textsc{Cobb, C.~W. and P.~H. Douglas} (1928): \enquote{A theory of production,} .
+
+\bibitem[\protect\citeauthoryear{Dauphin, Pascanu, Gulcehre, Cho, Ganguli, and Bengio}{Dauphin et~al.}{2014}]{dauphin2014identifying}
+\textsc{Dauphin, Y.~N., R.~Pascanu, C.~Gulcehre, K.~Cho, S.~Ganguli, and Y.~Bengio} (2014): \enquote{Identifying and attacking the saddle point problem in high-dimensional non-convex optimization,} \emph{Advances in neural information processing systems}, 27.
+
+\bibitem[\protect\citeauthoryear{Davenport, Ronanki et~al.}{Davenport et~al.}{2018}]{davenport2018artificial}
+\textsc{Davenport, T.~H., R.~Ronanki, et~al.} (2018): \enquote{Artificial intelligence for the real world,} \emph{Harvard business review}, 96, 108--116.
+
+\bibitem[\protect\citeauthoryear{Deck and Jahedi}{Deck and Jahedi}{2015}]{deck2015effect}
+\textsc{Deck, C. and S.~Jahedi} (2015): \enquote{The effect of cognitive load on economic decision making: A survey and new experiments,} \emph{European Economic Review}, 78, 97--119.
+
+\bibitem[\protect\citeauthoryear{Dehm, Nguyen, and Stadje}{Dehm et~al.}{2023}]{dehm2023non}
+\textsc{Dehm, C., T.~Nguyen, and M.~Stadje} (2023): \enquote{Non-concave expected utility optimization with uncertain time horizon,} \emph{Applied Mathematics \& Optimization}, 88, 65.
+
+\bibitem[\protect\citeauthoryear{Dewan and Neligh}{Dewan and Neligh}{2020}]{dewan2020estimating}
+\textsc{Dewan, A. and N.~Neligh} (2020): \enquote{Estimating information cost functions in models of rational inattention,} \emph{Journal of Economic Theory}, 187, 105011.
+
+\bibitem[\protect\citeauthoryear{Dixit}{Dixit}{1990}]{dixit1990optimization}
+\textsc{Dixit, A.~K.} (1990): \emph{Optimization in economic theory}, OUP UK.
+
+\bibitem[\protect\citeauthoryear{Drichoutis and Nayga~Jr}{Drichoutis and Nayga~Jr}{2020}]{drichoutis2020economic}
+\textsc{Drichoutis, A.~C. and R.~M. Nayga~Jr} (2020): \enquote{Economic rationality under cognitive load,} \emph{The Economic Journal}, 130, 2382--2409.
+
+\bibitem[\protect\citeauthoryear{Elsken, Metzen, and Hutter}{Elsken et~al.}{2019}]{elsken2019neural}
+\textsc{Elsken, T., J.~H. Metzen, and F.~Hutter} (2019): \enquote{Neural architecture search: A survey,} \emph{Journal of Machine Learning Research}, 20, 1--21.
+
+\bibitem[\protect\citeauthoryear{Engle}{Engle}{2018}]{engle2018working}
+\textsc{Engle, R.~W.} (2018): \enquote{Working memory and executive attention: A revisit,} \emph{Perspectives on psychological science}, 13, 190--193.
+
+\bibitem[\protect\citeauthoryear{Fl{\aa}m, Jongen, and Stein}{Fl{\aa}m et~al.}{2008}]{flaam2008slopes}
+\textsc{Fl{\aa}m, S.~D., H.~T. Jongen, and O.~Stein} (2008): \enquote{Slopes of shadow prices and Lagrange multipliers,} \emph{Optimization Letters}, 2, 143--155.
+
+\bibitem[\protect\citeauthoryear{Frey and Stutzer}{Frey and Stutzer}{2005}]{frey2005beyond}
+\textsc{Frey, B.~S. and A.~Stutzer} (2005): \enquote{Beyond outcomes: measuring procedural utility,} \emph{Oxford Economic Papers}, 57, 90--111.
+
+\bibitem[\protect\citeauthoryear{Furman and Seamans}{Furman and Seamans}{2019}]{furman2019ai}
+\textsc{Furman, J. and R.~Seamans} (2019): \enquote{AI and the Economy,} \emph{Innovation policy and the economy}, 19, 161--191.
+
+\bibitem[\protect\citeauthoryear{Giray}{Giray}{2023}]{giray2023prompt}
+\textsc{Giray, L.} (2023): \enquote{Prompt engineering with ChatGPT: a guide for academic writers,} \emph{Annals of biomedical engineering}, 51, 2629--2633.
+
+\bibitem[\protect\citeauthoryear{Grandl, Ananthanarayanan, Kandula, Rao, and Akella}{Grandl et~al.}{2014}]{grandl2014multi}
+\textsc{Grandl, R., G.~Ananthanarayanan, S.~Kandula, S.~Rao, and A.~Akella} (2014): \enquote{Multi-resource packing for cluster schedulers,} \emph{ACM SIGCOMM Computer Communication Review}, 44, 455--466.
+
+\bibitem[\protect\citeauthoryear{Gu, Alazab, Lin, Zhang, and Huang}{Gu et~al.}{2022}]{gu2022ai}
+\textsc{Gu, B., M.~Alazab, Z.~Lin, X.~Zhang, and J.~Huang} (2022): \enquote{AI-enabled task offloading for improving quality of computational experience in ultra dense networks,} \emph{ACM Transactions on Internet Technology (TOIT)}, 22, 1--17.
+
+\bibitem[\protect\citeauthoryear{Hagger, Wood, Stiff, and Chatzisarantis}{Hagger et~al.}{2010}]{hagger2010ego}
+\textsc{Hagger, M.~S., C.~Wood, C.~Stiff, and N.~L. Chatzisarantis} (2010): \enquote{Ego depletion and the strength model of self-control: a meta-analysis.} \emph{Psychological bulletin}, 136, 495.
+
+\bibitem[\protect\citeauthoryear{Hallak and Teboulle}{Hallak and Teboulle}{2020}]{hallak2020finding}
+\textsc{Hallak, N. and M.~Teboulle} (2020): \enquote{Finding second-order stationary points in constrained minimization: A feasible direction approach,} \emph{Journal of Optimization Theory and Applications}, 186, 480--503.
+
+\bibitem[\protect\citeauthoryear{He, Zhang, Ren, and Sun}{He et~al.}{2016}]{he2016deep}
+\textsc{He, K., X.~Zhang, S.~Ren, and J.~Sun} (2016): \enquote{Deep residual learning for image recognition,} in \emph{Proceedings of the IEEE conference on computer vision and pattern recognition}, 770--778.
+
+\bibitem[\protect\citeauthoryear{Heath}{Heath}{2019}]{heath2019prediction}
+\textsc{Heath, D.~R.} (2019): \enquote{Prediction machines: the simple economics of artificial intelligence: by Ajay Agrawal, Joshua Gans and Avi Goldfarb, Published in 2018 by Harvard Business Review Press, 272 pp., 30.00(hardcover),KindleEdition: 16.19, ISBN: 978-1-633695672,} .
+
+\bibitem[\protect\citeauthoryear{Hoffmann, Boysel, Nagle, Peng, and Xu}{Hoffmann et~al.}{2024}]{hoffmann2024generative}
+\textsc{Hoffmann, M., S.~Boysel, F.~Nagle, S.~Peng, and K.~Xu} (2024): \enquote{Generative AI and the Nature of Work,} \emph{Harvard Business School Strategy Unit Working Paper}, 25--021.
+
+\bibitem[\protect\citeauthoryear{Holmstrom and Milgrom}{Holmstrom and Milgrom}{1991}]{holmstrom1991multitask}
+\textsc{Holmstrom, B. and P.~Milgrom} (1991): \enquote{Multitask principal--agent analyses: Incentive contracts, asset ownership, and job design,} \emph{The Journal of Law, Economics, and Organization}, 7, 24--52.
+
+\bibitem[\protect\citeauthoryear{Inzlicht, Werner, Briskin, and Roberts}{Inzlicht et~al.}{2021}]{inzlicht2021integrating}
+\textsc{Inzlicht, M., K.~M. Werner, J.~L. Briskin, and B.~W. Roberts} (2021): \enquote{Integrating models of self-regulation,} \emph{Annual review of psychology}, 72, 319--345.
+
+\bibitem[\protect\citeauthoryear{Jie and Yan}{Jie and Yan}{2021}]{jie2021computing}
+\textsc{Jie, T. and G.~Yan} (2021): \enquote{Computing shadow prices with multiple Lagrange multipliers.} \emph{Journal of Industrial \& Management Optimization}, 17.
+
+\bibitem[\protect\citeauthoryear{Kahneman}{Kahneman}{1973}]{kahneman1973attention}
+\textsc{Kahneman, D.} (1973): \enquote{Attention and effort,} .
+
+\bibitem[\protect\citeauthoryear{Kaplan, McCandlish, Henighan, Brown, Chess, Child, Gray, Radford, Wu, and Amodei}{Kaplan et~al.}{2020}]{kaplan2020scaling}
+\textsc{Kaplan, J., S.~McCandlish, T.~Henighan, T.~B. Brown, B.~Chess, R.~Child, S.~Gray, A.~Radford, J.~Wu, and D.~Amodei} (2020): \enquote{Scaling laws for neural language models,} \emph{arXiv preprint arXiv:2001.08361}.
+
+\bibitem[\protect\citeauthoryear{Kim and Zauberman}{Kim and Zauberman}{2019}]{kim2019effect}
+\textsc{Kim, K. and G.~Zauberman} (2019): \enquote{The effect of music tempo on consumer impatience in intertemporal decisions,} \emph{European Journal of Marketing}, 53, 504--523.
+
+\bibitem[\protect\citeauthoryear{L{\"a}mmermann, Hofmann, and Urbach}{L{\"a}mmermann et~al.}{2024}]{lammermann2024managing}
+\textsc{L{\"a}mmermann, L., P.~Hofmann, and N.~Urbach} (2024): \enquote{Managing artificial intelligence applications in healthcare: Promoting information processing among stakeholders,} \emph{International Journal of Information Management}, 75, 102728.
+
+\bibitem[\protect\citeauthoryear{Li, Wang, Lu, and Wang}{Li et~al.}{2022}]{li2022optimizing}
+\textsc{Li, M., T.~Wang, W.~Lu, and M.~Wang} (2022): \enquote{Optimizing the systematic characteristics of online learning systems to enhance the continuance intention of Chinese college students,} \emph{Sustainability}, 14, 11774.
+
+\bibitem[\protect\citeauthoryear{Loewenstein}{Loewenstein}{1992}]{loewenstein1992anomalies}
+\textsc{Loewenstein, G.} (1992): \enquote{Anomalies of Intertemporal Choice: Evidence and Interpretation,} \emph{Russell Sage}.
+
+\bibitem[\protect\citeauthoryear{Loewenstein and Wojtowicz}{Loewenstein and Wojtowicz}{2023}]{loewenstein2023economics}
+\textsc{Loewenstein, G. and Z.~Wojtowicz} (2023): \enquote{The Economics of Attention,} \emph{Available at SSRN 4368304}.
+
+\bibitem[\protect\citeauthoryear{Ma{\'c}kowiak, Mat{\v{e}}jka, and Wiederholt}{Ma{\'c}kowiak et~al.}{2023}]{mackowiak2023rational}
+\textsc{Ma{\'c}kowiak, B., F.~Mat{\v{e}}jka, and M.~Wiederholt} (2023): \enquote{Rational inattention: A review,} \emph{Journal of Economic Literature}, 61, 226--273.
+
+\bibitem[\protect\citeauthoryear{Mallen and Belrose}{Mallen and Belrose}{2024}]{mallen2024balancing}
+\textsc{Mallen, A. and N.~Belrose} (2024): \enquote{Balancing Label Quantity and Quality for Scalable Elicitation,} \emph{arXiv preprint arXiv:2410.13215}.
+
+\bibitem[\protect\citeauthoryear{Mas-Colell, Whinston, and Green}{Mas-Colell et~al.}{1995}]{RePEc:oxp:obooks:9780195102680}
+\textsc{Mas-Colell, A., M.~D. Whinston, and J.~R. Green} (1995): \emph{{Microeconomic Theory}}, no. 9780195102680 in OUP Catalogue, Oxford University Press.
+
+\bibitem[\protect\citeauthoryear{Mirhosseini, Sadrosadati, Soltani, Sarbazi-Azad, and Wenisch}{Mirhosseini et~al.}{2017}]{mirhosseini2017binochs}
+\textsc{Mirhosseini, A., M.~Sadrosadati, B.~Soltani, H.~Sarbazi-Azad, and T.~F. Wenisch} (2017): \enquote{BiNoCHS: Bimodal network-on-chip for CPU-GPU heterogeneous systems,} in \emph{Proceedings of the Eleventh IEEE/ACM International Symposium on Networks-on-Chip}, 1--8.
+
+\bibitem[\protect\citeauthoryear{Mittal and Schulz}{Mittal and Schulz}{2013}]{mittal2013general}
+\textsc{Mittal, S. and A.~S. Schulz} (2013): \enquote{A general framework for designing approximation schemes for combinatorial optimization problems with many objectives combined into one,} \emph{Operations Research}, 61, 386--397.
+
+\bibitem[\protect\citeauthoryear{Moore}{Moore}{1998}]{moore1998cramming}
+\textsc{Moore, G.~E.} (1998): \enquote{Cramming more components onto integrated circuits,} \emph{Proceedings of the IEEE}, 86, 82--85.
+
+\bibitem[\protect\citeauthoryear{Navon and Gopher}{Navon and Gopher}{1979}]{navon1979economy}
+\textsc{Navon, D. and D.~Gopher} (1979): \enquote{On the economy of the human-processing system.} \emph{Psychological review}, 86, 214.
+
+\bibitem[\protect\citeauthoryear{Norman and Bobrow}{Norman and Bobrow}{1975}]{norman1975data}
+\textsc{Norman, D.~A. and D.~G. Bobrow} (1975): \enquote{On data-limited and resource-limited processes,} \emph{Cognitive psychology}, 7, 44--64.
+
+\bibitem[\protect\citeauthoryear{Palma, Segovia, Kassas, Ribera, and Hall}{Palma et~al.}{2018}]{palma2018self}
+\textsc{Palma, M.~A., M.~S. Segovia, B.~Kassas, L.~A. Ribera, and C.~R. Hall} (2018): \enquote{Self-control: Knowledge or perishable resource?} \emph{Journal of Economic Behavior \& Organization}, 145, 80--94.
+
+\bibitem[\protect\citeauthoryear{Pashler}{Pashler}{1994}]{pashler1994dual}
+\textsc{Pashler, H.} (1994): \enquote{Dual-task interference in simple tasks: data and theory.} \emph{Psychological bulletin}, 116, 220.
+
+\bibitem[\protect\citeauthoryear{Powell}{Powell}{2008}]{powell2008quantum}
+\textsc{Powell, J.~R.} (2008): \enquote{The quantum limit to Moore's law,} \emph{Proceedings of the IEEE}, 96, 1247--1248.
+
+\bibitem[\protect\citeauthoryear{Real, Aggarwal, Huang, and Le}{Real et~al.}{2019}]{real2019regularized}
+\textsc{Real, E., A.~Aggarwal, Y.~Huang, and Q.~V. Le} (2019): \enquote{Regularized evolution for image classifier architecture search,} in \emph{Proceedings of the aaai conference on artificial intelligence}, vol.~33, 4780--4789.
+
+\bibitem[\protect\citeauthoryear{Sekeris and Siqueira}{Sekeris and Siqueira}{2024}]{sekeris2024conflict}
+\textsc{Sekeris, P.~G. and K.~Siqueira} (2024): \enquote{Conflict and returns to scale in production,} \emph{Journal of Economic Behavior \& Organization}, 227, 106735.
+
+\bibitem[\protect\citeauthoryear{Simon}{Simon}{1955}]{simon1955behavioral}
+\textsc{Simon, H.~A.} (1955): \enquote{A behavioral model of rational choice,} \emph{The quarterly journal of economics}, 99--118.
+
+\bibitem[\protect\citeauthoryear{Sims}{Sims}{2003}]{sims2003implications}
+\textsc{Sims, C.~A.} (2003): \enquote{Implications of rational inattention,} \emph{Journal of monetary Economics}, 50, 665--690.
+
+\bibitem[\protect\citeauthoryear{Snoek, Larochelle, and Adams}{Snoek et~al.}{2012}]{snoek2012practical}
+\textsc{Snoek, J., H.~Larochelle, and R.~P. Adams} (2012): \enquote{Practical bayesian optimization of machine learning algorithms,} \emph{Advances in neural information processing systems}, 25.
+
+\bibitem[\protect\citeauthoryear{Syed, Suriadi, Adams, Bandara, Leemans, Ouyang, Ter~Hofstede, Van De~Weerd, Wynn, and Reijers}{Syed et~al.}{2020}]{syed2020robotic}
+\textsc{Syed, R., S.~Suriadi, M.~Adams, W.~Bandara, S.~J. Leemans, C.~Ouyang, A.~H. Ter~Hofstede, I.~Van De~Weerd, M.~T. Wynn, and H.~A. Reijers} (2020): \enquote{Robotic process automation: contemporary themes and challenges,} \emph{Computers in Industry}, 115, 103162.
+
+\bibitem[\protect\citeauthoryear{Thaler}{Thaler}{2016}]{thaler2016behavioral}
+\textsc{Thaler, R.~H.} (2016): \enquote{Behavioral economics: Past, present, and future,} \emph{American economic review}, 106, 1577--1600.
+
+\bibitem[\protect\citeauthoryear{Tuk, Zhang, and Sweldens}{Tuk et~al.}{2015}]{tuk2015propagation}
+\textsc{Tuk, M.~A., K.~Zhang, and S.~Sweldens} (2015): \enquote{The propagation of self-control: Self-control in one domain simultaneously improves self-control in other domains.} \emph{Journal of Experimental Psychology: General}, 144, 639.
+
+\bibitem[\protect\citeauthoryear{Varian}{Varian}{1992}]{varian1992microeconomic}
+\textsc{Varian, H.~R.} (1992): \enquote{Microeconomic analysis,} .
+
+\bibitem[\protect\citeauthoryear{Vaswani}{Vaswani}{2017}]{vaswani2017attention}
+\textsc{Vaswani, A.} (2017): \enquote{Attention is all you need,} \emph{Advances in Neural Information Processing Systems}.
+
+\bibitem[\protect\citeauthoryear{Waldrop}{Waldrop}{2016}]{waldrop2016chips}
+\textsc{Waldrop, M.~M.} (2016): \enquote{The chips are down for Moore’s law,} \emph{Nature News}, 530, 144.
+
+\bibitem[\protect\citeauthoryear{Westby and Riedl}{Westby and Riedl}{2023}]{westby2023collective}
+\textsc{Westby, S. and C.~Riedl} (2023): \enquote{Collective intelligence in human-AI teams: A Bayesian theory of mind approach,} in \emph{Proceedings of the AAAI Conference on Artificial Intelligence}, vol.~37, 6119--6127.
+
+\bibitem[\protect\citeauthoryear{Zamfirescu-Pereira, Wong, Hartmann, and Yang}{Zamfirescu-Pereira et~al.}{2023}]{zamfirescu2023johnny}
+\textsc{Zamfirescu-Pereira, J., R.~Y. Wong, B.~Hartmann, and Q.~Yang} (2023): \enquote{Why Johnny can’t prompt: how non-AI experts try (and fail) to design LLM prompts,} in \emph{Proceedings of the 2023 CHI Conference on Human Factors in Computing Systems}, 1--21.
+
+\end{thebibliography}
+
+\newpage
+\appendix
+\section{Appendix}
+\subsection{Proposition~\ref{pro:foc}}
+\label{app:foc}
+\begin{proof}
+Consider the decision problem~\ref{eq:problem}:
+
+$$\max_{a_1,\mathbf{e},a_2} U(a_1+f(\mathbf{e}),a_2)
+\quad \text{s.t.} \quad a_1 + \sum_{i=1}^n e_i + a_2 = C$$
+
+First, substitute the constraint $a_1=C-\sum_{i=1}^n e_i-a_2$ into the decision problem, i.e.
+
+$$\max_{\mathbf{e},a_2} U(C-\sum_{i=1}^n e_i-a_2+f(\mathbf{e}),a_2)$$
+
+Next, take the FOC with respect to each $e_i\in\{e_1,...,e_n\}$:
+
+$$\frac{\partial U}{\partial e_i}=\frac{\partial U}{\partial p_1}\frac{\partial p_1}{\partial e_i}=\frac{\partial U}{\partial p_1}*\frac{d}{de_i}[C-\sum_{i=1}^n e_i-a_2+f(\mathbf{e})]=\frac{\partial U}{\partial p_1}*\bigg[-1+\frac{\partial f(\mathbf{e})}{\partial e_i}\bigg]=0\quad\forall i\in\{1,...,n\}$$
+
+Since, $U$ is strictly increasing, $\frac{\partial U}{\partial p_1}>0$. Hence, for $\frac{\partial U}{\partial p_1}*\bigg[-1+\frac{\partial f(\mathbf{e})}{\partial e_i}\bigg]=0$ to be true $\forall i\in\{1,...,n\}$, the following expression must hold at the stationary point $(e^*_1,...,e^*_n,a^*_2)$:
+
+$$\frac{\partial f(\mathbf{e^*})}{\partial e_i}=1\quad\forall i\in\{1,...,n\}$$
+
+\end{proof}
+\subsection{Proposition~\ref{pro:soc}}
+\label{app:soc}
+\begin{proof}
+Consider the decision problem~\ref{eq:problem}:
+
+$$\max_{a_1,\mathbf{e},a_2} U(a_1+f(\mathbf{e}),a_2) 
+\quad \text{s.t.} \quad a_1 + \sum_{i=1}^n e_i + a_2 = C$$
+
+First, substitute the constraint $a_1=C-\sum_{i=1}^n e_i-a_2$ into the decision problem, i.e.
+
+$$\max_{\mathbf{e},a_2} U(C-\sum_{i=1}^n e_i-a_2+f(\mathbf{e}),a_2)$$
+
+Next, take the FOC with respect to $e_1,...,e_2,a_2$:
+
+$$\frac{\partial U}{\partial e_i}=\frac{\partial U}{\partial p_1}\frac{\partial p_1}{\partial e_i}=\frac{\partial U}{\partial p_1}*\frac{d}{de_i}[C-\sum_{i=1}^n e_i-a_2+f(\mathbf{e})]=\frac{\partial U}{\partial p_1}*\bigg[-1+\frac{\partial f(\mathbf{e})}{\partial e_i}\bigg]=0\quad\forall i\in\{1,...,n\}$$
+$$\frac{\partial U}{\partial a_2}=\frac{\partial U}{\partial p_1}\frac{\partial p_1}{\partial a_2}+\frac{\partial U}{\partial p_2}\frac{\partial p_2}{\partial a_2}=\frac{\partial U}{\partial p_1}(-1)+\frac{\partial U}{\partial p_2}(1)=0$$
+
+Now, take the SOC:
+
+$$\frac{\partial^2 U}{\partial e_i^2}=\frac{\partial^2 U}{\partial p_1^2}\bigg(\frac{\partial p_1}{\partial e_i}\bigg)^2+\frac{\partial U}{\partial p_1}\frac{\partial^2 p_1}{\partial e_i^2}=\frac{\partial^2 U}{\partial p_1^2}\bigg(\frac{\partial f(\mathbf{e})}{\partial e_i}-1\bigg)^2+\frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e})}{\partial e_i^2}$$
+But $\frac{\partial f(\mathbf{e^*})}{\partial e_i}=1$ at the stationary point $(e_1^*,...,e^*_n,a_2^*)$, so the 2nd derivative with respect to $e_i$ simplifies to:
+
+$$\frac{\partial^2 U}{\partial e_i^2}\bigg|_{(\mathbf{e}^*,a^*_2)}=\frac{\partial U}{\partial p_1}\times\frac{\partial^2 f(\mathbf{e})}{\partial e_i^2}\bigg|_{(\mathbf{e}^*,a^*_2)}\quad\forall i\in\{1,...,n\}$$
+Similarly for the cross partial derivatives: $\frac{\partial^2 U}{\partial e_i\partial e_j}$:
+$$\frac{\partial^2 U}{\partial e_i\partial e_j}=\frac{\partial U}{\partial p_1}\times\frac{\partial f(\mathbf{e})}{\partial e_i\partial e_j}\bigg|_{(\mathbf{e}^*,a^*_2)}\quad\forall i\neq j$$
+Next, deriving the SOC for $a^*_2$:
+$$\frac{\partial^2 U}{\partial a_2^2}=\frac{\partial^2 U}{\partial p_1^2}(-1)^2+\frac{\partial^2 U}{\partial p_2^2}(1)^2=\frac{\partial^2 U}{\partial p_1^2}+\frac{\partial^2 U}{\partial p_2^2}$$
+
+Finally, for the cross partial derivative of $e_i$ with respect with $a_2$: $$\frac{\partial^2 U}{\partial a\partial e_i}=\frac{\partial}{\partial a_2}\bigg(\frac{\partial U}{\partial p_1}*\bigg[-1+\frac{\partial f(\mathbf{e})}{\partial e_i}\bigg]\bigg)=\frac{\partial U^2}{\partial p_1^2}(-1)^2+\frac{\partial U^2}{\partial p_1^2}(-1)\frac{\partial f(\mathbf{e})}{\partial e_i}=\frac{\partial U^2}{\partial p_1^2}\bigg[1-\frac{\partial f(\mathbf{e})}{\partial e_i}\bigg]$$
+
+However, $\frac{\partial f(\mathbf{e^*})}{\partial e_i}=1$ at the stationary point $(e_1^*,...,e^*_n,a_2^*)$, so the cross partial derivative of $e_i$ and $a_2$ simplifies to:
+$$\frac{\partial^2 U}{\partial a\partial e_i}\bigg|_{(\mathbf{e}^*,a^*_2)}=0\quad\forall i\in\{1,...,n\}$$
+
+Constructing the Hessian matrix at the stationary point $(e^*_1,...,e^*_n,a^*_2)$:
+
+$$\mathbf{H}^U_{n+1}=\begin{bmatrix}
+\frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1^2} & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1\partial e_2} & ... & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1\partial e_n} & 0\\
+\frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_2\partial e_1} & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_2^2} & ... & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_2\partial e_n} & 0\\
+... & ... & ... & ... & ...\\
+\frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_n\partial e_1} & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_n\partial e_2} & ... & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_n^2} & 0\\
+0 & 0 & ... & 0 & \frac{\partial^2 U}{\partial p_1^2}+\frac{\partial^2 U}{\partial p_2^2}
+\end{bmatrix}$$
+
+From Sylvester's Criterion, $\mathbf{H}^U_{n+1}$ is negative definite if and only if $(-1)^i|\mathbf{H}^U_i|>0$ $\forall i\in\{1,...,n,n+1\}$. To focus on the condition necessary for $\mathbf{e}^*=[e^*_1,...,e^*_n]$, consider the minor $\mathbf{H}^U_n$:
+
+$$\mathbf{H}^U_n=\begin{bmatrix}
+\frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1^2} & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1\partial e_2} & ... & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1\partial e_n}\\
+\frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_2\partial e_1} & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_2^2} & ... & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_2\partial e_n}\\
+... & ... & ... & ...\\
+\frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_n\partial e_1} & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_n\partial e_2} & ... & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_n^2}\\
+\end{bmatrix}$$
+
+which can be rewritten as:
+
+$$\mathbf{H}^U_n=\frac{\partial U}{\partial p_1}\begin{bmatrix}
+\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1^2} & \frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1\partial e_2} & ... & \frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1\partial e_n}\\
+\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_2\partial e_1} & \frac{\partial^2 f(\mathbf{e}^*)}{\partial e_2^2} & ... & \frac{\partial^2 f(\mathbf{e}^*)}{\partial e_2\partial e_n}\\
+... & ... & ... & ...\\
+\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_n\partial e_1} & \frac{\partial^2 f(\mathbf{e}^*)}{\partial e_n\partial e_2} & ... & \frac{\partial^2 f(\mathbf{e}^*)}{\partial e_n^2}\\
+\end{bmatrix}$$
+
+Let $\mathbf{H}^f_n$ denote the Hessian matrix of the AI production function $f$, then the relationship can be expressed neatly as:
+
+$$\mathbf{H}^U_n=\frac{\partial U}{\partial p_1}\times\mathbf{H}^f_n$$
+
+Since $\mathbf{H}^U_n$ must be negative definite and $\frac{\partial U}{\partial p_1}>0$, $\mathbf{H}^f_n$ must also be negative definite for the interior solution $(\mathbf{e}^*,a^*_2)$ to be unique and a maximum.
+\end{proof}
+
+\end{document}
