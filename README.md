@@ -13,24 +13,29 @@ A curated collection of custom datasets in CSV format for easy access, analysis,
 | `data/Smoking Mothers.csv`       | Study on maternal smoking effects on birth outcomes               |
 
 ## Repository Structure
-
-```
-
-.
 ├── README.md
 ├── .gitignore
 ├── TeX
-│   ├── When to Delegate to AI, A Constrained Resource Optimization Framework.tex
+│   ├── master.tex                  # preamble, title, and \input{} statements
+│   ├── abstract.tex
+│   ├── introduction.tex
+│   ├── literature.tex
+│   ├── model.tex
+│   ├── discussion.tex
+│   ├── conclusion.tex
+│   ├── acknowledgment.tex
+│   ├── data_availability.tex
+│   ├── references.tex
+│   └── appendix.tex
 ├── data/
 │   ├── Height Weight.csv
 │   ├── House Price.csv
 │   ├── Productivity.csv
-│   ├── S\&P 500.csv
+│   ├── S&P 500.csv
 │   └── Smoking Mothers.csv
 └── scripts/
-   └── script.py
+    └── script.py
 
-````
 
 ## Getting Started
 
