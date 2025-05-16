@@ -19,6 +19,8 @@ A curated collection of custom datasets in CSV format for easy access, analysis,
 .
 ├── README.md
 ├── .gitignore
+├── TeX
+│   ├── When to Delegate to AI, A Constrained Resource Optimization Framework.tex
 ├── data/
 │   ├── Height Weight.csv
 │   ├── House Price.csv
