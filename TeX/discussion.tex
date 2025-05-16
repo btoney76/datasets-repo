@@ -1,0 +1,79 @@
+\section{Discussion}
+\label{sec:dis}
+Although the analysis in previous sections centered on an abstract formulation of direct labor and AI as variable inputs to production, the examples applied below reinforce that the model’s conclusions do not depend on a particular utility specification. Instead, they exploit how the production function governing AI enhancements exhibits the strict concavity demonstrated previously. Whether a firm or agent utilizes a familiar Cobb–Douglas or CES-style production technology, the fundamental requirement of diminishing returns to AI effort ensures that both human involvement and AI deployment remain jointly optimal. This flexibility illustrates the wide-ranging applicability of the model, covering contexts from industrial robotics to knowledge-intensive fields. Moreover, the model’s structure naturally accommodates methods to operationalize these ideas in real-world settings. For example, firms could approximate human cognitive bandwidth through metrics such as hours of qualified personnel time or validated psychometric scales for cognitive load, while AI enhancement could be measured by the frequency of model iterations, hyperparameter tuning cycles, or additional engineering sprints devoted to AI tooling. In empirical applications, whether in manufacturing or medical decision-making, researchers could track diminishing returns by examining how incremental improvements in AI output (e.g., diagnostic accuracy or production efficiency) taper off as more resources are allocated. Such measurement approaches connect the abstract framework presented here and the practical data requirements for rigorous empirical validation.
+
+By reaffirming that the model’s predictions hold without enforcing any specific functional form for the agent’s preferences, the following examples demonstrate why concavity in AI’s contribution is vital for a stable interior solution and offer guidance on how practitioners can capture and analyze these diminishing returns. Should organizations or researchers collect data on resource allocation decisions and corresponding performance outcomes, they could estimate the gradient of the AI production function at different levels of investment. Doing so would reveal whether the marginal product of AI assistance aligns with that of direct human effort, as predicted by the theoretical framework. This would highlight potential areas for efficency improvements in operational workflows. These empirical methods could also highlight scenarios where corner solutions arise (for instance, if data show constant or increasing returns to AI improvement), corroborating or contradicting the strict concavity assumption.
+
+\subsection{Example 1: Cobb-Douglas Production Function}
+\label{ssec:Cobb}
+Consider a simple example of a medical doctor deploying two AI systems to complete two tasks: (1) diagnosing and (2) seeing patients. The two AI systems can assist the physician with diagnosing, but cannot talk to patients on their behalf. The physician's cognitive bandwidth constraint is given by $a_1+e_1+e_2+a_2=C$, where $a_1$ is the doctor's direct effort in diagnosing, $e_1$ is the doctor's direct effort towards enhancing AI system 1, $e_2$ is the doctor's direct effort towards enhancing AI system 2, and $a_2$ is the doctor's direct effort dedicated to speaking with patients. Assume that the AI production function is given by $f(e_1,e_2)=e_1^\alpha e_2^{\beta}$ s.t. $p_1=a_1+e_1^\alpha e_2^{\beta}$ and $p_2=a_2$ \citep{cobb1928theory}. Then, the decision problem is given as
+\[
+\max_{a_1,e_1,e_2,a_2}U(a_1+e_1^\alpha e_2^{\beta},a_2)
+\quad
+\text{s.t.}
+\quad
+a_1+e_1+e_2+a_2=C.
+\]
+
+Substituting $a_1=C-e_1-e_2-a_2$ into the decision problem:
+\[
+\max_{e_1,e_2,a_2}U\bigl(C-e_1-e_2-a_2+e_1^\alpha e_2^{\beta},\,a_2\bigr).
+\]
+
+Then, taking the FOC with respect to $e_1$, $e_2$, and $a_2$:
+\[
+\frac{\partial U}{\partial e_1}=\frac{\partial U}{\partial p_1}\frac{\partial p_1}{\partial e_1}
+=\frac{\partial U}{\partial p_1}[\alpha e_1^{\alpha-1}e_2^{\beta}-1]=0,\quad
+\frac{\partial U}{\partial e_2}=\frac{\partial U}{\partial p_1}\frac{\partial p_1}{\partial e_2}
+=\frac{\partial U}{\partial p_1}[\beta e_1^{\alpha}e_2^{\beta-1}-1]=0,
+\]
+\[
+\frac{\partial U}{\partial a_2}
+=\frac{\partial U}{\partial p_1}\frac{\partial p_1}{\partial a_2}+\frac{\partial U}{\partial p_2}\frac{\partial p_2}{\partial a_2}
+=\frac{\partial U}{\partial p_1}(-1)+\frac{\partial U}{\partial p_2}(1)=0.
+\]
+Since $U$ is strictly increasing, the conditions above are satisfied when (1) $\alpha e^{\alpha-1}e_2^{\beta}=1$, (2) $\beta e^{\alpha}e_2^{\beta-1}=1$, and (3) $\tfrac{\partial U}{\partial p_1}=\tfrac{\partial U}{\partial p_2}$ hold. Indeed, it can be shown that the optimal amount of effort allocated towards the two AI systems must satisfy
+\[
+\tfrac{e^*_1}{e^*_2}=\tfrac{\alpha}{\beta},
+\]
+despite no specific utility functional form. In practical measurement terms, a healthcare organization could operationalize $e_1$ and $e_2$ by logging doctors' hours invested in upgrading or refining each AI diagnostic tool. The ratio $\tfrac{e_1^*}{e_2^*}$ could then be directly computed from those logs, while $a_1$ and $a_2$ might be captured by tracking time spent on “physician-led diagnostics” relative to “patient consults and communication.”
+
+To find $\alpha,\beta$ ensuring $(e^*_1,e^*_2)$ is a maximum, one estimates the SOC for $e_1$:
+\[
+\frac{\partial^2 U}{\partial e_1^2}
+=\frac{\partial^2 U}{\partial p_1^2}\bigl[\alpha e_1^{\alpha-1}e_2^{\beta}-1\bigr]^2
++\frac{\partial U}{\partial p_1}\alpha(1-\alpha)e_1^{\alpha-2}e_2^\beta,
+\]
+and similarly for $e_2$. In an empirical setting, the presence of diminishing marginal improvements could be detected by verifying $\alpha+\beta<1$ or demonstrating that direct returns to AI eventually plateau. If data collection on quality-adjusted diagnostic outputs and time allocations confirms the negative definiteness of the Hessian matrix derived from local estimates of $f$, it would confirm the concavity assumption.
+
+\subsection{Example 2: CES Production Function}
+To illustrate a more flexible specification than Cobb-Douglas, consider again the scenario where a medical doctor must allocate cognitive resources to two AI systems assisting with patient diagnoses, while also spending time speaking with patients. Let the doctor allocate $e_1$ and $e_2$ units of effort to enhance or refine the two AI diagnostic tools, while $a_1$ denotes the doctor’s own direct diagnostic effort, and $a_2$ denotes the time spent conversing with patients about treatments, results, and follow-up care. Suppose that the AI production function is given now by a CES (Constant Elasticity of Substitution) form \citep{arrow1961capital}:
+\[
+f(e_1, e_2)
+=
+\Bigl(\alpha\,e_1^\rho + \beta\,e_2^\rho\Bigr)^{\tfrac{1}{\rho}},
+\]
+where $\alpha, \beta > 0$ and $\rho < 1$ ensure diminishing returns and strict concavity in $(e_1,e_2)$. Strict concavity reflects the empirical observation that each additional unit of effort toward refining AI diagnostic tools eventually yields smaller marginal gains. In real-world data collection, the incremental time or resources devoted to each AI tool could be captured as $e_1$ and $e_2$, while $\rho$ could be derived through regression-like methods estimating how combined AI effort influences diagnostic outcomes.
+
+The doctor’s total cognitive budget is
+\[
+C \;=\; a_1 + e_1 + e_2 + a_2,
+\]
+where $C$ is a finite quantity of time or mental capacity. The optimization problem is then
+\[
+\max_{a_1,\, e_1,\, e_2,\, a_2}
+\; U\bigl(a_1 + f(e_1, e_2),\; a_2\bigr)
+\quad
+\text{s.t.}
+\quad
+a_1 + e_1 + e_2 + a_2 \;=\; C,
+\]
+under the assumption that $U(\cdot)$ is strictly increasing and quasi-concave. Here, $p_1 = a_1 + f(e_1, e_2)$ can be viewed as the doctor’s overall diagnostic output, and $p_2 = a_2$ reflects the patient-facing component of care. As before, $\nabla f(e_1, e_2)=1$ is necessary for an interior solution at the optimum, but verifying strict concavity in practice might involve a local approximation of the production function and verifying the sign of estimated second derivatives from the data.
+
+The partial derivatives with respect to $(e_1, e_2, a_2)$ follow the same pattern as the Cobb-Douglas example. Though, adjusting parameters such as $\rho$ or the weights $\alpha,\beta$ changes how effectively the AI tools can substitute for each other, thus shifting the ratio $\tfrac{e_1^*}{e_2^*}=\bigl(\tfrac{\alpha}{\beta}\bigr)^{\tfrac{1}{1-\rho}}$ at the solution. If $\rho$ approaches zero, the CES function approximates the Cobb-Douglas form. If $\rho < 0$, the function becomes more substitutable. Evidence of strong substitutability would appear if, in practice, a marginal improvement in one AI tool can nearly replace the role of the other tool entirely.
+
+Finally, the second-order (Hessian-based) conditions show that $D^2 f(e_1,e_2)<0$ is essential for a unique and stable interior optimum, just as in Section~\ref{sec:Framework}. This requirement holds with any form of $U$, underscoring that diminishing returns to AI improvement are the foundation of balanced allocations. Field data would confirm diminishing returns when incremental gains in diagnostic accuracy from additional AI tool refinement taper off beyond a certain point, reinforcing the negative definiteness condition. Therefore, when real measurements demonstrate an eventual flattening of performance improvements, the model’s interior solution is likely to manifest. By combining time allocations, patient outcome metrics, and measured changes in AI-based diagnostic proficiency, researchers and medical administrators can test whether the current workflow aligns the marginal product of AI refinement with the marginal product of direct doctor involvement for efficiency analysis and operational decision-making.
+
+In real-world settings, agents often exhibit substantial heterogeneity in their cognitive abilities, AI expertise, and task complexity. Although the present framework uses a representative agent for analytical clarity, variations in AI literacy or specialized domain knowledge could shift the marginal returns to AI enhancement. For example, an agent with advanced AI training can achieve higher $\nabla f(\mathbf{e})$ at lower $e_i$ levels, potentially moving the interior optimum more toward AI. Alternatively, agents facing tasks of widely differing complexity may prioritize direct labor if the AI tools are less tailored to those tasks. While accounting for such heterogeneity may require extensions of this basic model, the fundamental principle of balancing the marginal products of AI improvements and direct labor remains. Each agent (or task) determines to what extent returns to AI diminish and, thus, where the interior solution still emerges.
+
+Such empirical considerations reflect the model's broader significance. Verifying how resource allocations achieve optimization under data-based estimates can guide institutions, such as medical centers or other AI-driven enterprises, to optimize how specialists split their finite cognitive budgets between direct tasks and AI-oriented enhancements. This extends naturally to specialized tasks in advanced healthcare systems, engineering, or creative industries, reaffirming that the underlying production technology's concavity is key for sustaining partial human oversight and partial AI deployment rather than a radical shift to full automation or complete reliance on human labor alone.

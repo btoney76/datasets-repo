@@ -1,0 +1,93 @@
+\newpage
+\appendix
+\section{Appendix}
+\subsection{Proposition~\ref{pro:foc}}
+\label{app:foc}
+\begin{proof}
+Consider the decision problem~\ref{eq:problem}:
+
+$$\max_{a_1,\mathbf{e},a_2} U(a_1+f(\mathbf{e}),a_2)
+\quad \text{s.t.} \quad a_1 + \sum_{i=1}^n e_i + a_2 = C$$
+
+First, substitute the constraint $a_1=C-\sum_{i=1}^n e_i-a_2$ into the decision problem, i.e.
+
+$$\max_{\mathbf{e},a_2} U(C-\sum_{i=1}^n e_i-a_2+f(\mathbf{e}),a_2)$$
+
+Next, take the FOC with respect to each $e_i\in\{e_1,...,e_n\}$:
+
+$$\frac{\partial U}{\partial e_i}=\frac{\partial U}{\partial p_1}\frac{\partial p_1}{\partial e_i}=\frac{\partial U}{\partial p_1}*\frac{d}{de_i}[C-\sum_{i=1}^n e_i-a_2+f(\mathbf{e})]=\frac{\partial U}{\partial p_1}*\bigg[-1+\frac{\partial f(\mathbf{e})}{\partial e_i}\bigg]=0\quad\forall i\in\{1,...,n\}$$
+
+Since, $U$ is strictly increasing, $\frac{\partial U}{\partial p_1}>0$. Hence, for $\frac{\partial U}{\partial p_1}*\bigg[-1+\frac{\partial f(\mathbf{e})}{\partial e_i}\bigg]=0$ to be true $\forall i\in\{1,...,n\}$, the following expression must hold at the stationary point $(e^*_1,...,e^*_n,a^*_2)$:
+
+$$\frac{\partial f(\mathbf{e^*})}{\partial e_i}=1\quad\forall i\in\{1,...,n\}$$
+
+\end{proof}
+\subsection{Proposition~\ref{pro:soc}}
+\label{app:soc}
+\begin{proof}
+Consider the decision problem~\ref{eq:problem}:
+
+$$\max_{a_1,\mathbf{e},a_2} U(a_1+f(\mathbf{e}),a_2) 
+\quad \text{s.t.} \quad a_1 + \sum_{i=1}^n e_i + a_2 = C$$
+
+First, substitute the constraint $a_1=C-\sum_{i=1}^n e_i-a_2$ into the decision problem, i.e.
+
+$$\max_{\mathbf{e},a_2} U(C-\sum_{i=1}^n e_i-a_2+f(\mathbf{e}),a_2)$$
+
+Next, take the FOC with respect to $e_1,...,e_2,a_2$:
+
+$$\frac{\partial U}{\partial e_i}=\frac{\partial U}{\partial p_1}\frac{\partial p_1}{\partial e_i}=\frac{\partial U}{\partial p_1}*\frac{d}{de_i}[C-\sum_{i=1}^n e_i-a_2+f(\mathbf{e})]=\frac{\partial U}{\partial p_1}*\bigg[-1+\frac{\partial f(\mathbf{e})}{\partial e_i}\bigg]=0\quad\forall i\in\{1,...,n\}$$
+$$\frac{\partial U}{\partial a_2}=\frac{\partial U}{\partial p_1}\frac{\partial p_1}{\partial a_2}+\frac{\partial U}{\partial p_2}\frac{\partial p_2}{\partial a_2}=\frac{\partial U}{\partial p_1}(-1)+\frac{\partial U}{\partial p_2}(1)=0$$
+
+Now, take the SOC:
+
+$$\frac{\partial^2 U}{\partial e_i^2}=\frac{\partial^2 U}{\partial p_1^2}\bigg(\frac{\partial p_1}{\partial e_i}\bigg)^2+\frac{\partial U}{\partial p_1}\frac{\partial^2 p_1}{\partial e_i^2}=\frac{\partial^2 U}{\partial p_1^2}\bigg(\frac{\partial f(\mathbf{e})}{\partial e_i}-1\bigg)^2+\frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e})}{\partial e_i^2}$$
+But $\frac{\partial f(\mathbf{e^*})}{\partial e_i}=1$ at the stationary point $(e_1^*,...,e^*_n,a_2^*)$, so the 2nd derivative with respect to $e_i$ simplifies to:
+
+$$\frac{\partial^2 U}{\partial e_i^2}\bigg|_{(\mathbf{e}^*,a^*_2)}=\frac{\partial U}{\partial p_1}\times\frac{\partial^2 f(\mathbf{e})}{\partial e_i^2}\bigg|_{(\mathbf{e}^*,a^*_2)}\quad\forall i\in\{1,...,n\}$$
+Similarly for the cross partial derivatives: $\frac{\partial^2 U}{\partial e_i\partial e_j}$:
+$$\frac{\partial^2 U}{\partial e_i\partial e_j}=\frac{\partial U}{\partial p_1}\times\frac{\partial f(\mathbf{e})}{\partial e_i\partial e_j}\bigg|_{(\mathbf{e}^*,a^*_2)}\quad\forall i\neq j$$
+Next, deriving the SOC for $a^*_2$:
+$$\frac{\partial^2 U}{\partial a_2^2}=\frac{\partial^2 U}{\partial p_1^2}(-1)^2+\frac{\partial^2 U}{\partial p_2^2}(1)^2=\frac{\partial^2 U}{\partial p_1^2}+\frac{\partial^2 U}{\partial p_2^2}$$
+
+Finally, for the cross partial derivative of $e_i$ with respect with $a_2$: $$\frac{\partial^2 U}{\partial a\partial e_i}=\frac{\partial}{\partial a_2}\bigg(\frac{\partial U}{\partial p_1}*\bigg[-1+\frac{\partial f(\mathbf{e})}{\partial e_i}\bigg]\bigg)=\frac{\partial U^2}{\partial p_1^2}(-1)^2+\frac{\partial U^2}{\partial p_1^2}(-1)\frac{\partial f(\mathbf{e})}{\partial e_i}=\frac{\partial U^2}{\partial p_1^2}\bigg[1-\frac{\partial f(\mathbf{e})}{\partial e_i}\bigg]$$
+
+However, $\frac{\partial f(\mathbf{e^*})}{\partial e_i}=1$ at the stationary point $(e_1^*,...,e^*_n,a_2^*)$, so the cross partial derivative of $e_i$ and $a_2$ simplifies to:
+$$\frac{\partial^2 U}{\partial a\partial e_i}\bigg|_{(\mathbf{e}^*,a^*_2)}=0\quad\forall i\in\{1,...,n\}$$
+
+Constructing the Hessian matrix at the stationary point $(e^*_1,...,e^*_n,a^*_2)$:
+
+$$\mathbf{H}^U_{n+1}=\begin{bmatrix}
+\frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1^2} & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1\partial e_2} & ... & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1\partial e_n} & 0\\
+\frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_2\partial e_1} & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_2^2} & ... & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_2\partial e_n} & 0\\
+... & ... & ... & ... & ...\\
+\frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_n\partial e_1} & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_n\partial e_2} & ... & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_n^2} & 0\\
+0 & 0 & ... & 0 & \frac{\partial^2 U}{\partial p_1^2}+\frac{\partial^2 U}{\partial p_2^2}
+\end{bmatrix}$$
+
+From Sylvester's Criterion, $\mathbf{H}^U_{n+1}$ is negative definite if and only if $(-1)^i|\mathbf{H}^U_i|>0$ $\forall i\in\{1,...,n,n+1\}$. To focus on the condition necessary for $\mathbf{e}^*=[e^*_1,...,e^*_n]$, consider the minor $\mathbf{H}^U_n$:
+
+$$\mathbf{H}^U_n=\begin{bmatrix}
+\frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1^2} & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1\partial e_2} & ... & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1\partial e_n}\\
+\frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_2\partial e_1} & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_2^2} & ... & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_2\partial e_n}\\
+... & ... & ... & ...\\
+\frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_n\partial e_1} & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_n\partial e_2} & ... & \frac{\partial U}{\partial p_1}\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_n^2}\\
+\end{bmatrix}$$
+
+which can be rewritten as:
+
+$$\mathbf{H}^U_n=\frac{\partial U}{\partial p_1}\begin{bmatrix}
+\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1^2} & \frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1\partial e_2} & ... & \frac{\partial^2 f(\mathbf{e}^*)}{\partial e_1\partial e_n}\\
+\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_2\partial e_1} & \frac{\partial^2 f(\mathbf{e}^*)}{\partial e_2^2} & ... & \frac{\partial^2 f(\mathbf{e}^*)}{\partial e_2\partial e_n}\\
+... & ... & ... & ...\\
+\frac{\partial^2 f(\mathbf{e}^*)}{\partial e_n\partial e_1} & \frac{\partial^2 f(\mathbf{e}^*)}{\partial e_n\partial e_2} & ... & \frac{\partial^2 f(\mathbf{e}^*)}{\partial e_n^2}\\
+\end{bmatrix}$$
+
+Let $\mathbf{H}^f_n$ denote the Hessian matrix of the AI production function $f$, then the relationship can be expressed neatly as:
+
+$$\mathbf{H}^U_n=\frac{\partial U}{\partial p_1}\times\mathbf{H}^f_n$$
+
+Since $\mathbf{H}^U_n$ must be negative definite and $\frac{\partial U}{\partial p_1}>0$, $\mathbf{H}^f_n$ must also be negative definite for the interior solution $(\mathbf{e}^*,a^*_2)$ to be unique and a maximum.
+\end{proof}
+
+\end{document}
