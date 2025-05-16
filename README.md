@@ -26,6 +26,7 @@ A curated collection of custom datasets in CSV format for easy access, analysis,
 │   ├── S\&P 500.csv
 │   └── Smoking Mothers.csv
 └── scripts/
+   └── script.py
 
 ````
 
