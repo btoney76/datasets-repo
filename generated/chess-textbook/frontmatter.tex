@@ -63,12 +63,12 @@ The result is a compact loop:
 
 \begin{center}
 \begin{tikzpicture}[node distance=10mm and 7mm,>=Latex]
-\tikzset{step/.style={draw=Teal,rounded corners=2mm,fill=PaleTeal,minimum width=22mm,minimum height=9mm,font=\sffamily\bfseries\small,text=Navy}}
-\node[step] (m) {MODEL};
-\node[step,right=of m] (r) {REPLY};
-\node[step,right=of r] (v) {VALUE};
-\node[step,right=of v] (d) {DECIDE};
-\node[step,below=of v] (u) {UPDATE};
+\tikzset{flowstep/.style={draw=Teal,rounded corners=2mm,fill=PaleTeal,minimum width=22mm,minimum height=9mm,font=\sffamily\bfseries\small,text=Navy}}
+\node[flowstep] (m) {MODEL};
+\node[flowstep,right=of m] (r) {REPLY};
+\node[flowstep,right=of r] (v) {VALUE};
+\node[flowstep,right=of v] (d) {DECIDE};
+\node[flowstep,below=of v] (u) {UPDATE};
 \draw[->,thick,Teal] (m)--(r);
 \draw[->,thick,Teal] (r)--(v);
 \draw[->,thick,Teal] (v)--(d);
