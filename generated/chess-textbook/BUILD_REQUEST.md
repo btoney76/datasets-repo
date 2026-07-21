@@ -2,4 +2,4 @@
 
 This marker triggers the repository's XeLaTeX validation workflow for *Thinking in Chess*.
 
-Publication pass: 5.
+Final QA pass: 6.
