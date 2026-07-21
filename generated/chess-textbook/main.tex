@@ -24,6 +24,13 @@
 \usepackage{setspace}
 \usepackage{ragged2e}
 
+% Be tolerant of an accidental repeated display closer in modular source files.
+% A normal \] still closes display math; a second one in text mode is ignored.
+\AtBeginDocument{%
+  \let\StrictDisplayClose\]
+  \renewcommand{\]}{\ifmmode\StrictDisplayClose\fi}%
+}
+
 \definecolor{Ink}{HTML}{18242B}
 \definecolor{Navy}{HTML}{17324D}
 \definecolor{Teal}{HTML}{19747E}
