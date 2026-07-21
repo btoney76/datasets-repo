@@ -20,8 +20,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out source
+      - name: Check out source branch
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
 
       - name: Normalize two display-math closers
         run: |
