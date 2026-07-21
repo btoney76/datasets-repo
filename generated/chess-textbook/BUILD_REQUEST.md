@@ -2,4 +2,4 @@
 
 This marker triggers the repository's XeLaTeX validation workflow for *Thinking in Chess*.
 
-Diagnostic pass: 4.
+Publication pass: 5.
