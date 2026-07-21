@@ -51,6 +51,8 @@ jobs:
           PY
 
       - name: Compile with XeLaTeX
+        id: compile
+        continue-on-error: true
         uses: xu-cheng/latex-action@v4
         with:
           root_file: main.tex
@@ -58,6 +60,28 @@ jobs:
           latexmk_use_xelatex: true
           os: debian
           extra_system_packages: fonts-dejavu-core
+
+      - name: Collect compiler diagnostics
+        if: always()
+        run: |
+          mkdir -p build-diagnostics
+          if [ -f generated/chess-textbook/main.log ]; then
+            cp generated/chess-textbook/main.log build-diagnostics/main.log
+            tail -n 220 generated/chess-textbook/main.log > build-diagnostics/compile-tail.txt
+          else
+            printf 'No main.log was produced.\n' > build-diagnostics/compile-tail.txt
+          fi
+
+      - name: Upload compiler diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Thinking-in-Chess-Diagnostics
+          path: build-diagnostics/
+          if-no-files-found: error
+
+      - name: Verify compiled PDF exists
+        run: test -f generated/chess-textbook/main.pdf
 
       - name: Name the finished book
         run: cp generated/chess-textbook/main.pdf generated/chess-textbook/Thinking_in_Chess.pdf
