@@ -1,23 +1,38 @@
-Package enumitem Warning: Negative labelwidth. This does not make much
-(enumitem)                sense, on input line 274.
-
-[87] [88]
-Chapter 23.
-[89
-
-] [90]
-
-Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 367.
-See the caption package documentation for explanation.
-
-[91] [92]
-Chapter 24.
-
-Overfull \hbox (1.76909pt too wide) in paragraph at lines 405--405
-|\TU/TeXGyreHeros(0)/b/n/24.88 Match, tournament, and draw strat-
+]
+Underfull \hbox (badness 1728) in paragraph at lines 283--284
+[] []\TU/TeXGyrePagella(0)/b/n/10.95 Status bias.[] \TU/TeXGyrePagella(0)/m/n/1
+0.95 Alter objective judgment because of rating, title, or reputation.
  []
 
+[70] [71]
+Chapter 19.
+[72
+
+] [73]) [74] [75
+
+] (./part5.tex
+Chapter 20.
+[76
+
+] [77] [78] [79]
+Chapter 21.
+[80
+
+] [81] [82] [83]
+Chapter 22.
+[84
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 266--266
+[]|\TU/TeXGyrePagella(0)/b/n/10.95 Opponent
+ []
+
+[85] [86] [87]
+Chapter 23.
+[88
+
+] [89] [90] [91]
+Chapter 24.
 
 Underfull \hbox (badness 10000) in paragraph at lines 428--428
 []|\TU/TeXGyrePagella(0)/m/n/10.95 Win highly valu-
@@ -33,15 +48,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 428--428
 []|\TU/TeXGyrePagella(0)/m/n/10.95 Unknown stand-
  []
 
-[93
+[92
 
-] [94] [95]) [96] [97
+] [93] [94]) [95] [96
 
 ] (./part6.tex
 Chapter 25.
-[98
+[97
 
-] [99] [100] [101]
+] [98] [99] [100]
 Chapter 26.
 
 Underfull \hbox (badness 10000) in paragraph at lines 140--140
@@ -54,8 +69,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 140--140
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 141--142
-[]|\TU/TeXGyrePagella(0)/m/n/10.95 name result need and
+Underfull \hbox (badness 10000) in paragraph at lines 141--141
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 rate
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 141--141
+\OML/cmm/m/it/10.95 M; K; A; P; S; T; O$
  []
 
 
@@ -69,43 +89,43 @@ Underfull \hbox (badness 10000) in paragraph at lines 143--143
  []
 
 
-Underfull \hbox (badness 2134) in paragraph at lines 143--144
-[]|\TU/TeXGyrePagella(0)/m/n/10.95 state strongest reply be-
+Underfull \hbox (badness 1205) in paragraph at lines 144--144
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 compare security lev-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 145--145
+Underfull \hbox (badness 1810) in paragraph at lines 145--145
 []|\TU/TeXGyrePagella(0)/m/n/10.95 Backward induc-
  []
 
 
-Underfull \hbox (badness 1019) in paragraph at lines 145--145
-[]|\TU/TeXGyrePagella(0)/m/n/10.95 mate, promotion, and
- []
-
-
-Underfull \hbox (badness 5756) in paragraph at lines 145--145
+Underfull \hbox (badness 1383) in paragraph at lines 145--145
 \TU/TeXGyrePagella(0)/m/n/10.95 material terminal tar-
  []
 
 
-Underfull \hbox (badness 1558) in paragraph at lines 146--147
-[]|\TU/TeXGyrePagella(0)/m/n/10.95 spend time by volatility
+Underfull \hbox (badness 4634) in paragraph at lines 147--147
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 rank equal positions
  []
 
 
-Underfull \hbox (badness 7221) in paragraph at lines 147--148
-[]|\TU/TeXGyrePagella(0)/m/n/10.95 choose practical robust-
+Underfull \hbox (badness 4242) in paragraph at lines 148--148
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 Beliefs and pro-
  []
 
 
-Underfull \hbox (badness 5175) in paragraph at lines 148--148
+Underfull \hbox (badness 1158) in paragraph at lines 148--148
 []|\TU/TeXGyrePagella(0)/m/n/10.95 evidence ledgers and
  []
 
 
-Underfull \hbox (badness 2334) in paragraph at lines 149--149
-[]|\TU/TeXGyrePagella(0)/m/n/10.95 convert lines to trees;
+Underfull \hbox (badness 10000) in paragraph at lines 148--148
+\TU/TeXGyrePagella(0)/m/n/10.95 four responses to
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 149--149
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 Openings and
  []
 
 
@@ -119,28 +139,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 150--150
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 151--151
-[]|\TU/TeXGyrePagella(0)/m/n/10.95 Review and inte-
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 151--152
 []|\TU/TeXGyrePagella(0)/m/n/10.95 use MODEL–REPLY–
  []
 
+[101
 
-Underfull \hbox (badness 10000) in paragraph at lines 151--152
-\TU/TeXGyrePagella(0)/m/n/10.95 VALUE–DECIDE–
- []
-
-
-Overfull \hbox (3.95831pt too wide) in alignment at lines 136--153
- [] [] [] [] 
- []
-
-[102
-
-]
+] [102]
 Underfull \hbox (badness 1810) in paragraph at lines 170--171
 [] []\TU/TeXGyrePagella(0)/b/n/10.95 Candidate ladder.[] \TU/TeXGyrePagella(0)/
 m/n/10.95 One forcing position $\OMS/cmsy/m/n/10.95 !$ \TU/TeXGyrePagella(0)/m/
@@ -148,15 +153,10 @@ n/10.95 quiet position $\OMS/cmsy/m/n/10.95 !$ \TU/TeXGyrePagella(0)/m/n/10.95
 mixed tactical-
  []
 
-[103] [104] [105]) [106] [107
+[103] [104]) [105] [106
 
 ] (./appendices.tex
 Appendix A.
-
-Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 8.
-See the caption package documentation for explanation.
-
 
 Underfull \hbox (badness 1072) in paragraph at lines 41--41
 []|\TU/TeXGyrePagella(0)/m/n/10.95 e-eight promotes to
@@ -167,39 +167,39 @@ Underfull \hbox (badness 5091) in paragraph at lines 42--42
 []|\TU/TeXGyrePagella(0)/m/n/10.95 e-pawn takes d-six
  []
 
-[108
+[107
 
-] [109]
+] [108]
 Underfull \hbox (badness 10000) in paragraph at lines 75--75
 []|\TU/TeXGyrePagella(0)/m/n/10.95 Common
  []
 
-[110] [111]
+[109] [110]
 Appendix B.
-[112
+[111
 
-] [113] [114
+] [112] [113
 
-] [115]
+] [114]
 Appendix C.
-[116
+[115
 
-] [117] [118] [119] [120]
+] [116] [117] [118] [119]
 Underfull \hbox (badness 1019) in paragraph at lines 260--261
 [] []\TU/TeXGyrePagella(0)/b/n/10.95 Exercise 20.1.[] \TU/TeXGyrePagella(0)/m/n
 /10.95 The tree should include at least three opponent choices, your
  []
 
-[121] [122] [123]
+[120] [121] [122]
 Appendix D.
-[124
+[123
 
-] [125] [126] [127] [128]) [129] (./backmatter.tex [130
+] [124] [125] [126] [127]) [128] (./backmatter.tex [129
 
 
-] [131
+] [130
 
-]) [132
+]) [131
 
 ]
 (./main.aux)
@@ -209,12 +209,12 @@ L3 programming layer <2026-06-18>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 38445 strings out of 467814
- 812460 string characters out of 5425313
- 1375678 words of memory out of 5000000
- 66867 multiletter control sequences out of 15000+600000
- 635004 words of font info for 139 fonts, out of 8000000 for 9000
+ 38450 strings out of 467814
+ 812691 string characters out of 5425313
+ 1375722 words of memory out of 5000000
+ 66870 multiletter control sequences out of 15000+600000
+ 635020 words of font info for 141 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  102i,13n,107p,1001b,1134s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.xdv (148 pages, 2897860 bytes).
+Output written on main.xdv (147 pages, 2895168 bytes).

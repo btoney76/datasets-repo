@@ -1,24 +1,2 @@
 Package microtype Warning: Unable to apply patch `footnote' on input line 159.
-Overfull \hbox (3.96915pt too wide) in alignment at lines 95--114
-Package enumitem Warning: Negative labelwidth. This does not make much
-Package caption Warning: The option `hypcap=true' will be ignored for this
-Package enumitem Warning: Negative labelwidth. This does not make much
-Package caption Warning: The option `hypcap=true' will be ignored for this
-Overfull \hbox (34.6339pt too wide) in paragraph at lines 1--1
-Package caption Warning: The option `hypcap=true' will be ignored for this
-Package enumitem Warning: Negative labelwidth. This does not make much
-Package caption Warning: The option `hypcap=true' will be ignored for this
-Package enumitem Warning: Negative labelwidth. This does not make much
-Overfull \hbox (41.17734pt too wide) in paragraph at lines 107--107
-Package enumitem Warning: Negative labelwidth. This does not make much
-Package enumitem Warning: Negative labelwidth. This does not make much
-Package enumitem Warning: Negative labelwidth. This does not make much
-Package enumitem Warning: Negative labelwidth. This does not make much
-Package enumitem Warning: Negative labelwidth. This does not make much
-Overfull \hbox (18.35408pt too wide) in paragraph at lines 207--207
-Package enumitem Warning: Negative labelwidth. This does not make much
-Package caption Warning: The option `hypcap=true' will be ignored for this
-Overfull \hbox (1.76909pt too wide) in paragraph at lines 405--405
-Overfull \hbox (3.95831pt too wide) in alignment at lines 136--153
-Package caption Warning: The option `hypcap=true' will be ignored for this
-Output written on main.xdv (148 pages, 2897860 bytes).
+Output written on main.xdv (147 pages, 2895168 bytes).
