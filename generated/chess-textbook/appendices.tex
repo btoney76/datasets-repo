@@ -49,7 +49,7 @@ Knights use N because K is reserved for the king. Pawn moves use only the destin
 A plus sign marks check; a hash marks checkmate. An ``x'' marks capture. Annotation symbols such as !, ?, !?, and ?! express judgment and are not part of legal notation.
 
 \section{Essential rule reminders}
-\begin{description}[style=nextline,leftmargin=0pt]
+\begin{description}[style=nextline,leftmargin=2.4em,labelsep=.5em]
 \item[Check and mate.] A player in check must remove it. Checkmate ends the game.
 \item[Stalemate.] A player with no legal move who is not in check is stalemated; the game is drawn.
 \item[Castling.] Castling requires unmoved king and rook, empty intervening squares, no current check, and no king passage through an attacked square.
@@ -61,7 +61,7 @@ A plus sign marks check; a hash marks checkmate. An ``x'' marks capture. Annotat
 
 \section{Nominal material values}
 \begin{center}
-\begin{tabular}{lccl}
+\begin{tabularx}{.94\textwidth}{p{.13\textwidth}p{.16\textwidth}YY}
 \toprule
 Piece & Common prior & Main strength & Main dependence\\
 \midrule
@@ -72,7 +72,7 @@ Rook & 5 & files, ranks, passers & entry squares and activity\\
 Queen & 9 & coordinated multi-threats & king safety and tempo\\
 King & terminal & survival, endgame activity & phase of game\\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{center}
 
 These are priors, not exchange commands. Functional value depends on the position.
@@ -116,7 +116,7 @@ Evidence about preparation, style, or risk:\hrulefill
 \end{tcolorbox}
 
 \begin{tcolorbox}[colback=white,colframe=Gold,title={A/R/D --- Actions, replies, decision},fonttitle=\sffamily\bfseries,height=3.2in]
-\begin{tabularx}{\linewidth}{p{.08\linewidth}YYY}
+\begin{tabularx}{\linewidth}{p{.14\linewidth}YYY}
 \toprule
 & Candidate 1 & Candidate 2 & Candidate 3\\
 \midrule
@@ -286,7 +286,7 @@ Many exercises use your own games, so a good answer is defined by method rather 
 
 \chapter{Glossary of chess decision terms}
 
-\begin{description}[style=nextline,leftmargin=0pt]
+\begin{description}[style=nextline,leftmargin=2.4em,labelsep=.5em]
 \item[Action.] One legal move selected at the current state.
 \item[Action set.] All legal moves available in a state; the effective set excludes moves made unusable by tactical cost.
 \item[Anchoring.] Remaining attached to an earlier evaluation despite new evidence.
