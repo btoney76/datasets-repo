@@ -1,0 +1,488 @@
+\chapter{The opening as a prior, not a script}
+\begin{learningbox}
+You will treat opening knowledge as a prior over promising moves, understand development as option creation, use move-order logic, and know when to leave memory and start thinking.
+\end{learningbox}
+\chapterquestion{What is opening knowledge for if the opponent can deviate at any move?}
+
+\section{A prior narrows search}
+An opening repertoire does not solve chess. It gives a prior belief about which moves are likely sound and which structures are likely to arise. Before calculation, a familiar move may receive more attention because accumulated theory and experience support it. New board evidence must still update the prior.
+
+The mistake is to treat memory as a command after the position has changed. A remembered move belongs to a particular state, including move order. If one piece stands on a different square, the tactical justification may disappear.
+
+\begin{intuitionbox}
+Opening memory proposes. The current position disposes.
+\end{intuitionbox}
+
+\section{Opening goals as option creation}
+The familiar principles can be expressed game-theoretically.
+
+\begin{description}[style=nextline,leftmargin=0pt]
+\item[Control the center.] Increase useful actions and restrict the opponent's piece routes.
+\item[Develop pieces.] Expand the effective action set and coordinate future strategies.
+\item[Secure the king.] Reduce the opponent's forcing options.
+\item[Avoid premature queen moves.] Do not offer the opponent development with tempo.
+\item[Connect rooks.] Improve coordination and enable contested-file strategies.
+\end{description}
+
+Development is valuable not because a knight ``must'' move by move three, but because active pieces create options and reduce tactical vulnerability.
+
+\section{Move orders as information games}
+Two sequences may reach the same structure while revealing different information or allowing different deviations. A flexible move can ask the opponent to commit first. A forcing move can prevent them from choosing a favorable setup.
+
+Use three move-order questions:
+
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2em]
+\item What extra option does this order permit the opponent?
+\item What information about my structure or piece placement am I revealing?
+\item If the moves transpose, who gained or lost a useful tempo?
+\end{enumerate}
+
+\section{Preparation as a contingent strategy}
+Do not memorize one line. Store a decision tree:
+
+\begin{itemize}[leftmargin=1.4em]
+\item opponent's main strategic choices;
+\item your response and its purpose;
+\item tactical trigger positions;
+\item typical pawn breaks;
+\item bad-piece routes;
+\item endgames likely after exchanges;
+\item the first point where independent thought is required.
+\end{itemize}
+
+For every remembered move, attach a reason and a refutation condition: ``This move works because the center is closed; if the e-file is open, recheck king safety.''
+
+\section{Leaving book well}
+You are out of preparation when one of these occurs:
+
+\begin{itemize}[leftmargin=1.4em]
+\item you cannot explain the remembered move;
+\item the opponent's move changes a key tactical condition;
+\item you remember two lines but not which state belongs to which;
+\item clock behavior suggests the opponent knows the forcing branch deeply;
+\item a practical alternative fits your utility better.
+\end{itemize}
+
+At that moment, reset: MODEL the state, generate CCT+I, and search replies. Do not spend ten minutes trying to recover a memory that may be false.
+
+\begin{workedbox}[title={Worked example: the poisoned memory}]
+You remember a thematic pawn sacrifice from a similar opening. In the known line, the opponent's knight blocks the queen's defense. In the current move order, the knight has not moved and the queen protects the capture square. The pattern is a prior, but the state update refutes the memory. Choose a normal developing move.
+\end{workedbox}
+
+\section{Repertoire economics}
+Study time is scarce. A good repertoire balances:
+
+\begin{center}
+\begin{tabularx}{.92\textwidth}{p{.26\textwidth}YY}
+\toprule
+\textbf{Dimension} & \textbf{Narrow repertoire} & \textbf{Broad repertoire}\\
+\midrule
+Pattern depth & high & distributed\\
+Preparation burden & concentrated & large\\
+Predictability & higher & lower\\
+Adaptability & lower & higher\\
+Best for & building foundations & repeated high-level opposition\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Most improving players benefit from a stable core plus one sound alternative. Depth creates usable patterns; limited variety reduces exploitation.
+
+\begin{memorybox}
+Know the reason, the structure, and the exit point from memory. A move without its conditions is not knowledge.
+\end{memorybox}
+
+\begin{exercise}[Turn a line into a tree]
+Choose one opening line you know. Rewrite it as three opponent choices, your response to each, the purpose of each response, and one condition that would invalidate the move.
+\end{exercise}
+
+\begin{exercise}[Repertoire portfolio]
+Evaluate your repertoire for pattern depth, study cost, predictability, and practical fit. Name one core system and one diversification option.
+\end{exercise}
+
+\oneminute{Openings are priors and contingent strategies, not scripts. Development creates options; move order controls information and deviations. Leave memory as soon as you cannot explain the move's conditions.}
+
+\chapter{The middlegame as a portfolio of imbalances}
+\begin{learningbox}
+You will identify the position's dominant imbalance, allocate pieces to roles, compare plans as portfolios of gains and risks, and use switches when the opponent overdefends.
+\end{learningbox}
+\chapterquestion{How do you choose a plan when no tactic forces the answer?}
+
+\section{An imbalance is a persistent asymmetry}
+A middlegame plan grows from differences: one side has more space, a safer king, a better minor piece, a weak pawn target, a file, a passed pawn, or an initiative. If every feature were symmetric, there would be little reason to prefer one wing or exchange.
+
+First name the \term{dominant imbalance}: the feature most likely to determine future utility. Then identify supporting imbalances and liabilities.
+
+\begin{center}
+\begin{tabularx}{.94\textwidth}{p{.25\textwidth}YY}
+\toprule
+\textbf{Imbalance} & \textbf{Natural plan} & \textbf{Opponent's counter-incentive}\\
+\midrule
+Space advantage & restrict, improve, switch wings & seek pawn break and exchanges\\
+Better minor piece & preserve, create targets on its color & trade it or change structure\\
+Weak enemy pawn & fix, attack, add second target & advance, exchange, seek activity\\
+Safer king & open lines, add attackers & trade queens or counter in center\\
+Passed pawn & support and distract & blockade and attack base\\
+Initiative & force and convert & return material, simplify, countercheck\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{Plan portfolios}
+A plan is a portfolio of expected gains, risks, time costs, and options. Compare plans using five columns:
+
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2em]
+\item target created or attacked;
+\item worst piece improved;
+\item opponent counterplay permitted;
+\item irreversible commitments required;
+\item favorable ending or tactical transition available.
+\end{enumerate}
+
+A plan that attacks one weakness but activates all the opponent's pieces may have poor net value. A quieter plan that fixes the weakness and improves your worst piece can dominate over time.
+
+\section{Role assignment}
+Pieces are resources that need jobs. For each piece, state its current and desired role:
+
+\begin{description}[style=nextline,leftmargin=0pt]
+\item[Attack.] Create direct threats against king or targets.
+\item[Restrict.] Deny squares, breaks, or routes.
+\item[Defend.] Protect a critical piece, square, or king zone.
+\item[Transform.] Support a pawn break or exchange that changes the structure.
+\item[Reserve.] Remain flexible to switch wings or answer a break.
+\end{description}
+
+The ``worst piece'' is often the one with no meaningful role, not merely the one with few legal moves.
+
+\section{Create a second weakness}
+If the opponent can defend one fixed target with all pieces, your attack may stall. Switching to a second wing changes their allocation problem. The defender cannot be locally strong everywhere.
+
+The switch works only after the first weakness has tied resources. Attacking everywhere at once without fixing anything merely disperses your own pieces.
+
+\begin{intuitionbox}
+A weakness matters not only because it can fall, but because it taxes the opponent's pieces.
+\end{intuitionbox}
+
+\section{Pawn breaks as state transitions}
+A pawn break changes the game's geometry: files open, diagonals clear, squares weaken, and passed pawns appear. Treat it as a high-volatility state transition.
+
+Before a break, calculate:
+
+\begin{itemize}[leftmargin=1.4em]
+\item capture, push, and ignore responses;
+\item which files and diagonals open;
+\item which piece improves most for each side;
+\item whether the center opens against a king;
+\item the resulting pawn islands and passed pawns;
+\item move-order insertions.
+\end{itemize}
+
+\begin{workedbox}[title={Worked example: attack the base or improve the attacker?}]
+You can add a rook to a backward pawn, but the rook would be tied to defending your own back rank. An alternative king move solves the back rank and prepares rook doubling. The immediate attack looks active; the preparatory move improves the portfolio by covering a liability and preserving the same plan. The opponent's best response during the extra tempo decides whether preparation is justified.
+\end{workedbox}
+
+\section{Plan failure and switching}
+A plan is a hypothesis. Update it when:
+
+\begin{itemize}[leftmargin=1.4em]
+\item the opponent neutralizes the dominant imbalance;
+\item a tactical event changes king safety or material;
+\item a piece exchange changes which minor piece is superior;
+\item a pawn break transforms the structure;
+\item the cost of continuing exceeds the target's value.
+\end{itemize}
+
+Do not continue a plan merely for narrative consistency. Strategy is contingent.
+
+\begin{exercise}[Imbalance map]
+From a middlegame, list all persistent asymmetries. Select the dominant imbalance and design two plans with different risk and option profiles.
+\end{exercise}
+
+\begin{exercise}[Piece jobs]
+Assign a current and desired role to every piece on one side. Which piece has no useful job, and what route would give it one?
+\end{exercise}
+
+\oneminute{Middlegame plans grow from persistent asymmetries. Name the dominant imbalance, assign jobs, compare plans as portfolios, and switch when the position changes.}
+
+\chapter{Sacrifice as intertemporal exchange}
+\begin{learningbox}
+You will classify compensation, value sacrifices across time, distinguish investment from speculation, and prove a sacrifice against acceptance, refusal, and counterplay.
+\end{learningbox}
+\chapterquestion{How can giving up material increase utility?}
+
+\section{Material now for resources later}
+A sacrifice exchanges immediate material for future resources: time, king exposure, activity, structure, passed pawns, control, or a forced terminal result. It is \term{intertemporal} because the costs and benefits arrive at different moments.
+
+A sacrifice is rational when the discounted value of future compensation exceeds the material and options surrendered.
+
+\begin{formalbox}
+Think schematically:
+\[
+\text{Net sacrifice value}
+=\sum_{t=1}^{H}\delta^t C_t-M_0-R,
+\]
+where $M_0$ is material given now, $C_t$ is compensation at future time $t$, $\delta$ discounts delayed or uncertain benefits, and $R$ is execution and refutation risk.
+\]
+A forcing mate has little discount. Vague long-term pressure has a large discount.
+\end{formalbox}
+
+\section{Compensation categories}
+Name compensation precisely:
+
+\begin{itemize}[leftmargin=1.4em]
+\item forced mate or perpetual check;
+\item recovery of material by force;
+\item exposed king and durable attacking access;
+\item lead in development and initiative;
+\item trapped or restricted enemy piece;
+\item passed pawns or promotion race;
+\item structural domination;
+\item transition to a known favorable ending;
+\item practical error asymmetry.
+\end{itemize}
+
+``I have activity'' is incomplete. Which pieces, which squares, for how many tempi, and what can the defender do?
+
+\section{Three kinds of sacrifice}
+\paragraph{Combination.} Calculation proves a concrete return such as mate or material recovery.
+
+\paragraph{Investment.} Compensation is durable but not immediately forced: long-term squares, structure, or initiative.
+
+\paragraph{Speculation.} Compensation is uncertain and depends heavily on difficult defense or opponent error.
+
+All three can be practical choices. The proof burden rises from combination to investment to speculation.
+
+\section{The three-column proof}
+A sacrifice must survive three broad reply classes:
+
+\begin{center}
+\begin{tabularx}{.94\textwidth}{p{.21\textwidth}YY}
+\toprule
+\textbf{Opponent choice} & \textbf{Your question} & \textbf{Typical hidden resource}\\
+\midrule
+Accept & Is compensation sufficient after the best defense? & return material, trade queens, countercheck\\
+Decline & Did I improve or simply offer material? & keep structure, attack sacrificed piece\\
+Counterattack & Is my threat faster and is my king safe? & zwischenzug, perpetual, attack on queen\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Many false sacrifices calculate only acceptance.
+
+\section{Time decay of compensation}
+Initiative compensation decays. If you cannot renew threats, the material deficit remains. Structural compensation may persist longer. Passed pawns may grow in value toward the ending. Identify the time profile:
+
+\begin{description}[style=nextline,leftmargin=0pt]
+\item[Fast-decay.] Temporary development lead, exposed king before consolidation.
+\item[Medium-decay.] Piece activity and space that can be challenged.
+\item[Slow-decay.] Permanent pawn weakness, bishop versus fixed color complex, advanced protected passer.
+\end{description}
+
+Choose plans that convert fast-decay resources before they vanish.
+
+\section{Return sacrifice}
+The defender can often return part of the material to extinguish compensation. This is rational if material was only a means to result utility. Attackers routinely overvalue keeping every sacrificed unit ``justified''; defenders overvalue keeping every captured unit.
+
+\begin{workedbox}[title={Worked example: sacrifice to buy a move}]
+You give a pawn to open a file with tempo against the king. The compensation is not ``two open lines'' in the abstract. It is one immediate rook entry, a forced king move, and a queen arrival before the defender develops. If the defender can return the pawn and trade queens, the initiative may disappear. The sacrifice's value is the exact move-order window.
+\end{workedbox}
+
+\begin{warningbox}
+A beautiful first move does not lower the proof standard. Calculate the opponent's least cooperative response.
+\end{warningbox}
+
+\begin{exercise}[Compensation ledger]
+Analyze a sacrifice using material cost, compensation categories, time profile, acceptance, refusal, counterattack, and possible return sacrifice.
+\end{exercise}
+
+\begin{exercise}[Investment or speculation?]
+Find two sacrifices: one with durable positional compensation and one relying on a difficult defense. Explain why their discount and risk differ.
+\end{exercise}
+
+\oneminute{A sacrifice trades material now for future resources. Name the compensation, price its decay and uncertainty, and prove the idea against acceptance, refusal, and counterattack.}
+
+\chapter{Endgames as compressed game trees}
+\begin{learningbox}
+You will understand why endgames reward backward induction, value king activity and passed pawns dynamically, choose exchanges by terminal state, and use known positions as leaf labels.
+\end{learningbox}
+\chapterquestion{Why can fewer pieces make one tempo and one square more important?}
+
+\section{Fewer pieces, sharper state values}
+Endgames contain fewer legal interactions, so deeper calculation becomes possible. Yet each tempo, square, and pawn can have larger marginal value. The king changes from protected liability to active piece. Promotion supplies a clear terminal target. Known theoretical positions label leaves as win, draw, or loss.
+
+This makes endgames a natural laboratory for game theory: backward induction, opposition, zugzwang, races, and commitment are visible.
+
+\section{The endgame evaluation order}
+Use a different priority than in the middlegame:
+
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2em]
+\item forcing checks, captures, and promotion threats;
+\item king activity and opposition;
+\item passed pawns and races;
+\item piece activity and restriction;
+\item pawn structure and fixed weaknesses;
+\item transition to known theoretical positions;
+\item practical execution under the clock.
+\end{enumerate}
+
+Material still matters, but a distant king or trapped rook can make nominal count misleading.
+
+\section{The king as a production asset}
+In the opening, king exposure increases the opponent's forcing options. In the endgame, an active king creates captures, supports passers, and denies squares. The phase transition changes the weight $w_K$ in the evaluation function from safety to activity.
+
+A useful rule is not simply ``centralize the king,'' but:
+
+\begin{quote}
+Move the king toward the square where it changes the largest number of future pawn and piece outcomes.
+\end{quote}
+
+\section{Passed pawns and option value}
+A passed pawn creates a promotion threat and ties resources. Its value depends on:
+
+\begin{itemize}[leftmargin=1.4em]
+\item distance to promotion;
+\item support and blockade;
+\item whether advancing loses reserve tempi;
+\item the location of kings and rooks;
+\item whether it is outside, connected, or protected;
+\item tactical checks in the promotion race.
+\end{itemize}
+
+Do not automatically push. A pawn can be more valuable as a fixed threat that restricts the opponent than as an advanced target.
+
+\section{Exchange decisions point to terminal states}
+``Trade pieces when ahead'' is incomplete. Evaluate the state after the final recapture. A piece trade can enter a lost pawn ending. A rook trade can remove your only counterplay. A pawn trade can create an outside passer for the defender.
+
+Use backward comparison:
+
+\begin{enumerate}[leftmargin=1.4em]
+\item label the resulting ending;
+\item locate kings and passers after all recaptures;
+\item identify whose move it is;
+\item check reserve tempi and pawn races;
+\item only then approve the first exchange.
+\end{enumerate}
+
+\begin{positiondiagram}{In simplified endings, the same placement can change value when the side to move changes. Treat the move as part of the state.}
+\Put{\WKing}{g5}\Put{\WPawn}{e5}\Put{\BKing}{e7}
+\end{positiondiagram}
+
+The diagram is intentionally presented as a state-reading exercise rather than a claimed tablebase result. Add the side to move, then calculate candidate king routes and pawn advances. The lesson is that a diagram without turn information is incomplete.
+
+\section{Known positions as value functions}
+Endgame study builds a library of exact or reliable leaf values: basic mates, key king-and-pawn positions, rook activity rules, fortress patterns, and standard drawing mechanisms. When calculation reaches one, you can stop expanding and use the stored value.
+
+But retrieve conditions, not slogans. ``Rook behind the passed pawn'' depends on checks, king placement, and tactical details. A pattern is a theorem with assumptions.
+
+\section{Practical endgame utility}
+A theoretically drawn ending can be easy for one side and extremely difficult for the other. A tablebase label does not include clock, memory, or move difficulty. Preserve the objective label, then add execution utility:
+
+\begin{itemize}[leftmargin=1.4em]
+\item number of only-moves;
+\item naturalness of defensive setup;
+\item risk of irreversible pawn moves;
+\item clock increment;
+\item familiarity with the technique.
+\end{itemize}
+
+\begin{workedbox}[title={Worked example: simplify into what?}]
+You are up a pawn and can trade queens. The resulting pawn ending leaves your king outside the square of the opponent's passed pawn. The current queen position is risky, but the trade loses by force. ``Ahead means trade'' fails because the terminal state, not the number of pieces removed, determines utility.
+\end{workedbox}
+
+\begin{memorybox}
+In an endgame, calculate the final recapture and the next king move before celebrating simplification.
+\end{memorybox}
+
+\begin{exercise}[Leaf library]
+List ten endgame positions or techniques you can reliably label as win, draw, or loss. For each, write one condition required for the label.
+\end{exercise}
+
+\begin{exercise}[Exchange backward]
+Choose an endgame exchange from your game. Reconstruct the position after all recaptures, include side to move, and evaluate king activity and pawn races.
+\end{exercise}
+
+\oneminute{Endgames compress the tree and sharpen tempo value. Activate the king, value passed pawns dynamically, and judge exchanges from the final state backward using known positions as conditional leaf labels.}
+
+\chapter{Match, tournament, and draw strategy}
+\begin{learningbox}
+You will translate event scoring into utility, choose risk by standings and color, evaluate draw offers rationally, and separate legitimate event strategy from wishful result chasing.
+\end{learningbox}
+\chapterquestion{What is the value of half a point when half a point changes everything?}
+
+\section{The event changes preferences}
+In standard individual scoring, a win earns one point, a draw half, and a loss zero, though event rules can differ. The event state adds standings, tie-breaks, remaining rounds, color, and qualification conditions. A move's chess value is filtered through event utility.
+
+Let $x\in\{0,\tfrac12,1\}$ be the game score and let $G(x,H)$ be event utility given tournament history $H$. Maximizing $x$ and maximizing $G$ are not always identical. A draw may guarantee qualification; a win may be required for any prize.
+
+\section{Risk profiles by need}
+\begin{center}
+\begin{tabularx}{.94\textwidth}{p{.23\textwidth}YY}
+\toprule
+\textbf{Event need} & \textbf{Position preference} & \textbf{Risk implication}\\
+\midrule
+Draw sufficient & robust, low loss probability, simple execution & avoid unnecessary volatility\\
+Win highly valuable & preserve pieces, asymmetry, multiple plans & accept controlled variance\\
+Loss and draw equivalent & maximize win probability, not expected score & sharper gambles may become rational\\
+Unknown standings & maximize ordinary expected score & avoid assumptions\\
+Team context & verify board-order and team incentives & individual utility may differ\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Controlled variance means positions where you retain an objective floor and can press, not random self-destruction.
+
+\section{Draw offers as sequential choices}
+A draw offer creates an explicit decision with utilities shaped by position, clock, event need, and future risk. Evaluate:
+
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2em]
+\item objective position and likely result distribution;
+\item both clocks and execution difficulty;
+\item event value of half a point;
+\item whether your emotional state is distorting risk;
+\item whether continuing reveals or consumes preparation relevant later.
+\end{enumerate}
+
+Do not accept merely because the opponent is higher rated, nor decline merely because you were better earlier. The offer is evaluated from the current state.
+
+\section{Color and asymmetric utility}
+Color changes the initial action order, not the value of a win or loss. Yet opening choices and event needs interact with color. With Black in a must-draw game, a sound line with durable equality may dominate an unbalanced line. With White needing a win, avoiding early simplification may increase practical chances, provided objective soundness remains.
+
+\section{Match games and dynamic strategy}
+A match score creates state-dependent utilities. Leading by one point late in a match increases the value of low-variance choices; trailing increases the value of preserving winning chances. Preparation also repeats, so repertoire mixing and information management matter.
+
+A useful match table:
+
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+Score state & Win utility & Draw utility & Loss cost\\
+\midrule
+Leading late & high & very high & very high\\
+Tied & high & medium & high\\
+Trailing late & very high & low & medium\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The words are intentionally qualitative; exact utility depends on remaining games and advancement rules.
+
+\section{Ethics and rule compliance}
+Strategic event thinking must remain within fair play and event rules. Do not assume cooperation from other players, manipulate results through prohibited arrangements, or use outside assistance. Game theory describes incentives; it does not excuse misconduct.
+
+\begin{workedbox}[title={Worked example: the forced draw you dislike}]
+You had a winning position, blundered, and can now force perpetual check. Declining the draw line offers only a small chance of winning and a large chance of losing. If half a point meets your event need, the perpetual has high utility. The earlier win is a sunk state. Rational choice can feel disappointing and still be correct.
+\end{workedbox}
+
+\begin{warningbox}
+``I need to win'' changes the ranking of sound options. It does not make a refuted move sound.
+\end{warningbox}
+
+\begin{exercise}[Event utility]
+Create qualitative win/draw/loss utilities for four scenarios: first round, final round needing a draw, final round needing a win, and two games left while leading a match.
+\end{exercise}
+
+\begin{exercise}[Draw-offer decision]
+Analyze a real or hypothetical draw offer using position, clocks, event value, emotional state, and preparation cost. State the decision and its assumptions.
+\end{exercise}
+
+\oneminute{Event state changes utility. Translate standings and match score into risk preferences, evaluate draw offers from the current state, and let result need choose among sound options rather than justify unsound ones.}
