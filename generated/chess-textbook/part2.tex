@@ -1,0 +1,423 @@
+\chapter{Best responses and candidate moves}
+\begin{learningbox}
+You will define a best response, generate candidates from both sides of the board, and use a reply-first test to prevent one-move blunders.
+\end{learningbox}
+\chapterquestion{What move would you choose if your opponent were allowed to answer well?}
+
+\section{A move is good relative to a reply}
+In game theory, a \term{best response} is an action that gives a player the highest utility against a specified action or strategy of the other player. In chess, you usually do not know the opponent's complete strategy, but you can ask a local version:
+
+\begin{quote}
+After my candidate, which legal reply gives the opponent the best resulting position?
+\end{quote}
+
+The answer is often not the move you expect psychologically. It may be a forcing check, an in-between move, a quiet defense, a counterattack, or a simplifying exchange.
+
+\section{Generate from two viewpoints}
+Most players generate candidates only for themselves. Strong practical reasoning alternates perspectives.
+
+\begin{enumerate}[label=\textbf{Pass \arabic*:},leftmargin=4.7em]
+\item \textbf{My forcing resources.} Checks, captures, direct threats.
+\item \textbf{Their forcing resources.} Checks, captures, direct threats after each candidate.
+\item \textbf{My structural improvements.} Worst piece, break, restriction, simplification.
+\item \textbf{Their strategic goal.} What would they play if granted a free move?
+\end{enumerate}
+
+The fourth pass is especially powerful. If the opponent wants \move{...d5}, candidates that prevent or punish \move{...d5} gain value. If they want to trade queens, you can decide whether that preference aligns with yours.
+
+\begin{intuitionbox}
+Do not ask only ``What can I do?'' Ask ``What are they trying to make true?''
+\end{intuitionbox}
+
+\section{The reply-first filter}
+Before calculating deeply, run every serious candidate through \textbf{SAFE}:
+
+\begin{description}[style=multiline,leftmargin=3.0em,labelwidth=2.3em]
+\item[S] \textbf{Scan checks} against your king.
+\item[A] \textbf{Assess captures} of your loose or newly undefended pieces.
+\item[F] \textbf{Find threats} the move permits or creates for the opponent.
+\item[E] \textbf{Evaluate the end} of the forcing sequence, not its first pleasant moment.
+\end{description}
+
+SAFE is a tactical hygiene routine. It should take seconds in quiet positions and more time when kings or queens are exposed.
+
+\section{Counterfactual candidate generation}
+A useful candidate is sometimes discovered by reversing roles:
+
+\begin{quote}
+If I could move for my opponent now, what would I play?
+\end{quote}
+
+That move identifies the opponent's best response to your pass. You can then search for candidates that make it impossible, harmless, or costly. This is the heart of prophylaxis, developed later.
+
+\begin{workedbox}[title={Worked example: the natural recapture}]
+Your opponent captures a pawn. The automatic response is to recapture. Before doing so, generate from both viewpoints. Your forcing resource is the recapture. Their forcing resource after it is a queen check that wins your rook. Your alternative is an in-between check that forces the king away, then recaptures safely. The best response test turns ``obvious'' into ``verified.''
+\end{workedbox}
+
+\section{Best response does not mean engine move}
+At the board, you estimate the best response with limited time. The goal is not certainty; it is disciplined adversarial imagination. Use three levels:
+
+\begin{enumerate}[label=\arabic*.,leftmargin=1.4em]
+\item \textbf{Forced:} the reply is legally required or nearly so.
+\item \textbf{Natural:} it follows a visible principle and is likely to be found.
+\item \textbf{Difficult:} it is strong but hidden, counterintuitive, or precise.
+\end{enumerate}
+
+For objective verification, test all three. For practical choice, their findability matters too. Never label a defense ``unlikely'' merely because it refutes your idea; first decide whether it is actually difficult.
+
+\begin{memorybox}
+A candidate earns calculation only after it survives one hostile glance.
+\end{memorybox}
+
+\begin{exercise}[Opponent's free move]
+Take a position from your latest game. Give the opponent a hypothetical free move. What would they choose? Generate two candidates that address that goal in different ways.
+\end{exercise}
+
+\begin{exercise}[SAFE audit]
+For one move you considered but rejected, run SAFE explicitly. Which category supplied the refutation or confirmation?
+\end{exercise}
+
+\oneminute{A best response maximizes the opponent's utility against your candidate. Generate from both viewpoints, use the opponent's free move to reveal goals, and run SAFE before deep calculation.}
+
+\chapter{Dominance and disciplined elimination}
+\begin{learningbox}
+You will distinguish strict and weak dominance, understand why dominance is rare in chess, and eliminate candidates without discarding hidden resources.
+\end{learningbox}
+\chapterquestion{When is it safe to stop analyzing a move?}
+
+\section{Dominance in plain language}
+Move A \term{strictly dominates} Move B over a set of relevant opponent replies if A produces a better result than B against every reply in that set. A \term{weakly dominates} B if A is never worse and is better against at least one reply.
+
+In a small payoff table:
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+& Opponent defends & Opponent counterattacks\\
+\midrule
+Move A & $+$ & $=$\\
+Move B & $=$ & $-$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+A is at least as good in both columns and better in each comparison here, so B can be removed from this simplified decision.
+
+\section{Why chess resists easy dominance}
+Chess continuations are vast. A move that looks inferior against two obvious replies may contain a resource against a third. Positional value is also multidimensional: one move gains material, another gains safety, and their ranking can reverse later.
+
+Therefore use dominance as a disciplined pruning rule, not a slogan. State the comparison domain:
+
+\begin{quote}
+``Against the three forcing replies I can identify, A reaches the same favorable structure as B while keeping an extra tempo.''
+\end{quote}
+
+That is stronger than ``A looks more active.''
+
+\section{Four safe elimination tests}
+\paragraph{Legality elimination.} Remove moves that leave your king in check or violate the rules. Obvious, but under time pressure illegal mental branches consume attention.
+
+\paragraph{Forcing refutation.} Remove a candidate if one clear opponent reply forces unacceptable utility and you have no counter-resource.
+
+\paragraph{Transposition dominance.} If A and B reach the same position but A gives the opponent an extra useful tempo, B may dominate A.
+
+\paragraph{Function coverage.} If two moves perform the same job, prefer the one that also preserves another function: defense, flexibility, development, or clock ease.
+
+\begin{workedbox}[title={Worked example: same square, different order}]
+You can prepare a rook lift immediately or first play a useful king-safety move. Both routes reach the rook-lift position, but the immediate route allows a forcing countercheck. The improved move order covers the same attacking function while removing the countercheck. Over the relevant replies, the safer order dominates.
+\end{workedbox}
+
+\section{Iterated elimination as calculation}
+Game theory sometimes eliminates dominated strategies repeatedly. Chess calculation often does the same:
+
+\begin{enumerate}[leftmargin=1.4em]
+\item Generate four candidates.
+\item Remove one that loses to a forcing check.
+\item After inspecting replies, remove another that transposes a tempo down.
+\item Compare the remaining two deeply.
+\end{enumerate}
+
+This is not laziness. It is rational allocation of a limited search budget. The danger is premature elimination based on aesthetics: ``knights belong in the center,'' ``never move the same piece twice,'' or ``queen trades favor the defender.'' Principles suggest candidates; concrete replies decide.
+
+\begin{warningbox}[title={The invisible-column error}]
+Dominance claims are only as good as the opponent replies you included. Before deleting a candidate, ask whether a forcing or quiet resource creates a new column in the comparison table.
+\end{warningbox}
+
+\section{A dominance ledger}
+When the choice is difficult, write or think in three rows:
+
+\begin{center}
+\begin{tabularx}{.9\textwidth}{p{.18\textwidth}YY}
+\toprule
+& \textbf{Candidate A} & \textbf{Candidate B}\\
+\midrule
+Shared function & What both accomplish & What both accomplish\\
+Extra benefit & Preserved option or gain & Preserved option or gain\\
+Unique risk & Strongest refutation & Strongest refutation\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+If one move matches the shared function, has an extra benefit, and no larger unique risk, you have a practical dominance argument.
+
+\begin{exercise}[Dominance statement]
+Compare two plausible moves from a game using at least three opponent reply classes. State whether one dominates the other or whether the ranking depends on the reply.
+\end{exercise}
+
+\begin{exercise}[Recover a deleted move]
+Find a puzzle or game where an odd-looking move is best. Which principle might have caused premature elimination, and what hidden reply makes the move work?
+\end{exercise}
+
+\oneminute{Dominance lets you prune, but only over replies you have honestly considered. Eliminate by legality, forcing refutation, inferior transposition, or function coverage---not by taste.}
+
+\chapter{Minimax and the equilibrium compass}
+\begin{learningbox}
+You will use minimax as a standard of resistance, understand its relation to equilibrium, and know when worst-case reasoning should override hopeful expected-value reasoning.
+\end{learningbox}
+\chapterquestion{What remains of your idea after the opponent chooses the branch you like least?}
+
+\section{The adversarial value}
+Minimax says: choose the action whose worst credible continuation is best. If White is maximizing and Black minimizing White's utility, then schematically
+\[
+V(s)=\max_{a\in A_W(s)}\;\min_{b\in A_B(T(s,a))}V(T(T(s,a),b)).
+\]
+The formula is not asking you to calculate the whole game. It disciplines the comparison: each candidate is judged by the opponent's strongest reply, not the average reply or the reply that makes your combination beautiful.
+
+A convenient engine-style form is \term{negamax}:
+\[
+V(s)=\max_{a\in A(s)}\bigl[-V(T(s,a))\bigr],
+\]
+where value is always measured from the player-to-move's perspective.
+
+\section{Security level}
+The worst outcome your strategy can guarantee is its \term{security level}. In a tactical position, this is essential. If Move A wins a queen after a natural defense but loses to one forced resource, its security level is a loss. Move B that forces a draw has a higher security level when a draw is acceptable.
+
+\begin{center}
+\begin{tikzpicture}[>=Latex,every node/.style={font=\sffamily\small},level distance=14mm,level 1/.style={sibling distance=48mm},level 2/.style={sibling distance=21mm}]
+\node[draw=Navy,fill=SoftGray,rounded corners] {Choose}
+ child {node[draw=Teal,fill=PaleTeal,rounded corners] {A}
+   child {node[draw=Coral,fill=PaleCoral,rounded corners] {$+3$}}
+   child {node[draw=Coral,fill=PaleCoral,rounded corners] {$-5$}}}
+ child {node[draw=Teal,fill=PaleTeal,rounded corners] {B}
+   child {node[draw=Gold,fill=PaleGold,rounded corners] {$+1$}}
+   child {node[draw=Gold,fill=PaleGold,rounded corners] {$0$}}};
+\end{tikzpicture}
+\captionof{figure}{Minimax compares A's worst leaf $-5$ with B's worst leaf $0$, so it chooses B.}
+\end{center}
+
+\section{Equilibrium as mutual best response}
+A Nash equilibrium is a pair of strategies in which neither player can improve by changing strategy alone. In finite deterministic perfect-information zero-sum games, backward reasoning assigns the game a value and optimal pure strategies exist. For chess, the exact value of the initial position is not known to us, but the concept still supplies a compass: a sound plan must survive optimal resistance.
+
+Do not confuse equilibrium with a drawish position. An equilibrium strategy may force a win if the game-theoretic value is a win. Equilibrium means mutual optimality, not equality on the board.
+
+\section{When minimax is the right lens}
+Use worst-case reasoning heavily when:
+
+\begin{itemize}[leftmargin=1.4em]
+\item the line is forcing and replies are few;
+\item one opponent reply changes the result category;
+\item you are defending and cannot permit a tactical failure;
+\item a draw or win can be forced;
+\item the opponent has enough time and skill to find the resource.
+\end{itemize}
+
+Use it less rigidly when comparing several objectively equal, quiet positions against a fallible human. There, practical expected utility and complexity matter. Chapter 12 combines the lenses.
+
+\section{Robust moves}
+A \term{robust} move performs reasonably well across many opponent responses and across small errors in your own evaluation. Robustness has three forms:
+
+\begin{description}[style=nextline,leftmargin=0pt]
+\item[Reply robustness.] No single reply collapses the position.
+\item[Evaluation robustness.] The move remains sensible if one feature was misjudged.
+\item[Execution robustness.] The continuation contains several acceptable moves, not repeated only-moves.
+\end{description}
+
+Robust does not mean passive. A forcing tactical win is maximally reply-robust if every defense fails.
+
+\begin{workedbox}[title={Worked example: the sacrifice test}]
+You consider a rook sacrifice. Against the capture you calculated mate. Minimax asks the defender to choose the reply that minimizes your utility. Can the opponent decline the rook? Interpose a piece? Give a countercheck? Trade queens? If one branch leaves you simply down a rook, the sacrifice is not forced. The best-response search is the proof obligation.
+\end{workedbox}
+
+\begin{memorybox}
+For forcing decisions, do not average the branches until you know none of them contains a cliff.
+\end{memorybox}
+
+\begin{exercise}[Security levels]
+Invent or find a decision with two candidates. Assign rough values to each candidate's two strongest replies. Which move has the better security level? Does that match your intuition?
+\end{exercise}
+
+\begin{exercise}[Robustness audit]
+Evaluate a chosen move for reply, evaluation, and execution robustness. Which form was weakest?
+\end{exercise}
+
+\oneminute{Minimax chooses the best worst case. Equilibrium is mutual best response, not necessarily a draw. Use minimax for forcing branches and result-changing risks; favor robust moves when uncertainty is high.}
+
+\chapter{Backward induction and tactical proof}
+\begin{learningbox}
+You will solve forcing lines from terminal or stable leaves backward, distinguish threats from forced outcomes, and use proof standards for combinations.
+\end{learningbox}
+\chapterquestion{Why is it easier to calculate when you know what the final position must look like?}
+
+\section{Start at the end}
+Backward induction solves a sequential game by evaluating the last decisions first. In chess, tactics become manageable when you identify terminal targets:
+
+\begin{itemize}[leftmargin=1.4em]
+\item checkmate;
+\item a forced draw;
+\item a won queen or decisive material;
+\item promotion;
+\item a stable ending with a known result;
+\item a quiet leaf whose evaluation is clear.
+\end{itemize}
+
+Instead of asking ``What sequence looks strong?'' ask ``What final state would prove the claim, and which forcing moves make it unavoidable?''
+
+\begin{positiondiagram}{White to move can use the terminal target of back-rank mate to reason backward.}
+\Put{\WKing}{g1}\Put{\WRook}{e1}\Put{\WPawn}{f2}\Put{\WPawn}{g2}\Put{\WPawn}{h2}
+\Put{\BKing}{g8}\Put{\BPawn}{f7}\Put{\BPawn}{g7}\Put{\BPawn}{h7}
+\end{positiondiagram}
+
+In the diagram, \move{Re8\#} is not persuasive because the rook looks active. It is persuasive because the leaf is checkmate. Work backward: the rook on e8 checks along the eighth rank; the king has no legal flight square; no piece can capture or block. The terminal proof validates the first move.
+
+\section{Threat, tactic, and force}
+A \term{threat} says, ``If you do nothing, I will obtain a favorable outcome.'' A \term{forced line} says, ``Every legal or relevant response still leads to the outcome.'' Confusing them produces false combinations.
+
+Use three proof questions:
+
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2em]
+\item What exactly is the terminal claim?
+\item What are all defensive categories: move king, capture attacker, block, countercheck, counter-threat, decline sacrifice?
+\item At the leaf, is the position quiet enough to evaluate?
+\end{enumerate}
+
+\section{The forcing ladder}
+Calculation is easiest when actions shrink the opponent's reply set. A useful order is:
+
+\[
+\text{mate threats} \;\rightarrow\; \text{checks} \;\rightarrow\; \text{forcing captures} \;\rightarrow\; \text{direct threats} \;\rightarrow\; \text{quiet moves}.
+\]
+
+This is not a ranking of move quality. A quiet move may be best. It is a ranking of how easily branches can be proved.
+
+\section{Induction over a line}
+Suppose you claim a three-move combination works. The logic is:
+
+\begin{enumerate}[leftmargin=1.4em]
+\item At the final leaf, the outcome is winning.
+\item On the opponent's preceding turn, every relevant defense reaches a winning leaf.
+\item Therefore your preceding move forces a winning continuation.
+\item Repeat backward until the first move inherits the proof.
+\end{enumerate}
+
+This is why a single unexamined defense breaks the whole argument. A combination is a chain of universal claims about the opponent's replies.
+
+\begin{workedbox}[title={Worked example: calculate the recapture last}]
+You can sacrifice on a defended square, force the king onto a file, and then win the queen with a discovered attack. Many players stop after seeing the discovered attack. Backward induction evaluates the final recapture: after winning the queen, can the opponent take your attacking queen or force perpetual check? Only when the final material and king-safety state is stable does the first sacrifice become proved.
+\end{workedbox}
+
+\section{Known end states as libraries}
+Endgame knowledge shortens calculation because it labels leaves. If you know that a king-and-pawn position is won, a tactical line ending there can be evaluated immediately. If you know a rook ending is theoretically drawn but practically difficult, you can assign both objective and practical values.
+
+Patterns are not substitutes for calculation; they are compressed terminal evaluations.
+
+\begin{warningbox}
+Never end a line on your move. End after the opponent's strongest forcing reply, when all immediate checks, captures, and threats have been resolved.
+\end{warningbox}
+
+\begin{exercise}[Terminal target]
+Choose a tactic. State its terminal claim before listing moves. Then classify every defense by category and explain why the leaf supports the claim.
+\end{exercise}
+
+\begin{exercise}[Threat or force?]
+Create one position statement that is merely a threat and one that is forced. Explain what the defender can choose in each.
+\end{exercise}
+
+\oneminute{Backward induction starts from a proven leaf and carries the value backward. State the terminal claim, enumerate defensive categories, and stop only at a stable leaf.}
+
+\chapter{Dynamic value: tempo, initiative, and zugzwang}
+\begin{learningbox}
+You will treat turns as scarce resources, distinguish development from initiative, understand forcing tempo and loss of options, and model zugzwang as negative action value.
+\end{learningbox}
+\chapterquestion{How can the right to move be an advantage in one position and a burden in another?}
+
+\section{A move spends a turn}
+Every action has an opportunity cost: while one piece moves, every other possible action is delayed. A move is efficient when it changes several useful relationships at once---developing with tempo, defending while attacking, or improving a piece while preventing a break.
+
+A \term{tempo} is one unit of move order. Its value is state-dependent. One tempo in a mating race can decide the game. One tempo in a locked position may be used for a waiting move.
+
+\section{Development, initiative, and force}
+These terms are related but distinct.
+
+\begin{description}[style=nextline,leftmargin=0pt]
+\item[Development.] Mobilizing pieces from low-activity starting squares.
+\item[Initiative.] Making threats or creating questions that influence the opponent's choices.
+\item[Forcing tempo.] A move that requires a narrow class of replies.
+\end{description}
+
+You can be ahead in development but lose the initiative if your pieces do not threaten anything. You can have the initiative with less material if every move creates an urgent problem.
+
+\begin{intuitionbox}
+Initiative is temporary control over the opponent's to-do list.
+\end{intuitionbox}
+
+\section{The initiative ledger}
+Track who is spending moves on plans and who is spending moves on answers.
+
+\begin{center}
+\begin{tabularx}{.9\textwidth}{p{.2\textwidth}YY}
+\toprule
+& \textbf{Initiative holder} & \textbf{Responder}\\
+\midrule
+Typical move & creates threat, gains space, improves with tempo & parries, retreats, trades attacker\\
+Risk & overextension, insufficient force & passivity, accumulated weakness\\
+Goal & convert before momentum fades & neutralize and seize a free move\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+The defender often should return material to break the initiative. Material is stored utility; it can be spent to buy time, simplify, or close lines.
+
+\section{Move-order economics}
+Two sequences may reach similar positions, but the order changes what the opponent can insert. An \term{intermediate move} exploits this. Before automatic recapture, ask whether a check, attack on the queen, or stronger capture changes the order.
+
+The same logic governs preparation. If a pawn break will provoke a reply, you may first improve the piece that benefits from that reply. But every preparatory move gives the opponent a turn. Preparation is justified only if its gain exceeds the opponent's best use of the tempo.
+
+\begin{formalbox}
+Think of a move's dynamic contribution as
+\[
+D(a)=\text{useful changes created}-\text{best use of the reply granted}.
+\]
+This is not a numerical engine formula. It is an accounting identity: every non-forcing move purchases benefits while giving the opponent one action.
+\end{formalbox}
+
+\section{Zugzwang: when action has negative value}
+Normally, having the move is valuable because it expands choice. In zugzwang, every legal move worsens the position. Passing would preserve utility, but passing is not in the action set.
+
+Zugzwang teaches a general lesson: more options are valuable only when at least one option preserves or improves the state. A player may have many legal moves but no useful move.
+
+\begin{workedbox}[title={Worked example: reserve tempi}]
+In a pawn ending, a harmless pawn move can be stored as a reserve tempo. Later, when king opposition matters, the reserve move transfers the obligation to move. The pawn's value is not only its promotion chance; it also functions as a timing instrument.
+\end{workedbox}
+
+\section{Convert or renew}
+An initiative decays if it does not create durable gains. Ask every two or three moves:
+
+\begin{itemize}[leftmargin=1.4em]
+\item Can I convert it into material, structure, king exposure, or a favorable ending?
+\item Can I renew it with another forcing move?
+\item If neither, should I consolidate before the opponent gains free moves?
+\end{itemize}
+
+\begin{memorybox}
+A tempo is not ``one point.'' It is the right action at the right moment. Price it by what both players can do with the next turn.
+\end{memorybox}
+
+\begin{exercise}[Tempo audit]
+Take a three-move plan from one of your games. For each preparatory move, state the benefit purchased and the opponent's best use of the granted turn.
+\end{exercise}
+
+\begin{exercise}[Initiative conversion]
+Find a position where one side has the initiative. Name one way to convert it, one way to renew it, and one defensive method to extinguish it.
+\end{exercise}
+
+\oneminute{Turns are resources. Initiative controls the opponent's to-do list, but it must be converted or renewed. Move order matters because every preparation grants a reply; in zugzwang, the obligation to act becomes a cost.}
