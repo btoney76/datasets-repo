@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: chess-textbook-${{ github.ref }}
@@ -79,6 +79,19 @@ jobs:
           name: Thinking-in-Chess-Diagnostics
           path: build-diagnostics/
           if-no-files-found: error
+
+      - name: Publish concise diagnostic to build branch
+        if: always() && github.event_name == 'pull_request'
+        run: |
+          mkdir -p build-reports
+          cp build-diagnostics/compile-tail.txt build-reports/chess-compile-tail.txt
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add build-reports/chess-compile-tail.txt
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish chess compiler diagnostic [skip ci]'
+            git push origin HEAD:${{ github.head_ref }}
+          fi
 
       - name: Verify compiled PDF exists
         run: test -f generated/chess-textbook/main.pdf
