@@ -1,3 +1,158 @@
+Package enumitem Warning: Negative labelwidth. This does not make much
+(enumitem)                sense, on input line 274.
+
+[87] [88]
+Chapter 23.
+[89
+
+] [90]
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 367.
+See the caption package documentation for explanation.
+
+[91] [92]
+Chapter 24.
+
+Overfull \hbox (1.76909pt too wide) in paragraph at lines 405--405
+|\TU/TeXGyreHeros(0)/b/n/24.88 Match, tournament, and draw strat-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 428--428
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 Win highly valu-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 428--428
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 Loss and draw
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 428--428
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 Unknown stand-
+ []
+
+[93
+
+] [94] [95]) [96] [97
+
+] (./part6.tex
+Chapter 25.
+[98
+
+] [99] [100] [101]
+Chapter 26.
+
+Underfull \hbox (badness 10000) in paragraph at lines 140--140
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 reconstruct positions
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 140--140
+\TU/TeXGyrePagella(0)/m/n/10.95 from notation; list
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 141--142
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 name result need and
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 142--142
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 CCT+I sets without
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 143--143
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 opponent free-move
+ []
+
+
+Underfull \hbox (badness 2134) in paragraph at lines 143--144
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 state strongest reply be-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 145--145
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 Backward induc-
+ []
+
+
+Underfull \hbox (badness 1019) in paragraph at lines 145--145
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 mate, promotion, and
+ []
+
+
+Underfull \hbox (badness 5756) in paragraph at lines 145--145
+\TU/TeXGyrePagella(0)/m/n/10.95 material terminal tar-
+ []
+
+
+Underfull \hbox (badness 1558) in paragraph at lines 146--147
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 spend time by volatility
+ []
+
+
+Underfull \hbox (badness 7221) in paragraph at lines 147--148
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 choose practical robust-
+ []
+
+
+Underfull \hbox (badness 5175) in paragraph at lines 148--148
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 evidence ledgers and
+ []
+
+
+Underfull \hbox (badness 2334) in paragraph at lines 149--149
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 convert lines to trees;
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 150--150
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 Endgames and
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 150--150
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 final-recapture and
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 151--151
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 Review and inte-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 151--152
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 use MODEL–REPLY–
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 151--152
+\TU/TeXGyrePagella(0)/m/n/10.95 VALUE–DECIDE–
+ []
+
+
+Overfull \hbox (3.95831pt too wide) in alignment at lines 136--153
+ [] [] [] [] 
+ []
+
+[102
+
+]
+Underfull \hbox (badness 1810) in paragraph at lines 170--171
+[] []\TU/TeXGyrePagella(0)/b/n/10.95 Candidate ladder.[] \TU/TeXGyrePagella(0)/
+m/n/10.95 One forcing position $\OMS/cmsy/m/n/10.95 !$ \TU/TeXGyrePagella(0)/m/
+n/10.95 quiet position $\OMS/cmsy/m/n/10.95 !$ \TU/TeXGyrePagella(0)/m/n/10.95 
+mixed tactical-
+ []
+
+[103] [104] [105]) [106] [107
+
+] (./appendices.tex
+Appendix A.
+
 Package caption Warning: The option `hypcap=true' will be ignored for this
 (caption)                particular \caption on input line 8.
 See the caption package documentation for explanation.
@@ -14,207 +169,52 @@ Underfull \hbox (badness 5091) in paragraph at lines 42--42
 
 [108
 
-]
-
-Package enumitem Warning: Negative labelwidth. This does not make much
-(enumitem)                sense, on input line 52.
-
-
-Package fancyhdr Warning: \headheight is too small (15.0pt): 
-(fancyhdr)                Make it at least 21.99997pt, for example:
-(fancyhdr)                \setlength{\headheight}{21.99997pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-6.99997pt}.
-
-[109]
-Overfull \hbox (9.28017pt too wide) in paragraph at lines 64--76
- [] 
+] [109]
+Underfull \hbox (badness 10000) in paragraph at lines 75--75
+[]|\TU/TeXGyrePagella(0)/m/n/10.95 Common
  []
 
-
-Package fancyhdr Warning: \headheight is too small (15.0pt): 
-(fancyhdr)                Make it at least 21.99997pt, for example:
-(fancyhdr)                \setlength{\headheight}{21.99997pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-6.99997pt}.
-
-[110]
+[110] [111]
 Appendix B.
-[111
+[112
 
-]
-Overfull \hbox (13.24374pt too wide) in paragraph at lines 128--128
-[]|\TU/TeXGyrePagella(0)/m/n/10.95 Function| 
- []
+] [113] [114
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 128--128
-[]|\TU/TeXGyrePagella(0)/m/n/10.95 Best
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 128--128
-[]|\TU/TeXGyrePagella(0)/m/n/10.95 Stable
- []
-
-
-Package fancyhdr Warning: \headheight is too small (15.0pt): 
-(fancyhdr)                Make it at least 21.99997pt, for example:
-(fancyhdr)                \setlength{\headheight}{21.99997pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-6.99997pt}.
-
-[112]
-
-Package fancyhdr Warning: \headheight is too small (15.0pt): 
-(fancyhdr)                Make it at least 21.99997pt, for example:
-(fancyhdr)                \setlength{\headheight}{21.99997pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-6.99997pt}.
-
-[113
-
-]
-
-Package fancyhdr Warning: \headheight is too small (15.0pt): 
-(fancyhdr)                Make it at least 21.99997pt, for example:
-(fancyhdr)                \setlength{\headheight}{21.99997pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-6.99997pt}.
-
-[114]
+] [115]
 Appendix C.
-[115
+[116
 
-]
-
-Package fancyhdr Warning: \headheight is too small (15.0pt): 
-(fancyhdr)                Make it at least 21.99997pt, for example:
-(fancyhdr)                \setlength{\headheight}{21.99997pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-6.99997pt}.
-
-[116]
-
-Package fancyhdr Warning: \headheight is too small (15.0pt): 
-(fancyhdr)                Make it at least 21.99997pt, for example:
-(fancyhdr)                \setlength{\headheight}{21.99997pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-6.99997pt}.
-
-[117]
-
-Package fancyhdr Warning: \headheight is too small (15.0pt): 
-(fancyhdr)                Make it at least 21.99997pt, for example:
-(fancyhdr)                \setlength{\headheight}{21.99997pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-6.99997pt}.
-
-[118]
-
-Package fancyhdr Warning: \headheight is too small (15.0pt): 
-(fancyhdr)                Make it at least 21.99997pt, for example:
-(fancyhdr)                \setlength{\headheight}{21.99997pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-6.99997pt}.
-
-[119]
+] [117] [118] [119] [120]
 Underfull \hbox (badness 1019) in paragraph at lines 260--261
 [] []\TU/TeXGyrePagella(0)/b/n/10.95 Exercise 20.1.[] \TU/TeXGyrePagella(0)/m/n
 /10.95 The tree should include at least three opponent choices, your
  []
 
-
-Package fancyhdr Warning: \headheight is too small (15.0pt): 
-(fancyhdr)                Make it at least 21.99997pt, for example:
-(fancyhdr)                \setlength{\headheight}{21.99997pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-6.99997pt}.
-
-[120]
-
-Package fancyhdr Warning: \headheight is too small (15.0pt): 
-(fancyhdr)                Make it at least 21.99997pt, for example:
-(fancyhdr)                \setlength{\headheight}{21.99997pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-6.99997pt}.
-
-[121]
-
-Package fancyhdr Warning: \headheight is too small (15.0pt): 
-(fancyhdr)                Make it at least 21.99997pt, for example:
-(fancyhdr)                \setlength{\headheight}{21.99997pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-6.99997pt}.
-
-[122]
+[121] [122] [123]
 Appendix D.
+[124
 
-Package enumitem Warning: Negative labelwidth. This does not make much
-(enumitem)                sense, on input line 289.
+] [125] [126] [127] [128]) [129] (./backmatter.tex [130
 
-[123
+
+] [131
+
+]) [132
 
 ]
-
-Package fancyhdr Warning: \headheight is too small (15.0pt): 
-(fancyhdr)                Make it at least 21.99997pt, for example:
-(fancyhdr)                \setlength{\headheight}{21.99997pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-6.99997pt}.
-
-[124]
-
-Package fancyhdr Warning: \headheight is too small (15.0pt): 
-(fancyhdr)                Make it at least 21.99997pt, for example:
-(fancyhdr)                \setlength{\headheight}{21.99997pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-6.99997pt}.
-
-[125]
-
-Package fancyhdr Warning: \headheight is too small (15.0pt): 
-(fancyhdr)                Make it at least 21.99997pt, for example:
-(fancyhdr)                \setlength{\headheight}{21.99997pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-6.99997pt}.
-
-[126]
-
-Package fancyhdr Warning: \headheight is too small (15.0pt): 
-(fancyhdr)                Make it at least 21.99997pt, for example:
-(fancyhdr)                \setlength{\headheight}{21.99997pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-6.99997pt}.
-
-[127])
-
-Package fancyhdr Warning: \headheight is too small (15.0pt): 
-(fancyhdr)                Make it at least 21.99997pt, for example:
-(fancyhdr)                \setlength{\headheight}{21.99997pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-6.99997pt}.
-
-[128] (./backmatter.tex [129
-
-
-] [130
-
-]) [131
-
-] (./main.aux)
+(./main.aux)
  ***********
 LaTeX2e <2026-06-01>
 L3 programming layer <2026-06-18>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 38444 strings out of 467814
- 812429 string characters out of 5425313
+ 38445 strings out of 467814
+ 812460 string characters out of 5425313
  1375678 words of memory out of 5000000
- 66866 multiletter control sequences out of 15000+600000
+ 66867 multiletter control sequences out of 15000+600000
  635004 words of font info for 139 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  102i,13n,107p,1001b,1134s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.xdv (147 pages, 2896516 bytes).
+Output written on main.xdv (148 pages, 2897860 bytes).
