@@ -1,0 +1,81 @@
+name: Build chess game theory textbook
+
+on:
+  push:
+    branches:
+      - generated/chess-game-theory-textbook
+    paths:
+      - 'generated/chess-textbook/**'
+      - '.github/workflows/chess-textbook.yml'
+      - '!generated/chess-textbook/Thinking_in_Chess.pdf'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: chess-textbook-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Normalize two display-math closers
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          replacements = {
+              Path('generated/chess-textbook/part3.tex'): [
+                  (
+                      'where $\\lambda$ rises as clock time becomes scarce.\n\\]\nThe expression is conceptual:',
+                      'where $\\lambda$ rises as clock time becomes scarce.\nThe expression is conceptual:'
+                  )
+              ],
+              Path('generated/chess-textbook/part5.tex'): [
+                  (
+                      'and $R$ is execution and refutation risk.\n\\]\nA forcing mate has little discount.',
+                      'and $R$ is execution and refutation risk.\nA forcing mate has little discount.'
+                  )
+              ],
+          }
+
+          for path, edits in replacements.items():
+              text = path.read_text(encoding='utf-8')
+              for old, new in edits:
+                  text = text.replace(old, new)
+              path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Compile with XeLaTeX
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: main.tex
+          working_directory: generated/chess-textbook
+          latexmk_use_xelatex: true
+          os: debian
+          extra_system_packages: fonts-dejavu-core
+
+      - name: Name the finished book
+        run: cp generated/chess-textbook/main.pdf generated/chess-textbook/Thinking_in_Chess.pdf
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Thinking-in-Chess-PDF
+          path: generated/chess-textbook/Thinking_in_Chess.pdf
+          if-no-files-found: error
+
+      - name: Commit normalized source and PDF
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add generated/chess-textbook/part3.tex generated/chess-textbook/part5.tex generated/chess-textbook/Thinking_in_Chess.pdf
+          if ! git diff --cached --quiet; then
+            git commit -m 'Build Thinking in Chess textbook PDF'
+            git push
+          fi

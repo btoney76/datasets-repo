@@ -1,0 +1,373 @@
+\chapter{Search under bounded rationality}
+\begin{learningbox}
+You will allocate calculation by branch importance, use selective deepening and pruning, recognize horizon effects, and build a repeatable over-the-board search routine.
+\end{learningbox}
+\chapterquestion{If you cannot calculate everything, what deserves your next ten seconds?}
+
+\section{Rationality with a budget}
+Classical game theory often asks what an ideal optimizer would choose. Human chess asks what a limited optimizer should do with a finite clock, memory, and attention span. This is \term{bounded rationality}: the decision process itself consumes resources.
+
+The correct goal is not maximum depth everywhere. It is maximum decision quality per unit of attention.
+
+\begin{formalbox}
+Let $Q(a,d)$ be the estimated quality of candidate $a$ after searching to depth $d$, and let $C(a,d)$ be its cognitive and time cost. A bounded player seeks a useful balance such as
+\[
+\max_{a,d}\; Q(a,d)-\lambda C(a,d),
+\]
+where $\lambda$ rises as clock time becomes scarce.
+\]
+The expression is conceptual: under time pressure, an extra ply of analysis must justify its cost.
+\end{formalbox}
+
+\section{Search where value can flip}
+A branch deserves more attention when one of four conditions holds:
+
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2em]
+\item \textbf{Forcingness:} checks, captures, and threats narrow replies.
+\item \textbf{Volatility:} one move can change the result or evaluation sharply.
+\item \textbf{Irreversibility:} pawn breaks, sacrifices, exchanges, and king moves remove options.
+\item \textbf{Uncertainty:} your evaluation depends on a fact you have not verified.
+\end{enumerate}
+
+A quiet rook improvement in a stable position may need little depth. A pawn sacrifice opening files near your king needs much more.
+
+\section{Selective deepening}
+Use a funnel rather than a flood.
+
+\begin{enumerate}[label=\textbf{Stage \arabic*:},leftmargin=5.3em]
+\item \textbf{Scan.} Reconstruct the state and list forcing moves for both sides.
+\item \textbf{Generate.} Create three to five candidates with distinct functions.
+\item \textbf{Triage.} Reject only candidates with clear forcing defects.
+\item \textbf{Deepen.} Calculate the two most promising candidates, following strongest replies.
+\item \textbf{Stabilize.} Continue forcing lines until a quiet leaf.
+\item \textbf{Compare.} Use the same evaluation vector at each leaf.
+\item \textbf{Blunder check.} Run SAFE on the chosen move.
+\end{enumerate}
+
+This routine is iterative. If deepening reveals a new tactical fact, return to generation. Do not defend an early favorite merely because you invested time in it.
+
+\section{Pruning without lying}
+Pruning saves time by cutting branches unlikely to affect the choice. Good pruning uses evidence:
+
+\begin{itemize}[leftmargin=1.4em]
+\item a candidate is refuted by a forcing line;
+\item one move dominates another over the relevant reply set;
+\item a branch transposes to a position already evaluated;
+\item a reply is clearly inferior and cannot create a tactical exception;
+\item the current candidate already fails the required security level.
+\end{itemize}
+
+Bad pruning uses emotion or habit: ``they would never find that,'' ``this move is ugly,'' or ``I always play this structure.''
+
+\begin{warningbox}[title={Favorite-line bias}]
+The more attractive your idea feels, the more deliberately you should search for a refutation. Investment in a line is not evidence that the line works.
+\end{warningbox}
+
+\section{Horizon and quiescence}
+A \term{horizon effect} occurs when analysis stops just before a consequence appears. You ``win'' a pawn at the leaf, but one move later your queen is trapped. A position is \term{quiescent} when immediate forcing actions have settled enough for static evaluation to be meaningful.
+
+Before stopping, ask:
+
+\begin{itemize}[leftmargin=1.4em]
+\item Are there unresolved checks or forcing captures?
+\item Is a piece en prise or trapped?
+\item Is a promotion race still concrete?
+\item Is the material gain temporary?
+\item Can the opponent force a structural change immediately?
+\end{itemize}
+
+\section{Chunking and pattern libraries}
+Experts do not merely calculate faster; they recognize meaningful chunks. ``Minority attack,'' ``back-rank weakness,'' and ``outside passed pawn'' compress many relationships into one retrieval cue. A pattern is valuable when it suggests candidates and evaluation questions, not when it replaces verification.
+
+Build patterns from your own games by storing three items:
+
+\begin{enumerate}[leftmargin=1.4em]
+\item the trigger configuration;
+\item the typical action;
+\item the exception that would make the action fail.
+\end{enumerate}
+
+\begin{workedbox}[title={Worked example: attention allocation}]
+You have six minutes for twelve moves. The position is closed, with no checks or captures. A pawn break would open your king; a rook doubling move is reversible. Spend most calculation on the pawn break because it is volatile and irreversible. Verify the rook move tactically, but do not search equal depth merely for symmetry.
+\end{workedbox}
+
+\begin{memorybox}
+Calculate by danger and irreversibility, not by the number of legal moves.
+\end{memorybox}
+
+\begin{exercise}[Search budget]
+For a position from your games, rank three candidates by forcingness, volatility, irreversibility, and uncertainty. Allocate a hypothetical two-minute budget among them and explain why.
+\end{exercise}
+
+\begin{exercise}[Horizon repair]
+Find a line where your original analysis stopped too early. Extend it until a quiet leaf and state which unresolved forcing feature caused the error.
+\end{exercise}
+
+\oneminute{Bounded rationality means attention is part of the problem. Search volatile, forcing, irreversible, and uncertain branches more deeply. Prune with evidence, and stop only at a quiescent leaf.}
+
+\chapter{Expected utility and practical chances}
+\begin{learningbox}
+You will combine objective security with estimates of human response, distinguish probability from value, and compare moves by expected score without disguising tactical refutations.
+\end{learningbox}
+\chapterquestion{When should you choose the move a human is least likely to handle rather than the move an engine ranks first?}
+
+\section{From worst case to weighted branches}
+Minimax assumes the opponent selects the reply worst for you. Expected utility weights outcomes by their probability:
+\[
+EU(a)=\sum_{i}P(r_i\mid a)\,U(z_i),
+\]
+where $r_i$ is an opponent reply and $z_i$ the resulting outcome or evaluated leaf.
+
+This lens matters because humans are fallible. A move can create many difficult decisions, and a theoretically equal defense may be hard to find. But expected utility must be used only after tactical cliffs are identified.
+
+\begin{intuitionbox}
+Minimax asks, ``Can this fail?'' Expected utility asks, ``How often, and what happens in the other branches?''
+\end{intuitionbox}
+
+\section{Probability is conditional}
+Do not assign a probability to ``they blunder.'' Estimate a particular reply under particular conditions:
+
+\begin{itemize}[leftmargin=1.4em]
+\item Is the reply forcing or quiet?
+\item Is it natural by general principles?
+\item Does it require seeing a hidden intermediate move?
+\item How much clock time remains?
+\item Does it match the opponent's style and preparation?
+\item Are there many plausible alternatives?
+\end{itemize}
+
+A one-move check is likely to be found. A counterintuitive retreat that permits a temporary sacrifice may be much less findable.
+
+\section{Objective floor, practical ceiling}
+Use a two-stage test.
+
+\paragraph{Stage 1: objective floor.} What is the candidate's value against the strongest reply you can find? If that floor is an unacceptable forced loss, reject the move unless event utility truly requires gambling.
+
+\paragraph{Stage 2: practical ceiling.} Among candidates with acceptable floors, compare how difficult the opponent's decisions are, how easy your own continuation is, and how the clock shapes errors.
+
+This prevents ``trap chess,'' where a bad move is justified solely because the opponent might miss the refutation.
+
+\section{Error asymmetry}
+A position has favorable \term{error asymmetry} when your moves are natural and numerous while the opponent must repeatedly choose precise moves. It has unfavorable error asymmetry when you have only-moves and the opponent can improve almost automatically.
+
+Compare two equal positions:
+
+\begin{center}
+\begin{tabularx}{.92\textwidth}{p{.25\textwidth}YY}
+\toprule
+& \textbf{Position A} & \textbf{Position B}\\
+\midrule
+Your task & find one of several improving moves & find repeated defensive only-moves\\
+Opponent's task & solve concrete threats & improve pieces naturally\\
+Clock effect & helps your pressure & magnifies your danger\\
+Practical utility & often high & often low\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{A simple decision table}
+Suppose a move leads to three broad reply classes. Use rough categories rather than fake precision.
+
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+Reply class & Likelihood & Leaf utility & Contribution\\
+\midrule
+Best defense & low--medium & equal & modest\\
+Natural defense & medium & pleasant edge & positive\\
+Error & low & winning & positive but discounted\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Then stress-test the estimate. If the ``best defense'' is actually easy, raise its probability. If the winning branch still requires difficult technique, lower its utility.
+
+\section{Risk dominance in practical chess}
+When two moves have similar expected utility, prefer the one that remains acceptable across a broader range of probability estimates. If Move A is best only when your guess that the opponent misses a defense is 70 percent, while Move B is good from 20 to 80 percent, B is probability-robust.
+
+\begin{workedbox}[title={Worked example: the hidden defense}]
+You can enter a tactical complication where one quiet retreat equalizes. Your opponent has two minutes, and the retreat contradicts the natural impulse to recapture. The line may have practical value. First verify that the equalizing retreat does not leave you worse. Then compare the line with a simpler move that gives a small stable edge. Your event need and personal calculation confidence determine the final utility ranking.
+\end{workedbox}
+
+\begin{warningbox}
+Never replace ``I did not calculate the defense'' with ``the defense is unlikely.'' Findability is a second question, not a substitute for analysis.
+\end{warningbox}
+
+\begin{exercise}[Expected-score sketch]
+For two candidate moves, create three reply classes, assign rough probabilities that sum to one, and assign utilities. Compute the expected utility, then change one probability to see whether the decision is robust.
+\end{exercise}
+
+\begin{exercise}[Error asymmetry]
+Choose a position that is objectively equal. List the number and naturalness of acceptable moves for each side. Which side has the easier practical task?
+\end{exercise}
+
+\oneminute{Expected utility weights branches by practical likelihood, but only after you establish an acceptable objective floor. Prefer favorable error asymmetry and decisions robust to uncertain probability estimates.}
+
+\chapter{Mixed strategies and the value of unpredictability}
+\begin{learningbox}
+You will understand why randomization is unnecessary for perfect play in a single chess game yet useful across repeated encounters, opening preparation, and opponent exploitation.
+\end{learningbox}
+\chapterquestion{If one move is best, why should a player ever vary?}
+
+\section{Pure and mixed strategies}
+A \term{pure strategy} chooses a definite action at each decision. A \term{mixed strategy} assigns probabilities to alternatives. In a finite deterministic perfect-information game, optimal play does not require randomization merely to resolve hidden simultaneous choice. If one continuation guarantees the best game-theoretic value, you may choose it.
+
+Human competition adds repeated interaction and limited preparation. If your opponent knows you always answer \move{1.e4} with the same narrow system, they can invest all preparation there. Varying can reduce the return on their preparation.
+
+\section{Unpredictability is not randomness for its own sake}
+A useful mix contains moves that are individually sound. Randomly selecting an inferior move merely to surprise is usually expensive. The goal is to make exploitation difficult while preserving utility.
+
+Imagine two opening systems:
+
+\begin{center}
+\begin{tabularx}{.92\textwidth}{p{.22\textwidth}YY}
+\toprule
+& \textbf{System A} & \textbf{System B}\\
+\midrule
+Objective quality & sound & sound\\
+Preparation cost & already learned & moderate\\
+Style & forcing & strategic\\
+Opponent prep & likely targeted & less expected\\
+Role in mix & main line & diversification\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+A 70--30 mix may force the opponent to divide study time. The exact probabilities need not be generated by dice; they can be planned frequencies across a season.
+
+\section{The exploitability test}
+Ask:
+
+\begin{quote}
+If my next opponent knew my full choice rule, could they improve their preparation or game plan against me?
+\end{quote}
+
+If yes, you are exploitable. Exploitability can arise from openings, draw-offer habits, time usage, recurring recapture choices, or a tendency to avoid queen trades.
+
+\section{Mixing at different levels}
+\paragraph{Repertoire level.} Maintain two sound answers to a major opening branch.
+
+\paragraph{Move-order level.} Reach the same structure through different sequences to avoid prepared forcing lines.
+
+\paragraph{Position-type level.} Be capable of both tactical and strategic play so opponents cannot steer you cheaply.
+
+\paragraph{Clock level.} Varying thought time can avoid signaling that a move surprised you, though clock preservation is usually more important than theatrical deception.
+
+\section{When not to mix}
+Do not mix when:
+
+\begin{itemize}[leftmargin=1.4em]
+\item one move is clearly and safely superior;
+\item your secondary option is underprepared;
+\item the position is tactical and only one move survives;
+\item variety would dilute scarce training time below competence;
+\item event utility strongly favors one position type.
+\end{itemize}
+
+Consistency is valuable when it builds deep pattern knowledge. The strategic question is whether the learning benefit of specialization exceeds the exploitability cost.
+
+\begin{formalbox}
+In a repeated preparation game, let $p$ be the frequency with which you choose System A. Your opponent allocates preparation to maximize expected gain against that frequency. A useful mix makes the opponent roughly indifferent between concentrating on A and covering B; otherwise they can profitably reallocate effort.
+\end{formalbox}
+
+\begin{workedbox}[title={Worked example: surprise with substance}]
+You normally play a sharp main line. For a match, you add a quieter move that reaches a structure you understand. The surprise is not valuable because it is rare. It is valuable because it forces the opponent to solve fresh but sound problems while you retain familiar plans.
+\end{workedbox}
+
+\begin{memorybox}
+The best surprise is a good move whose preparation cost falls more on the opponent than on you.
+\end{memorybox}
+
+\begin{exercise}[Exploitability audit]
+List three predictable habits in your chess. For each, state how an informed opponent could exploit it and whether to improve, conceal, or deliberately keep the habit.
+\end{exercise}
+
+\begin{exercise}[Repertoire mix]
+Choose one major opening decision. Design a two-option mix in which both choices are sound, serve different practical roles, and fit within your study budget.
+\end{exercise}
+
+\oneminute{Perfect play in one chess game needs no randomization, but repeated human competition rewards sound variety. Mix to reduce exploitability, not to excuse inferior moves.}
+
+\chapter{Time controls and clock utility}
+\begin{learningbox}
+You will treat clock time as a state variable, price thinking time by decision importance, and use time thresholds, reserve rules, and low-time protocols.
+\end{learningbox}
+\chapterquestion{How much is one minute worth in the current position?}
+
+\section{The clock changes the game}
+Time is not merely a constraint outside the board. It changes the probability of future errors, the feasibility of complex plans, and the value of simplification. A complete practical state is $(s,t_W,t_B)$: board state plus both clocks.
+
+One minute has variable marginal value. In a forced sequence, extra thought may add little. Before an irreversible sacrifice, it may be decisive. Near move forty in a classical time control, preserving enough time to reach the increment can dominate a small positional gain.
+
+\section{Think in decisions, not moves}
+Equal time per move is inefficient. Allocate time by decision importance:
+
+\begin{center}
+\begin{tabularx}{.92\textwidth}{p{.24\textwidth}YY}
+\toprule
+\textbf{Decision type} & \textbf{Spend more time} & \textbf{Spend less time}\\
+\midrule
+Forcing tactic & many branches or unclear leaf & forced recapture, verified sequence\\
+Pawn break & irreversible, opens kings & standard break with known response\\
+Exchange & changes ending/result prospects & clearly favorable forced trade\\
+Quiet move & several plans compete & one natural safe improvement\\
+Defense & only-move risk, checks & simple neutralization\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{The time budget equation}
+A rough budget is
+\[
+\text{average available} = \frac{\text{time remaining}-\text{reserve}}{\text{moves to next control or estimated moves}}.
+\]
+Do not mechanically spend that amount. Use it as a baseline, then borrow for critical decisions and repay on forced moves.
+
+Set a \term{reserve}: time you refuse to spend before a future phase. For example, preserve five minutes for the final ten moves before a control, or preserve enough time to execute a technical ending without panic.
+
+\section{Stop rules}
+Overthinking often occurs because the player has no criterion for ending analysis. Stop when:
+
+\begin{itemize}[leftmargin=1.4em]
+\item one candidate has an acceptable security level and competitors are refuted;
+\item forcing lines reach stable leaves;
+\item further analysis repeats the same branches without new information;
+\item the marginal value of thought is lower than the future value of the time;
+\item your process is deteriorating and a robust move is available.
+\end{itemize}
+
+A stop rule prevents analysis from becoming anxiety management.
+
+\section{Low-time protocol}
+When time is scarce, shrink the process but do not abandon it:
+
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2em]
+\item Reconstruct checks against both kings.
+\item Identify all loose pieces and immediate captures.
+\item Choose one forcing and one robust candidate.
+\item Reject any move that fails SAFE.
+\item Prefer simple execution and favorable error asymmetry.
+\end{enumerate}
+
+With increment, make a legal safe move before the clock reaches the point where physical execution becomes risky. Do not spend an increment repeatedly proving a move you already know you will play.
+
+\section{Clock as signal and weapon}
+Thinking time can reveal surprise or uncertainty, but trying to fake signals is usually less valuable than preserving time. More important is how your move changes the opponent's time problem. A move with several plausible replies may force them to spend; a forcing move may make their decision easy. Complexity is not automatically pressure if the opponent's best response is obvious.
+
+\begin{workedbox}[title={Worked example: buying future accuracy}]
+You have eight minutes for eight moves. A stable move preserves a slight edge; a sharp move may win more but requires three future only-moves. Even if both are objectively sound, the stable move can have higher utility because it converts current time into future accuracy. You are not ``wasting an advantage''; you are pricing execution risk.
+\end{workedbox}
+
+\begin{warningbox}
+Do not use almost all your time to reach a winning position you can no longer execute. Utility belongs to the final result, not the evaluation at move thirty.
+\end{warningbox}
+
+\begin{exercise}[Time map]
+Take one of your games and mark three critical decisions. Compare actual time spent with forcingness, volatility, irreversibility, and uncertainty. Where was time misallocated?
+\end{exercise}
+
+\begin{exercise}[Design a protocol]
+Write a personalized low-time routine of no more than five steps and a reserve rule for your usual time control.
+\end{exercise}
+
+\oneminute{Clock time is part of the state. Spend by decision importance, maintain a reserve, use stop rules, and under pressure shrink the process to checks, loose pieces, robust candidates, and SAFE.}

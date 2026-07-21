@@ -1,0 +1,369 @@
+\chapter{Notation and rules reference}
+
+\section{Board coordinates}
+Files are labeled a through h from White's left to right. Ranks are labeled 1 through 8 from White's side toward Black's. A square combines file and rank, such as e4.
+
+\begin{center}
+\begin{tikzpicture}[x=.58cm,y=.58cm]\DrawBoard\StartingPieces\end{tikzpicture}
+\captionof{figure}{Coordinates and the initial position, viewed from White's side.}
+\end{center}
+
+\section{Piece symbols and names}
+\begin{center}
+\begin{tabular}{clcl}
+\toprule
+\textbf{White} & \textbf{Name} & \textbf{Black} & \textbf{Letter}\\
+\midrule
+{\chessfont\WKing} & King & {\chessfont\BKing} & K\\
+{\chessfont\WQueen} & Queen & {\chessfont\BQueen} & Q\\
+{\chessfont\WRook} & Rook & {\chessfont\BRook} & R\\
+{\chessfont\WBishop} & Bishop & {\chessfont\BBishop} & B\\
+{\chessfont\WKnight} & Knight & {\chessfont\BKnight} & N\\
+{\chessfont\WPawn} & Pawn & {\chessfont\BPawn} & no letter\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Knights use N because K is reserved for the king. Pawn moves use only the destination square.
+
+\section{Algebraic notation}
+\begin{longtable}{p{.22\textwidth}p{.25\textwidth}p{.42\textwidth}}
+\toprule
+\textbf{Notation} & \textbf{Read as} & \textbf{Meaning}\\
+\midrule
+\move{e4} & e-four & pawn moves to e4\\
+\move{Nf3} & knight f-three & knight moves to f3\\
+\move{Rae1} & a-rook e-one & rook from the a-file moves to e1\\
+\move{Qxh7+} & queen takes h-seven check & queen captures on h7 and checks\\
+\move{Re8\#} & rook e-eight mate & rook moves to e8 and gives checkmate\\
+\move{O-O} & castles kingside & king and rook castle on the kingside\\
+\move{O-O-O} & castles queenside & king and rook castle on the queenside\\
+\move{e8=Q} & e-eight promotes to queen & pawn reaches e8 and promotes\\
+\move{exd6 e.p.} & e-pawn takes d-six en passant & special capture after a two-square pawn move\\
+\move{1-0} & White wins & final result\\
+\move{0-1} & Black wins & final result\\
+\move{$\tfrac12$-$\tfrac12$} & draw & final result\\
+\bottomrule
+\end{longtable}
+
+A plus sign marks check; a hash marks checkmate. An ``x'' marks capture. Annotation symbols such as !, ?, !?, and ?! express judgment and are not part of legal notation.
+
+\section{Essential rule reminders}
+\begin{description}[style=nextline,leftmargin=0pt]
+\item[Check and mate.] A player in check must remove it. Checkmate ends the game.
+\item[Stalemate.] A player with no legal move who is not in check is stalemated; the game is drawn.
+\item[Castling.] Castling requires unmoved king and rook, empty intervening squares, no current check, and no king passage through an attacked square.
+\item[En passant.] A pawn that advances two squares and lands beside an opposing pawn may be captured as though it moved one square, but only on the immediately following move.
+\item[Promotion.] A pawn reaching the final rank promotes to queen, rook, bishop, or knight.
+\item[Repetition and move-count draws.] Formal claim and automatic-draw details depend on the governing laws and platform. Record history when relevant and consult the event rules.
+\item[Touch move and clock procedure.] Over-the-board events may enforce touch-move and specific clock rules. Follow the organizer's regulations.
+\end{description}
+
+\section{Nominal material values}
+\begin{center}
+\begin{tabular}{lccl}
+\toprule
+Piece & Common prior & Main strength & Main dependence\\
+\midrule
+Pawn & 1 & structure, promotion & advancement and support\\
+Knight & 3 & forks, closed positions & stable central squares\\
+Bishop & 3 & long range, both wings & open diagonals\\
+Rook & 5 & files, ranks, passers & entry squares and activity\\
+Queen & 9 & coordinated multi-threats & king safety and tempo\\
+King & terminal & survival, endgame activity & phase of game\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+These are priors, not exchange commands. Functional value depends on the position.
+
+\section{A compact analysis notation}
+For private notes, use:
+
+\begin{itemize}[leftmargin=1.4em]
+\item $\rightarrow$ for ``leads to'';
+\item $\pm$ for White clearly better, $\mp$ for Black clearly better;
+\item $\infty$ for unclear compensation;
+\item $M,K,A,P,S,T,O$ for material, king safety, activity, pawn structure, space, time, options;
+\item F, N, D for forced, natural, and difficult-to-find replies;
+\item W, D, L for win, draw, and loss outcome classes.
+\end{itemize}
+
+\chapter{Decision sheets and printable templates}
+
+\section{Pre-game utility card}
+\begin{tcolorbox}[colback=white,colframe=Teal,title={Event and preference frame},fonttitle=\sffamily\bfseries,height=2.55in]
+\textbf{Time control:}\hrulefill\quad
+\textbf{Color:}\hrulefill\\[1em]
+\textbf{Event state and result need:}\hrulefill\\[1.1em]
+\textbf{Position types I understand well:}\hrulefill\\[1.1em]
+\textbf{Clock reserve rule:}\hrulefill\\[1.1em]
+\textbf{Emotional guardrail:}\hrulefill
+\end{tcolorbox}
+
+\section{BOARD position sheet}
+\begin{tcolorbox}[colback=white,colframe=Navy,title={B --- Board facts},fonttitle=\sffamily\bfseries,height=2.15in]
+Material:\hrulefill\\[.8em]
+Checks, captures, threats, loose pieces:\hrulefill\\[.8em]
+$M,K,A,P,S,T,O$:\hrulefill\\[.8em]
+What changed on the last move?\hrulefill
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=white,colframe=Teal,title={O --- Opponent},fonttitle=\sffamily\bfseries,height=1.75in]
+Their free move / plan:\hrulefill\\[.9em]
+Strongest reply to my likely move:\hrulefill\\[.9em]
+Evidence about preparation, style, or risk:\hrulefill
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=white,colframe=Gold,title={A/R/D --- Actions, replies, decision},fonttitle=\sffamily\bfseries,height=3.2in]
+\begin{tabularx}{\linewidth}{p{.08\linewidth}YYY}
+\toprule
+& Candidate 1 & Candidate 2 & Candidate 3\\
+\midrule
+Function & & &\\[1.2em]
+Best reply & & &\\[1.2em]
+Stable leaf & & &\\[1.2em]
+Risk / ease & & &\\[1.2em]
+\bottomrule
+\end{tabularx}
+Chosen move and why:\hrulefill\\[.6em]
+SAFE result:\hrulefill
+\end{tcolorbox}
+
+\clearpage
+\section{Calculation tree sheet}
+\begin{tcolorbox}[colback=white,colframe=BoardDark,title={Terminal claim},fonttitle=\sffamily\bfseries,height=1.25in]
+What final state would prove the line?\hrulefill\\[.9em]
+What counts as a stable leaf?\hrulefill
+\end{tcolorbox}
+
+\begin{center}
+\begin{tikzpicture}[>=Latex,every node/.style={draw=BoardDark,rounded corners,minimum width=31mm,minimum height=10mm,font=\sffamily\small},level distance=20mm,level 1/.style={sibling distance=55mm},level 2/.style={sibling distance=27mm}]
+\node {Candidate}
+child {node {Reply 1} child {node {Leaf}} child {node {Leaf}}}
+child {node {Reply 2} child {node {Leaf}} child {node {Leaf}}};
+\end{tikzpicture}
+\end{center}
+
+\begin{tcolorbox}[colback=white,colframe=Navy,title={Comparison},fonttitle=\sffamily\bfseries,height=2.1in]
+Worst credible leaf:\hrulefill\\[.9em]
+Most likely leaf:\hrulefill\\[.9em]
+Unresolved forcing feature:\hrulefill\\[.9em]
+Confidence and stop rule:\hrulefill
+\end{tcolorbox}
+
+\section{Post-game five-pass sheet}
+\begin{enumerate}[label=\textbf{Pass \arabic*:},leftmargin=5.2em]
+\item \textbf{Reconstruct.} My candidates, evaluation, clock, and thought process.
+\item \textbf{Opponent.} Their best response, plan, and evidence revealed.
+\item \textbf{Counterfactual.} Rejected candidates and stable leaves.
+\item \textbf{Verify.} Engine, database, coach, or reference; reason for difference.
+\item \textbf{Compress.} One pattern card, one guardrail, one knowledge task.
+\end{enumerate}
+
+\begin{tcolorbox}[colback=white,colframe=Coral,title={Error classification},fonttitle=\sffamily\bfseries,height=2.0in]
+State / Candidate / Reply / Calculation / Evaluation / Utility / Time / Belief / Execution\\[1em]
+Dominant category:\hrulefill\\[1em]
+Direct training intervention:\hrulefill
+\end{tcolorbox}
+
+\section{Pattern card}
+\begin{tcolorbox}[colback=white,colframe=Gold,title={Reusable pattern},fonttitle=\sffamily\bfseries,height=2.7in]
+\textbf{Trigger configuration:}\hrulefill\\[1em]
+\textbf{Question to retrieve:}\hrulefill\\[1em]
+\textbf{Typical action or method:}\hrulefill\\[1em]
+\textbf{Exception / refutation condition:}\hrulefill\\[1em]
+Review dates: same day\quad 1 day\quad 1 week\quad 1 month
+\end{tcolorbox}
+
+\chapter{Solutions and answer guidance}
+
+Many exercises use your own games, so a good answer is defined by method rather than one move. The solutions below give the required reasoning structure and a representative response.
+
+\section*{Chapter 1}
+\solution{1.1}{Perfect information concerns the observable game state: piece locations, legal rights, history, and clocks. Beliefs concern hidden human variables such as whether the opponent knows a line or has seen a tactic. Example board fact: Black's queen is undefended. Hidden human fact: Black may or may not have noticed it.}
+\solution{1.2}{A complete answer names the failed stage. Example: MODEL omitted an overloaded defender; REPLY assumed a passive recapture; VALUE stopped before a countercheck; DECIDE favored excitement over result; UPDATE continued to use the old evaluation after the exchange.}
+
+\section*{Chapter 2}
+\solution{2.1}{Frame: White has 42 seconds; castling rights are lost. Preference: White dislikes queenless endings; Black enjoys complications. ``A draw wins the match'' enters the event frame and thereby changes the ranking of terminal results; it should be recorded before utility is assigned.}
+\solution{2.2}{At minimum: side to move, castling/en-passant rights, repetition or move-count relevance, clock times and time control, event result need, and any missing prior move needed to establish legal rights.}
+
+\section*{Chapter 3}
+\solution{3.1}{A contingent strategy should specify how the isolated pawn will be fixed and attacked, plus responses to advance, defense, exchange, or counterplay. Example: blockade if it advances, double rooks if defended passively, switch wings if pieces become tied, and abandon the target if a tactical attack on your king appears.}
+\solution{3.2}{A valid set includes legal examples from all requested functions. The learning objective is breadth before commitment. After generation, run reply-first triage; do not reject quiet improvements merely because a check exists.}
+
+\section*{Chapter 4}
+\solution{4.1}{In training, a difficult but instructive ending can outrank an easy draw. In a must-draw game, low loss probability and simple execution rank highly. In a must-win game, a sharp but sound winning chance can outrank a sterile small edge. The rankings must be internally consistent and tied to event utility.}
+\solution{4.2}{The answer should identify the emotional preference, the chess utility it displaced, and a prewritten guardrail. Example: pride rejected perpetual check; guardrail: ``After losing an advantage, rank only outcomes reachable from the current state.''}
+
+\section*{Chapter 5}
+\solution{5.1}{Rate all seven coordinates, then generate actions from weaknesses. If activity is unfavorable, improve or exchange the worst piece. If king safety is unfavorable, neutralize checks, add defenders, close lines, or trade queens. A complete answer connects every negative feature to at least one candidate.}
+\solution{5.2}{Compare mobility, targets, defensive duties, pawn colors, open lines, and the position after recapture. Nominal equality does not settle the exchange. The answer should state which future function was gained or lost.}
+
+\section*{Chapter 6}
+\solution{6.1}{The free move should express the opponent's strongest plan. Two responses may stop it directly, permit it while gaining elsewhere, provoke it as a weakness, or race it. The key is to compare response cost with plan value.}
+\solution{6.2}{SAFE must inspect checks, captures, threats, and the end of the forcing sequence. A strong answer names the exact category and the changed relationship, such as a queen move abandoning back-rank defense.}
+
+\section*{Chapter 7}
+\solution{7.1}{Create reply columns such as forcing defense, simplification, and counterattack. One move dominates only if it is never worse across the relevant columns and better in at least one. Otherwise state the condition on which the ranking depends.}
+\solution{7.2}{Typical examples include quiet retreats, underpromotions, clearance moves, and intermediate moves. Name the misleading principle and the hidden resource. The lesson is to store principles with exceptions.}
+
+\section*{Chapter 8}
+\solution{8.1}{For each candidate, take the minimum value among the opponent's strongest replies. Choose the candidate with the larger minimum. If rough values are speculative, state the uncertainty rather than manufacture precision.}
+\solution{8.2}{Reply robustness asks whether one defense collapses the move; evaluation robustness asks whether a mistaken feature estimate changes the choice; execution robustness asks whether only-moves follow. The weakest dimension indicates where more calculation or a safer move is needed.}
+
+\section*{Chapter 9}
+\solution{9.1}{State a terminal result such as mate, decisive material, promotion, forced draw, or a known ending. Enumerate king moves, captures, blocks, counterchecks, refusal, and counter-threats as relevant. Every branch must reach a leaf supporting the claim.}
+\solution{9.2}{A threat succeeds only if the opponent passes or responds inadequately. A forced line survives every relevant defense. The answer should name the defender's available choice in the threat example and the lack of a utility-preserving choice in the forced example.}
+
+\section*{Chapter 10}
+\solution{10.1}{For each preparation move, list its benefit and the opponent's best use of the tempo. Preparation is justified only if the net dynamic gain is positive and no forcing counterplay appears.}
+\solution{10.2}{Conversion examples: win material, damage structure, force a favorable ending. Renewal examples: create another forcing threat or bring a piece with tempo. Defense examples: trade attackers, return material, close lines, or countercheck.}
+
+\section*{Chapter 11}
+\solution{11.1}{Allocate more time to candidates high in forcingness, volatility, irreversibility, or uncertainty. A valid two-minute split might be 70 seconds on a king-opening pawn break, 35 seconds on a tactical exchange, and 15 seconds on a reversible improvement, leaving 20 seconds for comparison and SAFE.}
+\solution{11.2}{Extend until immediate checks, captures, promotions, and trapped-piece issues are resolved. Name the horizon cause, such as temporary material gain or a forcing reply just beyond the original leaf.}
+
+\section*{Chapter 12}
+\solution{12.1}{Probabilities must sum to one. Compute $EU=\sum p_i u_i$, then vary the most uncertain probability. If the preferred move changes after a small adjustment, the decision is fragile and objective robustness deserves more weight.}
+\solution{12.2}{Count acceptable moves and classify them as natural or difficult. The side with several coherent improvements and fewer tactical cliffs has favorable error asymmetry, even if the objective evaluation is equal.}
+
+\section*{Chapter 13}
+\solution{13.1}{Examples: always playing one defense, refusing queen trades, moving instantly when prepared, or accepting every draw offer. For each, describe the exploitation. Keep a habit when its learning value or objective quality exceeds predictability cost; otherwise broaden or improve it.}
+\solution{13.2}{Both options must be objectively sound, understood, and affordable to study. Give them distinct roles, such as a forcing main line and a quieter structural alternative, plus intended frequencies across repeated games.}
+
+\section*{Chapter 14}
+\solution{14.1}{Compare actual time with decision importance. Overspending on forced recaptures and underspending on irreversible pawn breaks are classic errors. The answer should propose a reallocation and preserve a future reserve.}
+\solution{14.2}{A strong five-step routine checks both kings, loose pieces, one forcing and one robust candidate, SAFE, and physical clock execution. The reserve rule should be specific to the time control.}
+
+\section*{Chapter 15}
+\solution{15.1}{State a hypothesis and an alternative. The update should depend on likelihood ratio: an instant accurate novelty response is more diagnostic of preparation than an instant forced recapture. Preserve uncertainty if both explanations predict the evidence similarly.}
+\solution{15.2}{Beliefs can choose between close sound candidates, such as theory versus a fresh structure. They cannot turn a forced loss into a good move. State the objective floor first and the belief adjustment second.}
+
+\section*{Chapter 16}
+\solution{16.1}{Separate square control, lines, weaknesses, and threats from intimidation or perceived intention. Only board effects remain against a fearless opponent. A strategically valid move must retain sufficient value there.}
+\solution{16.2}{A credible threat is beneficial if ignored, cannot be answered while improving freely, remains executable after the reply, does not assume cooperation, and costs less than it gains. Classify the actual threat accordingly.}
+
+\section*{Chapter 17}
+\solution{17.1}{Stopping removes the plan; permitting accepts it as harmless; provoking encourages it because it concedes something; racing ignores it for faster counterplay. Compare resulting utilities, not the emotional comfort of prevention.}
+\solution{17.2}{A complete second-order answer states your plan, the opponent's belief about it, the preventive action that belief induced, and a counter-plan that exploits the prevention.}
+
+\section*{Chapter 18}
+\solution{18.1}{Classify the main process distortion, then choose a direct guardrail. Confirmation bias: search for one refutation. Anchoring: rebuild the vector. Sunk cost: evaluate only current futures. Action bias: include a waiting move.}
+\solution{18.2}{Each story becomes observable claims. ``Attack'' becomes attackers, defenders, entry squares, and forcing moves. ``Weak pawn'' becomes fixed, attackable, unable to advance, and costly to defend.}
+
+\section*{Chapter 19}
+\solution{19.1}{List mutual learning and predicted adaptation. Example: they learned your narrow defense; you learned they dislike closed centers; they may prepare the forcing main line; you may diversify into a sound closed structure.}
+\solution{19.2}{Stable traits require repetition across positions; temporary states include fatigue and time trouble; position effects follow directly from board necessity. Give confidence and avoid using one game as decisive evidence.}
+
+\section*{Chapter 20}
+\solution{20.1}{The tree should include at least three opponent choices, your purpose-based response, and an invalidating condition. This converts sequence memory into contingent knowledge.}
+\solution{20.2}{A good portfolio usually has a stable core for pattern depth and one sound alternative for adaptability. The answer should acknowledge study cost and not add variety beyond competence.}
+
+\section*{Chapter 21}
+\solution{21.1}{List asymmetries, choose the dominant one, and design two plans with explicit target, worst-piece improvement, counterplay, commitments, and transition. Rank plans by net portfolio rather than activity alone.}
+\solution{21.2}{Every piece receives an attack, restrict, defend, transform, or reserve role. The worst piece is the one without a useful current or future job; propose a legal route and test the opponent's tempo.}
+
+\section*{Chapter 22}
+\solution{22.1}{The ledger must include immediate material, exact compensation, time decay, all three reply classes, and a possible return sacrifice. The conclusion should state whether compensation is forced, durable, or mainly practical.}
+\solution{22.2}{An investment has identifiable long-lived resources such as permanent weakness or protected passers. A speculation depends on difficult defense or opponent error, so delayed benefits receive a larger discount and risk penalty.}
+
+\section*{Chapter 23}
+\solution{23.1}{Examples include basic mates, key pawn positions, opposition, rook cut-off methods, fortress patterns, and standard promotion races. Each label needs a condition such as side to move, king placement, checking distance, or absence of a tactical exception.}
+\solution{23.2}{Reconstruct after all captures, then include side to move, king routes, passers, reserve tempi, and races. The initial exchange is good only if the terminal state has acceptable utility.}
+
+\section*{Chapter 24}
+\solution{24.1}{First round normally uses ordinary expected score. Must-draw heavily values low loss probability. Must-win emphasizes win probability among sound choices. A late match lead raises draw utility and loss cost. Exact rankings depend on event rules.}
+\solution{24.2}{Evaluate current position, result distribution, clocks, event value, emotion, and information cost. State assumptions. Earlier advantage and rating are not sufficient reasons to accept or reject.}
+
+\section*{Chapter 25}
+\solution{25.1}{The final output is deliberately limited: one trigger-question-action-exception card, one behavioral guardrail, and one specific knowledge task. Verification should follow unaided reconstruction and counterfactual analysis.}
+\solution{25.2}{Classify five decisions, count recurring categories, and prescribe the matching drill. A reply error calls for best-response work; a time error for budgeting; an evaluation error for comparative positions.}
+
+\section*{Chapter 26}
+\solution{26.1}{Assign dates and game opportunities to all twelve weeks. Suitable four-week metrics include reply naming rate, SAFE catches, time-allocation accuracy, or percentage of games reviewed before engine use.}
+\solution{26.2}{The full version should include all BOARD stages. Under two minutes, preserve board facts, opponent threat, two candidates, strongest replies, and SAFE. Note which deeper evaluation or belief work was lost and whether the compressed decision remained robust.}
+
+\chapter{Glossary of chess decision terms}
+
+\begin{description}[style=nextline,leftmargin=0pt]
+\item[Action.] One legal move selected at the current state.
+\item[Action set.] All legal moves available in a state; the effective set excludes moves made unusable by tactical cost.
+\item[Anchoring.] Remaining attached to an earlier evaluation despite new evidence.
+\item[Backward induction.] Evaluating terminal or stable states first and carrying their values backward through the tree.
+\item[Bayesian updating.] Revising beliefs when new evidence is more likely under one hypothesis than another.
+\item[Belief.] A probability or confidence assigned to a hidden opponent characteristic or future response.
+\item[Best response.] The reply that maximizes a player's utility against a specified opposing choice.
+\item[BOARD.] Board facts, Opponent, Actions, Replies/results, Decide/update.
+\item[Bounded rationality.] Rational decision making under limited time, memory, and computation.
+\item[Candidate move.] A legal action selected for serious comparison.
+\item[CCT+I.] Checks, captures, threats, and improvements; a candidate-generation order.
+\item[Cheap talk.] Communication with little direct board cost or commitment.
+\item[Commitment.] An action that removes future options to coordinate or make a plan credible.
+\item[Common knowledge.] A fact known by both players, with each aware that the other knows it.
+\item[Compensation.] Nonmaterial resources received in exchange for material, such as time, activity, structure, or king exposure.
+\item[Constant-sum.] A result structure in which one player's gain corresponds to the other's loss.
+\item[Counterfactual.] Analysis of what would have happened after an unchosen action or different reply.
+\item[Credible threat.] A threatened future action that remains beneficial to execute if ignored.
+\item[Decision state.] The complete practical situation from which a move is chosen.
+\item[Deterministic.] A property of a game in which actions have fixed transitions rather than random outcomes.
+\item[Dominance.] A relation in which one action is never worse and sometimes or always better across specified replies.
+\item[Dynamic value.] Value arising from move order, initiative, threats, and timing rather than static features alone.
+\item[Effective action set.] Legal moves that remain strategically viable after obvious tactical costs are considered.
+\item[Equilibrium.] Strategies that are mutual best responses; neither player benefits by changing alone.
+\item[Error asymmetry.] A difference in how many natural or precise moves each side must find.
+\item[Evaluation vector.] A multidimensional summary such as material, king safety, activity, pawn structure, space, time, and options.
+\item[Expected utility.] Probability-weighted value over possible outcomes.
+\item[Exploitability.] The gain an informed opponent can obtain from knowing your predictable choice rule.
+\item[Extensive form.] A representation of sequential decisions as a branching tree.
+\item[Forcing move.] A move that sharply restricts the opponent's acceptable replies.
+\item[Frame.] Players, states, actions, transitions, rules, and terminal outcomes before preferences are added.
+\item[Functional value.] A piece or pawn's value from the jobs it performs in the current state.
+\item[Game tree.] The branching structure of moves, replies, and subsequent positions.
+\item[Guardrail.] A precommitted process rule designed to interrupt a known bias or error.
+\item[Horizon.] The point where calculation stops and evaluation begins.
+\item[Horizon effect.] A mistake caused by stopping just before a decisive consequence.
+\item[Imbalance.] A persistent asymmetry that can support a plan.
+\item[Incomplete information.] Uncertainty about hidden types, intentions, knowledge, or other non-board variables.
+\item[Information set.] Decision nodes a player cannot distinguish; in formal chess, visible board states are distinguishable.
+\item[Initiative.] Temporary control over the opponent's priorities through threats and forcing questions.
+\item[Intertemporal exchange.] Trading a resource now for compensation arriving later.
+\item[Iterated elimination.] Repeatedly removing dominated or refuted choices as analysis progresses.
+\item[Leaf.] A terminal or chosen stopping point in a calculation tree.
+\item[Mechanism design.] Structuring available choices so another player's best response advances your objective.
+\item[Minimax.] Choosing the action with the best worst-case value under optimal resistance.
+\item[Mixed strategy.] A probability distribution over multiple actions or plans.
+\item[Negamax.] A symmetric minimax formulation using value from the player-to-move's perspective.
+\item[Nominal value.] A general piece-value prior before state-specific functions are considered.
+\item[Objective floor.] The value of a candidate against the strongest reply found.
+\item[Opening prior.] Stored theory and experience that guide initial attention among moves.
+\item[Option value.] Value created by preserving useful future choices.
+\item[Outcome.] A terminal result or evaluated future position.
+\item[Perfect information.] A property in which the formal game state and action history relevant to play are observable.
+\item[Posterior.] A belief after new evidence has been incorporated.
+\item[Practical ceiling.] A candidate's upside against likely human responses, after its objective floor is acceptable.
+\item[Practical utility.] Value adjusted for clock, complexity, familiarity, and human error.
+\item[Preference.] A ranking over outcomes.
+\item[Prior.] A belief held before the current evidence is observed.
+\item[Prophylaxis.] Reasoning about the opponent's intended action and choosing whether to stop, permit, provoke, or race it.
+\item[Pure strategy.] A definite action rule at every state.
+\item[Quiescent position.] A leaf where immediate forcing actions have settled enough for static evaluation.
+\item[Repeated game.] A sequence of encounters in which past behavior changes future beliefs and incentives.
+\item[Reserve tempo.] A move saved to transfer the obligation to act at a critical later moment.
+\item[Robust move.] A move that remains acceptable across replies, evaluation uncertainty, or execution errors.
+\item[SAFE.] Scan checks, Assess captures, Find threats, Evaluate the end.
+\item[Security level.] The worst outcome a strategy can guarantee against the replies considered.
+\item[Selective deepening.] Searching important branches more deeply than quiet or settled branches.
+\item[Signal.] An observed action that may convey information about intention or type.
+\item[Stable leaf.] A calculation endpoint with resolved forcing actions and a reliable evaluation.
+\item[State.] All facts relevant to legal actions, transition, and practical choice.
+\item[Strategy.] A contingent rule specifying action at every state that may be reached.
+\item[Tempo.] One unit of move order whose value depends on the state.
+\item[Terminal state.] A checkmate, draw, resignation result, or other game-ending state.
+\item[Threat.] A prospective action that gains value if the opponent does not respond adequately.
+\item[Transposition.] Different move orders reaching the same position.
+\item[Type.] A hidden characteristic such as preparation, style, or risk tolerance.
+\item[Utility.] A numerical representation of preference ordering.
+\item[Volatility.] The degree to which one move can sharply change evaluation or result.
+\item[Zugzwang.] A state in which every legal move worsens the player's position, so the obligation to act is costly.
+\end{description}

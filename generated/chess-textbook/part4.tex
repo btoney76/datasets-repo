@@ -1,0 +1,420 @@
+\chapter{Beliefs and Bayesian updating}
+\begin{learningbox}
+You will distinguish board evaluation from beliefs about an opponent, update those beliefs from evidence, avoid stereotypes, and use opponent models only when they change a close decision.
+\end{learningbox}
+\chapterquestion{What did the opponent's last move reveal beyond the squares it changed?}
+
+\section{The board state and the player type}
+The board is visible. The opponent's internal state is not. You may be uncertain about their opening knowledge, tactical alertness, risk attitude, fatigue, time-management habits, and preferred structures. Game theory represents such hidden characteristics as a \term{type}.
+
+Let $\theta$ denote an opponent type, such as ``well prepared in this forcing line'' or ``unfamiliar with this pawn structure.'' You begin with a prior belief $P(\theta)$. Each move supplies evidence $e$, producing a posterior belief:
+\[
+P(\theta\mid e)=\frac{P(e\mid\theta)P(\theta)}{P(e)}.
+\]
+You do not need numerical calculation at the board. The formula teaches direction: evidence matters in proportion to how differently likely it is under competing explanations.
+
+\section{Strong and weak evidence}
+A rapid sequence of accurate theoretical moves is evidence of preparation because it is more likely from a prepared player than an unprepared one. One aggressive pawn push is weak evidence of an ``attacking personality'' because many board reasons could explain it.
+
+\begin{center}
+\begin{tabularx}{.94\textwidth}{p{.27\textwidth}YY}
+\toprule
+\textbf{Observation} & \textbf{Possible update} & \textbf{Alternative explanation}\\
+\midrule
+Instant accurate novelty response & preparation more likely & forced or obvious move\\
+Long think in known structure & unfamiliarity more likely & recalling a deep line carefully\\
+Repeated queen-trade offers & draw preference more likely & trades objectively best\\
+Fast risky moves in time trouble & risk tolerance may be high & desperation from the position\\
+Quiet defensive retreat & resourcefulness more likely & only legal defense\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Good updating keeps alternative explanations alive.
+
+\section{Priors should be broad, not prejudiced}
+Ratings, past games, and known repertoire can create useful priors. They must not become rigid stories. A lower-rated player can calculate a position accurately; an attacking player can choose a quiet defense. Board evidence dominates labels.
+
+Use three confidence levels:
+
+\begin{description}[style=nextline,leftmargin=0pt]
+\item[Low confidence.] One ambiguous move; do not change strategy.
+\item[Medium confidence.] Several consistent observations; use as a tie-breaker.
+\item[High confidence.] Direct preparation evidence or repeated behavior; allow meaningful adjustment, still with objective safety.
+\end{description}
+
+\section{Bayesian candidate choice}
+Opponent beliefs matter most when objective candidates are close. Suppose two sound moves lead to different tasks:
+
+\begin{itemize}[leftmargin=1.4em]
+\item Move A enters a forcing theoretical line.
+\item Move B enters a strategic structure with many plans.
+\end{itemize}
+
+If the opponent has played the first fifteen moves instantly and accurately, increase the probability they are prepared. B may gain practical utility. If B is objectively inferior, the belief should not magically repair it; the update changes a close comparison, not the rules of chess.
+
+\section{Learning from time usage}
+Time is evidence, but noisy evidence. A long think can mean surprise, calculation, indecision, or an attempt to remember. A fast move can mean preparation, obviousness, or carelessness. Combine time with move quality and structure familiarity.
+
+A useful question is:
+
+\begin{quote}
+Which hypothesis makes the observed move-and-time pair least surprising?
+\end{quote}
+
+\begin{workedbox}[title={Worked example: updating without overreacting}]
+Your opponent plays an unusual opening move instantly. Prior: perhaps it is preparation. Evidence after two more moves: they spend a long time on a standard thematic break and choose an inaccurate plan. Posterior: the first move may have been a memorized surprise with shallow follow-up. You now prefer a normal sound continuation that asks structural questions rather than trying to ``refute'' the opening immediately.
+\end{workedbox}
+
+\begin{warningbox}[title={Narrative overfitting}]
+One move is rarely a personality test. Update beliefs gradually and keep the board's objective demands primary.
+\end{warningbox}
+
+\section{The belief ledger}
+Between games, not during every move, track:
+
+\begin{enumerate}[leftmargin=1.4em]
+\item hypothesis about the opponent;
+\item evidence for and against;
+\item confidence level;
+\item decision that would change if the hypothesis were true;
+\item post-game check against reality.
+\end{enumerate}
+
+This turns opponent modeling into calibrated learning rather than folklore.
+
+\begin{exercise}[Update a belief]
+Choose one observation from a game. State a prior hypothesis, the likelihood of the observation under that hypothesis and an alternative, and the direction of your update.
+\end{exercise}
+
+\begin{exercise}[Tie-breaker only]
+Find two objectively similar candidates. Explain how one plausible opponent belief would change their practical ranking and why it should not override a tactical refutation.
+\end{exercise}
+
+\oneminute{A player type is hidden; the board is not. Update beliefs when evidence is more likely under one explanation than another, keep alternatives alive, and use beliefs mainly to break close objective ties.}
+
+\chapter{Signals, threats, and credible commitment}
+\begin{learningbox}
+You will understand what moves can signal, distinguish an objective threat from a psychological message, test credibility through cost and commitment, and avoid empty ``intimidation'' chess.
+\end{learningbox}
+\chapterquestion{When does a move communicate a plan the opponent should rationally believe?}
+
+\section{Moves do two jobs}
+Every move changes the board. It can also communicate information about intentions, preparation, and willingness to enter certain positions. In game theory, a \term{signal} is an observed action that may convey hidden information about type or intention.
+
+Chess signals are constrained by perfect information: a move cannot make a false attack become objectively real. If a sacrifice does not work, confidence does not repair it. Yet a move may still alter beliefs and decision difficulty.
+
+\section{Cheap talk and costly signals}
+\term{Cheap talk} is communication that does not directly change payoffs or constrain future action. Facial confidence, fast play, or a dramatic gesture may influence a human but carries little strategic credibility.
+
+A \term{costly signal} commits real board resources. Advancing a kingside pawn reveals willingness to weaken squares for space or attack. Sacrificing material proves commitment because the material cannot simply be recalled. A queen retreat into a defensive role may credibly signal that the player values consolidation.
+
+The signal is credible when faking it would be too costly for a type without the claimed plan.
+
+\begin{formalbox}
+A signal separates types when different types prefer different signals because their costs differ. In chess terms, a well-prepared attacker may accept a pawn sacrifice whose compensation they understand, while an unprepared player pays a larger practical cost for the same commitment.
+\end{formalbox}
+
+\section{Threats as incentive design}
+A threat is not merely an announced future move. It changes the opponent's incentives by attaching a cost to inaction. A good threat often improves your position even if answered:
+
+\begin{itemize}[leftmargin=1.4em]
+\item it forces a passive defense;
+\item it provokes a weakening pawn move;
+\item it gains a useful tempo;
+\item it distracts a defender;
+\item it induces an unfavorable exchange;
+\item it restricts the opponent's candidate set.
+\end{itemize}
+
+The best threats are \term{dual-purpose}: the threatened action is real, and the move also improves a piece or structure.
+
+\section{Credibility test}
+Before relying on a threat, ask:
+
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2em]
+\item If ignored, does the threatened move actually improve my utility?
+\item Can the opponent answer while advancing their own plan?
+\item Am I willing and able to carry out the threat after the board changes?
+\item Does my threat depend on the opponent choosing a convenient defense?
+\item What did I give up to create it?
+\end{enumerate}
+
+A threat that you should not execute is not credible. The opponent may rationally ignore it.
+
+\section{Commitment devices}
+A commitment device removes your future freedom in order to influence current behavior. Castling to opposite wings, fixing the center, or sacrificing a pawn can commit the game to a type of struggle. Commitment can be valuable because it makes a plan credible and coordinates your pieces. It can be dangerous because new information cannot be accommodated.
+
+Preserve flexibility when uncertainty is high. Commit when the gain from coordination or force exceeds the option value lost.
+
+\begin{workedbox}[title={Worked example: the pawn storm signal}]
+You play h4 near the enemy king. Board effect: gain space and prepare h5. Signal: willingness to attack. Credibility depends on the center. If the opponent can open the center against your uncastled king, h4 may be an empty signal and a real weakness. If the center is locked and your pieces can join, the commitment is coherent. The board validates the message.
+\end{workedbox}
+
+\section{Inducing choices}
+Sometimes the goal is not to force one reply but to offer a menu in which every reply concedes something. A pin may let the opponent choose between structural damage and loss of activity. A passed pawn may force a rook into passivity, allowing invasion elsewhere.
+
+This is chess as mechanism design in miniature: shape the opponent's action set so their self-interested best response advances your plan.
+
+\begin{memorybox}
+A credible threat is a future action you would genuinely want to execute if ignored.
+\end{memorybox}
+
+\begin{exercise}[Signal or board effect?]
+Choose an aggressive move. Separate its objective board effects from the beliefs it might create. Which effects remain if the opponent feels no fear?
+\end{exercise}
+
+\begin{exercise}[Credibility audit]
+Find a threat from one of your games. Apply the five credibility questions. Was the threat forcing, useful when answered, or empty?
+\end{exercise}
+
+\oneminute{Moves can signal, but the board determines whether the signal has substance. Credibility comes from a real beneficial follow-through, often supported by cost or commitment.}
+
+\chapter{Prophylaxis and common knowledge}
+\begin{learningbox}
+You will use recursive opponent modeling, distinguish prevention from passivity, and choose between stopping, permitting, provoking, and exploiting an opponent's plan.
+\end{learningbox}
+\chapterquestion{What changes when both players know what the other player wants?}
+
+\section{Thinking one mind deeper}
+Prophylaxis begins with the opponent's desired action. But strong chess goes further:
+
+\begin{enumerate}[leftmargin=1.4em]
+\item What do they want?
+\item What do they think I want?
+\item How will they prevent my plan?
+\item Can I exploit the preventive move they are likely to choose?
+\end{enumerate}
+
+This recursive reasoning resembles higher-order beliefs in game theory. ``I know'' is first order. ``I know that they know'' is second order. Chess does not require infinite recursion; usually two levels reveal the key interaction.
+
+\section{Common knowledge}
+A fact is common knowledge when both players know it, both know that both know it, and so on. An obvious weak back rank can be common knowledge. The strategic battle then moves from discovering the weakness to exploiting the incentives it creates: perhaps neither side can move a rook because both understand the tactical consequence.
+
+Common knowledge can create stability. A tactical resource that is visible to both sides may never be played, yet it constrains moves for many turns.
+
+\section{Four responses to an opponent's plan}
+Do not automatically prevent everything. Choose among:
+
+\begin{description}[style=nextline,leftmargin=0pt]
+\item[Stop.] Make the plan impossible when it would be strong and prevention is cheap.
+\item[Permit.] Allow it when the resulting position is harmless or favorable.
+\item[Provoke.] Encourage it because the plan creates a weakness or overcommitment.
+\item[Race.] Ignore it because your own action is faster or more valuable.
+\end{description}
+
+Prophylaxis is therefore comparative, not fearful. The question is the utility of their plan relative to the cost of your response.
+
+\section{The free-move experiment}
+At each quiet decision, imagine the opponent can move twice. What would the first move prepare? This reveals latent plans that are not yet threats.
+
+Then ask a second question: if you stop that plan, what new freedom do they gain? A move that prevents one break may abandon another square. Good prophylaxis alters incentives without creating a larger concession.
+
+\begin{workedbox}[title={Worked example: invite the break}]
+The opponent wants a pawn break that seems to attack your center. You can prevent it with a weakening pawn move. Analysis shows the break actually opens a file for your rook and leaves their pawn isolated. The correct prophylactic choice is to permit or even provoke the break. Understanding the opponent's goal does not imply obeying it.
+\end{workedbox}
+
+\section{Useful restriction}
+Restriction reduces the opponent's effective action set. A square can be legally available but strategically unusable because entering it loses material. Restriction works through:
+
+\begin{itemize}[leftmargin=1.4em]
+\item controlling breaks;
+\item taking away piece squares;
+\item fixing targets;
+\item tying defenders;
+\item preserving a tactical punishment;
+\item exchanging the opponent's active piece.
+\end{itemize}
+
+The ideal restrictive move also improves your own position. Purely defensive prevention may cede the initiative.
+
+\section{Mutual plans as a matrix}
+For a difficult position, compare plans rather than single moves:
+
+\begin{center}
+\begin{tabularx}{.92\textwidth}{p{.22\textwidth}YY}
+\toprule
+& \textbf{They execute plan} & \textbf{They prevent yours}\\
+\midrule
+You execute yours & race: compare speed and force & test whether your plan still works\\
+You prevent theirs & compare cost of prevention & maneuvering equilibrium\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+This matrix prevents vague thinking. Name the plans, the move orders, and the resulting concessions.
+
+\begin{warningbox}
+Do not spend a useful move stopping an opponent's bad plan. Prevention has an opportunity cost.
+\end{warningbox}
+
+\begin{exercise}[Four responses]
+Identify an opponent plan from a game. Analyze one move each that would stop, permit, provoke, or race it. Rank the four responses.
+\end{exercise}
+
+\begin{exercise}[Second-order belief]
+State what your opponent wanted, what they likely believed you wanted, and how that belief shaped their move. What alternative could you have prepared?
+\end{exercise}
+
+\oneminute{Prophylaxis is not automatic prevention. Model the opponent's goal, then choose whether to stop, permit, provoke, or race it. Think one level deeper about what they believe you want.}
+
+\chapter{Biases, emotions, and distorted utility}
+\begin{learningbox}
+You will recognize common decision biases in chess, separate emotion from information, and use process guardrails to recover after surprise or error.
+\end{learningbox}
+\chapterquestion{Which opponent is more dangerous: the player across the board or the story in your head?}
+
+\section{Bounded rationality is systematic}
+Human limitations are not random. We make predictable errors. Recognizing them creates a practical advantage because a guardrail can be designed before emotion arrives.
+
+\section{Eight recurring biases}
+\paragraph{Confirmation bias.} Search for moves that prove your idea and ignore refutations. \textit{Guardrail:} after finding a move, spend one pass trying to defeat it.
+
+\paragraph{Anchoring.} Stay attached to an earlier evaluation such as ``I am winning.'' \textit{Guardrail:} rebuild the vector after every tactical or structural change.
+
+\paragraph{Sunk-cost bias.} Continue an attack because you already sacrificed material or time. \textit{Guardrail:} evaluate from the current state; previous investment is gone.
+
+\paragraph{Loss aversion.} Fear giving back material even when returning it secures the king or a draw. \textit{Guardrail:} compare terminal utility, not the pain of the concession.
+
+\paragraph{Recency bias.} Overweight the opponent's last tactic or your last blunder. \textit{Guardrail:} ask what the full position, not the last event, demands.
+
+\paragraph{Availability bias.} Choose a move because a memorable pattern resembles the position. \textit{Guardrail:} state the pattern's required conditions and verify them.
+
+\paragraph{Status bias.} Alter objective judgment because of rating, title, or reputation. \textit{Guardrail:} write the board evaluation before opponent-type adjustments.
+
+\paragraph{Action bias.} Feel compelled to attack or change the structure when waiting is best. \textit{Guardrail:} include one improving or waiting candidate.
+
+\section{Emotion as data, not command}
+Fear may signal that you have not checked a forcing line. Excitement may signal a tactical pattern. These feelings are useful prompts to inspect the state, but poor decision rules.
+
+Use the sequence:
+
+\begin{center}
+\textbf{Name} the feeling $\rightarrow$ \textbf{Locate} the board source $\rightarrow$ \textbf{Test} it with replies $\rightarrow$ \textbf{Choose} by utility.
+\end{center}
+
+If no board source appears, the emotion may be residue from rating, previous mistakes, or imagined expectations.
+
+\section{Tilt as preference corruption}
+After a blunder, a player may prefer a low-probability swindle to a high-probability draw because accepting the draw feels like admitting failure. The preference ordering has shifted from ``maximize score'' to ``repair identity.'' That shift is rarely deliberate.
+
+A reset protocol:
+
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2em]
+\item Sit physically still and take one slow breath.
+\item Say the material count and immediate threats.
+\item Delete the previous evaluation.
+\item Identify the new result goal.
+\item Choose one robust candidate before seeking tricks.
+\end{enumerate}
+
+\section{The narrative audit}
+Players often tell stories: ``They are attacking,'' ``I have the bishop pair,'' ``This pawn must be weak.'' Convert every story into falsifiable board claims.
+
+\begin{center}
+\begin{tabularx}{.92\textwidth}{YY}
+\toprule
+\textbf{Story} & \textbf{Testable claim}\\
+\midrule
+They are attacking & list attackers, entry squares, forcing moves, and defenders\\
+My bishop pair is strong & show open diagonals and targets on both wings\\
+Their pawn is weak & show that it can be fixed, attacked, and not advanced\\
+I have compensation & identify time, king safety, activity, or structure equal to material\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{workedbox}[title={Worked example: fear of the higher-rated opponent}]
+You see a sound simplifying move but reject it because the opponent ``must know the ending better.'' This may be true, but it is not yet decision-relevant. Evaluate the ending. Compare it with the tactical risk of alternatives. Use rating only as a small belief adjustment after objective work, not as a replacement for it.
+\end{workedbox}
+
+\begin{memorybox}
+Feelings can choose the question. They should not choose the move.
+\end{memorybox}
+
+\begin{exercise}[Bias diagnosis]
+Select one serious error and classify the dominant bias. Write a one-sentence guardrail that would have interrupted it.
+\end{exercise}
+
+\begin{exercise}[Rewrite a story]
+Take three narrative statements from your annotations and convert each into measurable board claims.
+\end{exercise}
+
+\oneminute{Biases systematically distort search and utility. Name emotion, locate its board source, test it, and choose by current future outcomes. Use prewritten guardrails after surprise and error.}
+
+\chapter{Repeated encounters, reputation, and adaptation}
+\begin{learningbox}
+You will view matches and tournaments as repeated games, understand reputation as a strategic state, adapt without overfitting, and manage information across encounters.
+\end{learningbox}
+\chapterquestion{How can today's opening choice change the opponent's preparation next month?}
+
+\section{One game changes the next}
+Formal over-the-board chess ends at the result. Competitive relationships continue. Opponents remember openings, time habits, risk choices, draw behavior, and emotional reactions. A match or tournament series is a repeated game with learning.
+
+Your broader state includes a public history:
+\[
+H=(\text{past openings, results, visible habits, reputation}).
+\]
+This history changes beliefs and preparation incentives.
+
+\section{Reputation as a commitment asset}
+A reputation for tactical alertness can deter speculative sacrifices. A reputation for accepting early draws may encourage opponents to offer them. A reputation for one narrow opening can invite deep preparation.
+
+Reputation is useful when it credibly reflects skill or policy. It is costly when it makes you predictable. The solution is not image management at the expense of chess, but awareness that repeated behavior becomes information.
+
+\section{Exploit, explore, or conceal}
+Across repeated games you face three learning choices:
+
+\begin{description}[style=nextline,leftmargin=0pt]
+\item[Exploit.] Use a known opponent weakness now.
+\item[Explore.] Choose a line that reveals how they respond, accepting some immediate uncertainty.
+\item[Conceal.] Avoid revealing a prepared weapon before a more important game.
+\end{description}
+
+In most ordinary tournaments, maximizing the current game's score dominates elaborate concealment. In a match, information management can matter more because the same branches may recur.
+
+\section{Adaptation loops}
+After each encounter:
+
+\begin{enumerate}[leftmargin=1.4em]
+\item update your beliefs about the opponent;
+\item predict how they will update beliefs about you;
+\item identify what preparation each side now has an incentive to change;
+\item choose whether to repeat, vary, or reverse course.
+\end{enumerate}
+
+A common match tactic is a second-level adaptation: repeat a line long enough that the opponent prepares an improvement, then switch to a different system. This works only if the new system is sound and prepared; otherwise strategic theater replaces chess quality.
+
+\section{Do not overfit one game}
+A single result contains noise from tactics, time trouble, and mood. Distinguish:
+
+\begin{itemize}[leftmargin=1.4em]
+\item \textbf{stable traits:} recurring time usage, long-term repertoire, structural preferences;
+\item \textbf{state effects:} fatigue, event situation, surprise, one tactical oversight;
+\item \textbf{position effects:} the board simply demanded the observed move.
+\end{itemize}
+
+Update more after repeated evidence or a highly diagnostic choice.
+
+\section{Tournament ecology}
+Even when players do not meet repeatedly, standings create indirect strategic interaction. Your result changes pairings, tie-breaks, and what other players need. Draw incentives may shift by round. The correct unit of utility is sometimes the event, not the isolated game.
+
+Still, never assume collusion or behavior outside the rules. Model only legitimate incentives and choose within fair-play standards.
+
+\begin{workedbox}[title={Worked example: repeat the opening?}]
+You won a game because the opponent mishandled a structure, not because the opening was objectively strong. In the rematch, repeating may invite targeted repair. Ask whether the line remains sound after their likely improvement. If yes, repetition can test whether their understanding changed. If no, the previous result is a poor reason to repeat.
+\end{workedbox}
+
+\begin{warningbox}
+Results are evidence about decisions, not proof that every decision was good. A bad opening can win; a good plan can lose after a later blunder.
+\end{warningbox}
+
+\begin{exercise}[Second-game plan]
+Choose a past opponent you may face again. List what they learned about you, what you learned about them, and one likely adaptation by each side.
+\end{exercise}
+
+\begin{exercise}[Trait or state?]
+Classify five observations from an opponent's games as stable trait, temporary state, or position effect. State your confidence.
+\end{exercise}
+
+\oneminute{Repeated play creates a public history that shapes preparation and beliefs. Exploit stable evidence, explore when learning is valuable, conceal only when stakes justify it, and do not overfit one result.}

@@ -1,0 +1,191 @@
+\documentclass[11pt,openany,oneside]{book}
+
+\usepackage[paperwidth=7in,paperheight=10in,top=0.72in,bottom=0.76in,inner=0.78in,outer=0.68in,headheight=15pt]{geometry}
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Pagella}
+\setsansfont{TeX Gyre Heros}
+\setmonofont{DejaVu Sans Mono}
+\IfFontExistsTF{DejaVu Sans}{\newfontfamily\chessfont{DejaVu Sans}}{\newfontfamily\chessfont{FreeSerif}}
+\usepackage[english]{babel}
+\usepackage{microtype}
+\usepackage{mathtools,amssymb}
+\usepackage{booktabs,tabularx,longtable,array,multicol}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,backgrounds,fit}
+\usepackage[most]{tcolorbox}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{needspace}
+\usepackage{setspace}
+\usepackage{ragged2e}
+
+% Be tolerant of an accidental repeated display closer in modular source files.
+% A normal \] still closes display math; a second one in text mode is ignored.
+\AtBeginDocument{%
+  \let\StrictDisplayClose\]
+  \renewcommand{\]}{\ifmmode\StrictDisplayClose\fi}%
+}
+
+\definecolor{Ink}{HTML}{18242B}
+\definecolor{Navy}{HTML}{17324D}
+\definecolor{Teal}{HTML}{19747E}
+\definecolor{PaleTeal}{HTML}{E7F3F2}
+\definecolor{Gold}{HTML}{C5912F}
+\definecolor{PaleGold}{HTML}{F7F0DF}
+\definecolor{Coral}{HTML}{A8473A}
+\definecolor{PaleCoral}{HTML}{F8EAE7}
+\definecolor{BoardLight}{HTML}{EADFCB}
+\definecolor{BoardDark}{HTML}{8EA5A3}
+\definecolor{SoftGray}{HTML}{F2F4F5}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=Navy,
+  citecolor=Teal,
+  urlcolor=Teal,
+  pdftitle={Thinking in Chess: An Intuitive Game-Theoretic Textbook},
+  pdfauthor={OpenAI},
+  pdfsubject={Chess thinking through game theory},
+  pdfkeywords={chess, game theory, minimax, strategy, utility, belief, Bayesian reasoning}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.48em}
+\setlength{\emergencystretch}{2em}
+\linespread{1.04}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{1}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\color{Navy}\nouppercase{\leftmark}}
+\fancyhead[R]{\small\sffamily\color{Teal}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{BoardDark}\leaders\hrule height \headrulewidth\hfill}}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\sffamily\color{Teal}\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily}
+  {\filleft\fontsize{46}{46}\selectfont\bfseries\color{Teal}\thechapter}
+  {-0.5ex}
+  {\titlerule[0.8pt]\vspace{0.8ex}\Huge\bfseries\color{Navy}}
+  [\vspace{0.7ex}\color{BoardDark}\titlerule]
+\titleformat{name=\chapter,numberless}[display]
+  {\normalfont\sffamily}
+  {}
+  {0pt}
+  {\Huge\bfseries\color{Navy}}
+  [\vspace{0.7ex}\color{BoardDark}\titlerule]
+\titleformat{\section}{\Large\sffamily\bfseries\color{Navy}}{\thesection}{0.55em}{}
+\titleformat{\subsection}{\large\sffamily\bfseries\color{Teal}}{\thesubsection}{0.5em}{}
+\titlespacing*{\chapter}{0pt}{-20pt}{18pt}
+\titlespacing*{\section}{0pt}{1.5em}{0.55em}
+\titlespacing*{\subsection}{0pt}{1.2em}{0.4em}
+
+\newtcolorbox{intuitionbox}[1][]{enhanced,breakable,colback=PaleTeal,colframe=Teal,boxrule=0.7pt,arc=2mm,left=3mm,right=3mm,top=2mm,bottom=2mm,title={Intuition},fonttitle=\sffamily\bfseries,#1}
+\newtcolorbox{memorybox}[1][]{enhanced,breakable,colback=PaleGold,colframe=Gold,boxrule=0.7pt,arc=2mm,left=3mm,right=3mm,top=2mm,bottom=2mm,title={Memory hook},fonttitle=\sffamily\bfseries,#1}
+\newtcolorbox{formalbox}[1][]{enhanced,breakable,colback=SoftGray,colframe=Navy,boxrule=0.6pt,arc=1mm,left=3mm,right=3mm,top=2mm,bottom=2mm,title={Formal lens},fonttitle=\sffamily\bfseries,#1}
+\newtcolorbox{warningbox}[1][]{enhanced,breakable,colback=PaleCoral,colframe=Coral,boxrule=0.7pt,arc=2mm,left=3mm,right=3mm,top=2mm,bottom=2mm,title={Common error},fonttitle=\sffamily\bfseries,#1}
+\newtcolorbox{workedbox}[1][]{enhanced,breakable,colback=white,colframe=BoardDark,boxrule=0.8pt,arc=1mm,left=3mm,right=3mm,top=2mm,bottom=2mm,title={Worked example},fonttitle=\sffamily\bfseries\color{Navy},#1}
+\newtcolorbox{learningbox}[1][]{enhanced,breakable,colback=white,colframe=Teal,boxrule=0pt,borderline west={2.4pt}{0pt}{Teal},left=3mm,right=2mm,top=1mm,bottom=1mm,title={By the end of this chapter},fonttitle=\sffamily\bfseries\color{Teal},#1}
+
+\newcounter{exercise}[chapter]
+\renewcommand{\theexercise}{\thechapter.\arabic{exercise}}
+\newenvironment{exercise}[1][]{%
+  \refstepcounter{exercise}%
+  \begin{tcolorbox}[enhanced,breakable,colback=white,colframe=Gold,boxrule=0.6pt,arc=1mm,left=3mm,right=3mm,top=2mm,bottom=2mm,title={Exercise \theexercise\if\relax\detokenize{#1}\relax\else: #1\fi},fonttitle=\sffamily\bfseries]
+}{\end{tcolorbox}}
+
+\newcommand{\chapterquestion}[1]{\begin{intuitionbox}[title={The question underneath the chapter}]#1\end{intuitionbox}}
+\newcommand{\oneminute}[1]{\begin{memorybox}[title={The chapter in one minute}]#1\end{memorybox}}
+\newcommand{\move}[1]{\texttt{#1}}
+\newcommand{\term}[1]{\textbf{#1}}
+\newcommand{\solution}[2]{\Needspace{4\baselineskip}\paragraph{Exercise #1.} #2}
+
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}p{0.16\textwidth}}
+
+% Chess piece glyphs from Unicode.
+\newcommand{\WKing}{\char"2654}
+\newcommand{\WQueen}{\char"2655}
+\newcommand{\WRook}{\char"2656}
+\newcommand{\WBishop}{\char"2657}
+\newcommand{\WKnight}{\char"2658}
+\newcommand{\WPawn}{\char"2659}
+\newcommand{\BKing}{\char"265A}
+\newcommand{\BQueen}{\char"265B}
+\newcommand{\BRook}{\char"265C}
+\newcommand{\BBishop}{\char"265D}
+\newcommand{\BKnight}{\char"265E}
+\newcommand{\BPawn}{\char"265F}
+
+\newcommand{\DrawBoard}{%
+  \foreach \x/\fl in {0/a,1/b,2/c,3/d,4/e,5/f,6/g,7/h}{%
+    \foreach \y/\rk in {0/1,1/2,2/3,3/4,4/5,5/6,6/7,7/8}{%
+      \pgfmathtruncatemacro{\shadeindex}{mod(\x+\y,2)}%
+      \ifnum\shadeindex=0\relax
+        \fill[BoardDark] (\x,\y) rectangle ++(1,1);%
+      \else
+        \fill[BoardLight] (\x,\y) rectangle ++(1,1);%
+      \fi
+      \coordinate (sq-\fl\rk) at (\x+0.5,\y+0.5);%
+    }%
+    \node[font=\sffamily\scriptsize,text=Ink] at (\x+0.5,-0.24) {\fl};%
+  }%
+  \foreach \y/\rk in {0/1,1/2,2/3,3/4,4/5,5/6,6/7,7/8}{%
+    \node[font=\sffamily\scriptsize,text=Ink] at (-0.24,\y+0.5) {\rk};%
+  }%
+  \draw[Ink,line width=0.9pt] (0,0) rectangle (8,8);%
+}
+\newcommand{\Put}[2]{\node[font=\chessfont\fontsize{21}{21}\selectfont,text=Ink] at (sq-#2) {#1};}
+\newenvironment{positiondiagram}[1]{%
+  \begin{center}\def\poscaption{#1}\begin{tikzpicture}[x=0.60cm,y=0.60cm]\DrawBoard
+}{%
+  \end{tikzpicture}\captionof{figure}{\poscaption}\end{center}
+}
+
+\newcommand{\StartingPieces}{%
+\Put{\WRook}{a1}\Put{\WKnight}{b1}\Put{\WBishop}{c1}\Put{\WQueen}{d1}\Put{\WKing}{e1}\Put{\WBishop}{f1}\Put{\WKnight}{g1}\Put{\WRook}{h1}%
+\Put{\WPawn}{a2}\Put{\WPawn}{b2}\Put{\WPawn}{c2}\Put{\WPawn}{d2}\Put{\WPawn}{e2}\Put{\WPawn}{f2}\Put{\WPawn}{g2}\Put{\WPawn}{h2}%
+\Put{\BRook}{a8}\Put{\BKnight}{b8}\Put{\BBishop}{c8}\Put{\BQueen}{d8}\Put{\BKing}{e8}\Put{\BBishop}{f8}\Put{\BKnight}{g8}\Put{\BRook}{h8}%
+\Put{\BPawn}{a7}\Put{\BPawn}{b7}\Put{\BPawn}{c7}\Put{\BPawn}{d7}\Put{\BPawn}{e7}\Put{\BPawn}{f7}\Put{\BPawn}{g7}\Put{\BPawn}{h7}%
+}
+
+\begin{document}
+\frontmatter
+\input{frontmatter}
+\tableofcontents
+\listoffigures
+\listoftables
+
+\mainmatter
+\part{Model the Decision}
+\input{part1}
+
+\part{Reason Through the Tree}
+\input{part2}
+
+\part{Choose Under Risk and Limits}
+\input{part3}
+
+\part{Think About Minds}
+\input{part4}
+
+\part{Apply the Framework}
+\input{part5}
+
+\part{Practice Until It Is Automatic}
+\input{part6}
+
+\appendix
+\part{Reference and Solutions}
+\input{appendices}
+
+\backmatter
+\input{backmatter}
+\end{document}
