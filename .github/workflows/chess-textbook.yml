@@ -102,9 +102,49 @@ jobs:
       - name: Name the finished book
         run: cp generated/chess-textbook/main.pdf generated/chess-textbook/Thinking_in_Chess.pdf
 
-      - name: Upload PDF artifact
+      - name: Package editable LaTeX source
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZIP_DEFLATED, ZipFile
+
+          root = Path('generated/chess-textbook')
+          output = root / 'Thinking_in_Chess_LaTeX.zip'
+          excluded_names = {
+              'BUILD_REQUEST.md',
+              'Thinking_in_Chess.pdf',
+              'Thinking_in_Chess_LaTeX.zip',
+              'main.pdf',
+          }
+          excluded_suffixes = {
+              '.aux', '.fdb_latexmk', '.fls', '.log', '.out', '.toc',
+              '.lof', '.lot', '.xdv', '.synctex.gz'
+          }
+
+          with ZipFile(output, 'w', compression=ZIP_DEFLATED) as archive:
+              for path in sorted(root.rglob('*')):
+                  if not path.is_file() or path.name in excluded_names:
+                      continue
+                  if any(path.name.endswith(suffix) for suffix in excluded_suffixes):
+                      continue
+                  relative = path.relative_to(root)
+                  archive.write(path, Path('Thinking_in_Chess_LaTeX') / relative)
+          PY
+
+      - name: Upload PDF and source artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Thinking-in-Chess-PDF
-          path: generated/chess-textbook/Thinking_in_Chess.pdf
+          name: Thinking-in-Chess-Deliverables
+          path: |
+            generated/chess-textbook/Thinking_in_Chess.pdf
+            generated/chess-textbook/Thinking_in_Chess_LaTeX.zip
           if-no-files-found: error
+
+      - name: Publish direct-download deliverables to build branch
+        if: github.event_name == 'pull_request'
+        run: |
+          git add generated/chess-textbook/Thinking_in_Chess.pdf generated/chess-textbook/Thinking_in_Chess_LaTeX.zip
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish Thinking in Chess deliverables [skip ci]'
+            git push origin HEAD:${{ github.head_ref }}
+          fi
