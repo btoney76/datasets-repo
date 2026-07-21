@@ -31,30 +31,65 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
 
+          root = Path('generated/chess-textbook')
+
+          # Generic list fix: next-line descriptions need a positive margin.
+          for path in root.glob('*.tex'):
+              text = path.read_text(encoding='utf-8')
+              text = text.replace(
+                  r'\begin{description}[style=nextline,leftmargin=0pt]',
+                  r'\begin{description}[style=nextline,leftmargin=2.4em,labelsep=.5em]'
+              )
+              path.write_text(text, encoding='utf-8')
+
           edits = {
-              Path('generated/chess-textbook/main.tex'): [
+              root / 'main.tex': [
                   (
                       'outer=0.68in,headheight=15pt',
                       'outer=0.68in,headheight=22pt'
                   ),
+                  (
+                      r'\usepackage{caption}',
+                      r'\usepackage[hypcap=false]{caption}'
+                  ),
+                  (
+                      r'\fancyhead[L]{\small\sffamily\color{Navy}\nouppercase{\leftmark}}',
+                      r'\fancyhead[L]{\footnotesize\sffamily\color{Navy}\nouppercase{\leftmark}}'
+                  ),
+                  (
+                      r'{\titlerule[0.8pt]\vspace{0.8ex}\Huge\bfseries\color{Navy}}',
+                      r'{\titlerule[0.8pt]\vspace{0.8ex}\huge\bfseries\color{Navy}\raggedright}'
+                  ),
+                  (
+                      r'{\Huge\bfseries\color{Navy}}',
+                      r'{\huge\bfseries\color{Navy}\raggedright}'
+                  ),
               ],
-              Path('generated/chess-textbook/part3.tex'): [
+              root / 'frontmatter.tex': [
+                  (
+                      r'\begin{longtable}{p{.27\textwidth}p{.29\textwidth}p{.36\textwidth}}',
+                      r'\begin{longtable}{@{}p{.25\textwidth}p{.28\textwidth}p{.34\textwidth}@{}}'
+                  ),
+              ],
+              root / 'part3.tex': [
                   (
                       'where $\\lambda$ rises as clock time becomes scarce.\n\\]\nThe expression is conceptual:',
                       'where $\\lambda$ rises as clock time becomes scarce.\nThe expression is conceptual:'
                   ),
               ],
-              Path('generated/chess-textbook/part5.tex'): [
+              root / 'part5.tex': [
                   (
                       'and $R$ is execution and refutation risk.\n\\]\nA forcing mate has little discount.',
                       'and $R$ is execution and refutation risk.\nA forcing mate has little discount.'
                   ),
               ],
-              Path('generated/chess-textbook/appendices.tex'): [
+              root / 'part6.tex': [
                   (
-                      '\\begin{description}[style=nextline,leftmargin=0pt]',
-                      '\\begin{description}[style=nextline,leftmargin=2.4em,labelsep=.5em]'
+                      r'\begin{longtable}{p{.07\textwidth}p{.23\textwidth}p{.28\textwidth}p{.31\textwidth}}',
+                      r'\begin{longtable}{@{}p{.06\textwidth}p{.21\textwidth}p{.27\textwidth}p{.34\textwidth}@{}}'
                   ),
+              ],
+              root / 'appendices.tex': [
                   (
                       '\\begin{tabular}{lccl}\n\\toprule\nPiece & Common prior & Main strength & Main dependence\\\\\n\\midrule',
                       '\\begin{tabularx}{.94\\textwidth}{p{.13\\textwidth}p{.16\\textwidth}YY}\n\\toprule\nPiece & Common prior & Main strength & Main dependence\\\\\n\\midrule'
@@ -64,8 +99,8 @@ jobs:
                       '\\end{tabularx}\n\\end{center}\n\nThese are priors, not exchange commands.'
                   ),
                   (
-                      '\\begin{tabularx}{\\linewidth}{p{.08\\linewidth}YYY}',
-                      '\\begin{tabularx}{\\linewidth}{p{.14\\linewidth}YYY}'
+                      r'\begin{tabularx}{\linewidth}{p{.08\linewidth}YYY}',
+                      r'\begin{tabularx}{\linewidth}{p{.14\linewidth}YYY}'
                   ),
               ],
           }
@@ -82,9 +117,9 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add generated/chess-textbook/main.tex generated/chess-textbook/part3.tex generated/chess-textbook/part5.tex generated/chess-textbook/appendices.tex
+          git add generated/chess-textbook/*.tex
           if ! git diff --cached --quiet; then
-            git commit -m 'Apply LaTeX source and layout QA fixes [skip ci]'
+            git commit -m 'Apply final LaTeX typography fixes [skip ci]'
             git push origin HEAD:${{ github.head_ref }}
           fi
 
@@ -107,9 +142,28 @@ jobs:
             cp generated/chess-textbook/main.log build-diagnostics/main.log
             tail -n 220 generated/chess-textbook/main.log > build-diagnostics/compile-tail.txt
             grep -E 'Missing character|Overfull \\hbox|Overfull \\vbox|Package .* Warning|Output written' generated/chess-textbook/main.log > build-diagnostics/qa-summary.txt || true
+            python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          log = Path('generated/chess-textbook/main.log').read_text(encoding='utf-8', errors='replace').splitlines()
+          current = 'main.tex'
+          output = []
+          markers = ('Missing character', 'Overfull \\hbox', 'Overfull \\vbox', 'Negative labelwidth')
+          for index, line in enumerate(log):
+              matches = re.findall(r'\((?:\./)?([^()\s]+\.tex)', line)
+              if matches:
+                  current = matches[-1]
+              if any(marker in line for marker in markers):
+                  output.append(f'{current}: {line}')
+                  for continuation in log[index + 1:index + 3]:
+                      output.append(f'    {continuation}')
+          Path('build-diagnostics/qa-context.txt').write_text('\n'.join(output) + ('\n' if output else 'No clipping-class warnings found.\n'), encoding='utf-8')
+          PY
           else
             printf 'No main.log was produced.\n' > build-diagnostics/compile-tail.txt
             cp build-diagnostics/compile-tail.txt build-diagnostics/qa-summary.txt
+            cp build-diagnostics/compile-tail.txt build-diagnostics/qa-context.txt
           fi
 
       - name: Upload compiler diagnostics
@@ -126,12 +180,20 @@ jobs:
           mkdir -p build-reports
           cp build-diagnostics/compile-tail.txt build-reports/chess-compile-tail.txt
           cp build-diagnostics/qa-summary.txt build-reports/chess-qa-summary.txt
+          cp build-diagnostics/qa-context.txt build-reports/chess-qa-context.txt
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add build-reports/chess-compile-tail.txt build-reports/chess-qa-summary.txt
+          git add build-reports/chess-compile-tail.txt build-reports/chess-qa-summary.txt build-reports/chess-qa-context.txt
           if ! git diff --cached --quiet; then
             git commit -m 'Publish chess compiler diagnostic [skip ci]'
             git push origin HEAD:${{ github.head_ref }}
+          fi
+
+      - name: Enforce clipping-free layout
+        run: |
+          if grep -Eq 'Missing character|Overfull \\hbox|Overfull \\vbox|Negative labelwidth' generated/chess-textbook/main.log; then
+            echo 'Layout QA found clipping-class warnings. See chess-qa-context.txt.'
+            exit 1
           fi
 
       - name: Verify compiled PDF exists
