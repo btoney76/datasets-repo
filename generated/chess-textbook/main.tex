@@ -15,7 +15,7 @@
 \usetikzlibrary{arrows.meta,positioning,calc,shapes.geometric,backgrounds,fit}
 \usepackage[most]{tcolorbox}
 \usepackage{xcolor}
-\usepackage{caption}
+\usepackage[hypcap=false]{caption}
 \usepackage{fancyhdr}
 \usepackage{titlesec}
 \usepackage{hyperref}
@@ -63,7 +63,7 @@
 
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\sffamily\color{Navy}\nouppercase{\leftmark}}
+\fancyhead[L]{\footnotesize\sffamily\color{Navy}\nouppercase{\leftmark}}
 \fancyhead[R]{\small\sffamily\color{Teal}\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{BoardDark}\leaders\hrule height \headrulewidth\hfill}}
@@ -73,13 +73,13 @@
   {\normalfont\sffamily}
   {\filleft\fontsize{46}{46}\selectfont\bfseries\color{Teal}\thechapter}
   {-0.5ex}
-  {\titlerule[0.8pt]\vspace{0.8ex}\Huge\bfseries\color{Navy}}
+  {\titlerule[0.8pt]\vspace{0.8ex}\huge\bfseries\color{Navy}\raggedright}
   [\vspace{0.7ex}\color{BoardDark}\titlerule]
 \titleformat{name=\chapter,numberless}[display]
   {\normalfont\sffamily}
   {}
   {0pt}
-  {\Huge\bfseries\color{Navy}}
+  {\huge\bfseries\color{Navy}\raggedright}
   [\vspace{0.7ex}\color{BoardDark}\titlerule]
 \titleformat{\section}{\Large\sffamily\bfseries\color{Navy}}{\thesection}{0.55em}{}
 \titleformat{\subsection}{\large\sffamily\bfseries\color{Teal}}{\thesubsection}{0.5em}{}
