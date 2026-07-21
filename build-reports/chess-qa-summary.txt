@@ -1,2 +1,0 @@
-Package microtype Warning: Unable to apply patch `footnote' on input line 159.
-Output written on main.xdv (147 pages, 2895168 bytes).
