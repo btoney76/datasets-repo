@@ -1,0 +1,245 @@
+\chapter{The post-game learning loop}
+\begin{learningbox}
+You will review decisions before consulting an engine, separate process errors from knowledge errors, update your model from counterfactuals, and convert one game into a small set of reusable rules.
+\end{learningbox}
+\chapterquestion{How do you learn from a game without merely collecting the engine's preferred moves?}
+
+\section{A result is a noisy label}
+Winning does not prove your decisions were good; losing does not prove they were bad. The result is one terminal sample from a tree containing missed opportunities, robust choices, and later errors. Review should estimate decision quality, not reward hindsight.
+
+The unit of learning is the \term{critical decision}: a state where candidates differed materially in utility, where you spent significant time, or where evaluation changed.
+
+\section{The five-pass review}
+\paragraph{Pass 1: reconstruct without assistance.} Record what you thought, what candidates you considered, your clock, and your evaluation. Do not rewrite memory to match the truth.
+
+\paragraph{Pass 2: opponent model.} For each critical state, identify the opponent's best plan and best response. Mark surprises and what they revealed.
+
+\paragraph{Pass 3: counterfactual tree.} Analyze the candidates you rejected. Use a small tree and stable leaves. State what evidence would have changed your choice.
+
+\paragraph{Pass 4: external verification.} Consult an engine, database, coach, or endgame reference. Use the tool to test hypotheses, not to replace them. Ask why the recommendation works and what refutes your move.
+
+\paragraph{Pass 5: compress.} Create one pattern card, one process guardrail, and one knowledge task. More than three takeaways often means none will be retained.
+
+\section{Error taxonomy}
+Classify the failure before prescribing study.
+
+\begin{center}
+\begin{tabularx}{.95\textwidth}{p{.24\textwidth}YY}
+\toprule
+\textbf{Error type} & \textbf{Diagnostic} & \textbf{Training response}\\
+\midrule
+State error & missed piece, right, threat, or side effect & board scan and visualization\\
+Candidate error & best move never entered the set & CCT+I and opponent free-move drills\\
+Reply error & assumed cooperative response & best-response and SAFE drills\\
+Calculation error & tree branch or move order wrong & short forcing-line calculation\\
+Evaluation error & leaf features weighted poorly & comparative position study\\
+Utility error & event, clock, or risk misranked & pre-game utility card\\
+Time error & thinking budget misallocated & clock map and stop rules\\
+Belief error & over- or under-updated opponent model & evidence ledger\\
+Execution error & knew idea but failed technique & endgame or conversion drills\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+A tactical puzzle will not cure a utility error. Opening memorization will not cure a reply-first failure.
+
+\section{Counterfactual discipline}
+Ask three counterfactual questions:
+
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2em]
+\item If the opponent had chosen their best reply, would my move still be acceptable?
+\item If my evaluation of one feature were wrong, would the move remain robust?
+\item If I had half the time, which simpler process would have reached the decision?
+\end{enumerate}
+
+Counterfactuals reveal causality. Perhaps the move won only because the opponent blundered; perhaps it was robust despite losing later.
+
+\section{Using engines without outsourcing thought}
+An engine is strongest as a falsifier and comparator.
+
+\begin{itemize}[leftmargin=1.4em]
+\item Compare your top three candidates, not only the played move.
+\item Hide the principal variation at first; guess the refutation.
+\item Ask which evaluation component changed.
+\item Check at several depths for tactical stability.
+\item Translate the line into a verbal reason and a trigger condition.
+\item Revisit the position days later without the engine.
+\end{itemize}
+
+Do not memorize decimal evaluations. A shift from $+0.4$ to $-0.8$ matters because of the underlying tactical or strategic reason, not because the digits are magical.
+
+\begin{workedbox}[title={Worked example: the wrong lesson from a blunder}]
+You lose after missing a knight fork. Engine review shows your previous pawn break was also inferior. The tempting takeaway is ``study knight forks.'' Error taxonomy shows two failures: a reply scan missed the fork, and an evaluation error overvalued space from the pawn break. Create two tasks: a SAFE trigger for loose king-and-queen geometry, and a structural study of the break. One label would hide half the lesson.
+\end{workedbox}
+
+\section{Pattern cards and spaced retrieval}
+A useful card has four lines:
+
+\begin{enumerate}[leftmargin=1.4em]
+\item \textbf{Trigger:} the visible configuration.
+\item \textbf{Question:} what to ask.
+\item \textbf{Action:} typical candidate or method.
+\item \textbf{Exception:} condition that makes it fail.
+\end{enumerate}
+
+Example: Trigger---queen and king share a knight-fork geometry. Question---can a tempo move create the fork? Action---scan checks and attacks on queen. Exception---the knight is pinned or the destination square is defended tactically.
+
+Review cards after one day, one week, and one month. Retrieval is the practice; rereading is not enough.
+
+\section{Process metrics}
+Track controllable behaviors rather than rating alone:
+
+\begin{itemize}[leftmargin=1.4em]
+\item percentage of critical moves where you named an opponent best reply;
+\item number of blunders caught by SAFE before moving;
+\item time spent on truly critical decisions;
+\item number of games reviewed before engine use;
+\item recurrence rate of the same error category;
+\item conversion and defense outcomes by position type.
+\end{itemize}
+
+These metrics are diagnostic, not moral scores.
+
+\begin{memorybox}
+A game is learned when it changes a future question, not when its engine line has been copied.
+\end{memorybox}
+
+\begin{exercise}[Five-pass review]
+Apply the five passes to one complete game. Produce exactly three outputs: a pattern card, a process guardrail, and a knowledge task.
+\end{exercise}
+
+\begin{exercise}[Error taxonomy]
+Classify the five most important mistakes in a game. Which category recurred, and what training intervention directly targets it?
+\end{exercise}
+
+\oneminute{Review decisions, not only results. Reconstruct first, build counterfactuals, verify last, classify the error, and compress the game into one pattern, one guardrail, and one knowledge task.}
+
+\chapter{A twelve-week course in thinking}
+\begin{learningbox}
+You will turn the book into a sustainable study program, practice one cognitive skill at a time, measure transfer to games, and integrate the full decision loop.
+\end{learningbox}
+\chapterquestion{How do ideas become board habits?}
+
+\section{The training principle}
+Knowledge becomes skill through retrieval under conditions resembling play. Each week therefore contains four elements:
+
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2em]
+\item \textbf{Read:} understand one lens.
+\item \textbf{Drill:} practice it in isolated positions.
+\item \textbf{Play:} use one process goal in real games.
+\item \textbf{Review:} measure whether the process appeared.
+\end{enumerate}
+
+Do not try to ``use the entire book'' on every move. Automation comes from narrow focus followed by integration.
+
+\section{Weekly plan}
+\begin{longtable}{p{.07\textwidth}p{.23\textwidth}p{.28\textwidth}p{.31\textwidth}}
+\toprule
+\textbf{Wk} & \textbf{Focus} & \textbf{Drill} & \textbf{Game process goal}\\
+\midrule
+1 & Frame and state & reconstruct positions from notation; list missing facts & say side to move, material, checks, loose pieces\\
+2 & Utility and evaluation & rate $M,K,A,P,S,T,O$ in ten positions & name result need and dominant feature\\
+3 & Candidates & CCT+I sets without moving pieces & generate at least three distinct functions\\
+4 & Best responses & opponent free-move and SAFE drills & state strongest reply before moving\\
+5 & Minimax & compare security levels in short trees & reject tactical cliffs\\
+6 & Backward induction & mate, promotion, and material terminal targets & stop at stable leaves\\
+7 & Bounded search & timed candidate triage & spend time by volatility and irreversibility\\
+8 & Expected utility & rank equal positions by error asymmetry & choose practical robustness among sound moves\\
+9 & Beliefs and prophylaxis & evidence ledgers and four responses to plans & ask what the last move revealed and enabled\\
+10 & Openings and middlegames & convert lines to trees; imbalance maps & leave memory when conditions change\\
+11 & Endgames and event utility & final-recapture and result-need exercises & calculate terminal transition before exchange\\
+12 & Review and integration & full five-pass review & use MODEL--REPLY--VALUE--DECIDE--UPDATE\\
+\bottomrule
+\end{longtable}
+
+\section{A 45-minute study session}
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2em]
+\item \textbf{5 minutes---retrieval.} Without notes, write last session's memory hook and process rule.
+\item \textbf{10 minutes---concept.} Read one subsection and restate it in your own words.
+\item \textbf{15 minutes---deliberate drill.} Solve three to five positions with written candidates and replies.
+\item \textbf{10 minutes---one game fragment.} Apply the skill to your own position.
+\item \textbf{5 minutes---compression.} Create one card and schedule its review.
+\end{enumerate}
+
+Longer sessions can add play or a full game review. Preserve the order: retrieve before rereading and think before engine verification.
+
+\section{Skill ladders}
+Progress by increasing one difficulty dimension at a time.
+
+\paragraph{Candidate ladder.}
+One forcing position $\rightarrow$ quiet position $\rightarrow$ mixed tactical-strategic position $\rightarrow$ low-time selection.
+
+\paragraph{Calculation ladder.}
+One reply $\rightarrow$ two branches $\rightarrow$ intermediate move $\rightarrow$ quiet leaf evaluation $\rightarrow$ clock constraint.
+
+\paragraph{Opponent-model ladder.}
+Identify plan $\rightarrow$ identify best response $\rightarrow$ infer belief $\rightarrow$ update from new evidence $\rightarrow$ adapt in a rematch.
+
+\section{The integrated move protocol}
+By week twelve, use \textbf{BOARD}:
+
+\begin{description}[style=multiline,leftmargin=3.2em,labelwidth=2.5em]
+\item[B] \textbf{Board facts.} What changed? Checks, captures, threats, loose pieces, evaluation vector.
+\item[O] \textbf{Opponent.} What do they want, what is their best reply, and what did the last move reveal?
+\item[A] \textbf{Actions.} Generate three to five candidates with distinct functions.
+\item[R] \textbf{Replies and results.} Search forcing branches, stable leaves, security levels, and practical error asymmetry.
+\item[D] \textbf{Decide and update.} Choose by current utility, run SAFE, move, and rebuild the state.
+\end{description}
+
+BOARD is the same book in one word. Under time pressure, compress it to:
+
+\begin{center}
+\textbf{Facts $\rightarrow$ their threat $\rightarrow$ two candidates $\rightarrow$ SAFE $\rightarrow$ move.}
+\end{center}
+
+\section{Assessment positions}
+At the end of weeks 4, 8, and 12, select ten positions from your own games. For each, record:
+
+\begin{itemize}[leftmargin=1.4em]
+\item state evaluation without an engine;
+\item candidate set;
+\item strongest reply to each serious candidate;
+\item chosen move and confidence;
+\item time used;
+\item later verification;
+\item error category, if any.
+\end{itemize}
+
+Compare process accuracy, not only move match. You are improving when candidate sets are richer, replies are more hostile, time is better allocated, and repeated error categories decline.
+
+\section{Retention schedule}
+Every important concept should be retrieved at expanding intervals:
+
+\begin{center}
+\textbf{same day} $\rightarrow$ \textbf{1 day} $\rightarrow$ \textbf{1 week} $\rightarrow$ \textbf{1 month} $\rightarrow$ \textbf{before an event}.
+\end{center}
+
+Mix old and new positions. A skill remembered only in the chapter where it was learned is context-bound; chess requires transfer.
+
+\begin{workedbox}[title={Worked example: one-focus game}]
+This week's goal is best responses. You play a rapid game and, before every non-forced move, name one strongest reply. You still make strategic mistakes, but you catch two tactical blunders. In review, measure whether the behavior occurred, not whether every move was best. The habit is being installed; other layers return in later weeks.
+\end{workedbox}
+
+\section{Graduation standard}
+You have internalized the framework when, in a difficult position, you naturally:
+
+\begin{itemize}[leftmargin=1.4em]
+\item reconstruct before reacting;
+\item generate before calculating;
+\item search the opponent's best reply;
+\item compare stable leaves with the right utility;
+\item spend time where value can flip;
+\item update without defending your previous story.
+\end{itemize}
+
+No protocol removes mistakes. It makes errors visible, classifiable, and trainable.
+
+\begin{exercise}[Build your course]
+Put actual dates, game days, and review sessions onto the twelve-week plan. Choose one process metric for each four-week block.
+\end{exercise}
+
+\begin{exercise}[Final integration]
+Analyze one critical position using the full BOARD protocol. Then repeat under a two-minute limit and compare what was preserved or lost.
+\end{exercise}
+
+\oneminute{Train one lens at a time through retrieval, drills, play, and review. Integrate with BOARD: Board facts, Opponent, Actions, Replies/results, Decide/update.}
