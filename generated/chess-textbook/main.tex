@@ -5,7 +5,7 @@
 \setmainfont{TeX Gyre Pagella}
 \setsansfont{TeX Gyre Heros}
 \setmonofont{DejaVu Sans Mono}
-\newfontfamily\chessfont{DejaVu Sans}
+\IfFontExistsTF{DejaVu Sans}{\newfontfamily\chessfont{DejaVu Sans}}{\newfontfamily\chessfont{FreeSerif}}
 \usepackage[english]{babel}
 \usepackage{microtype}
 \usepackage{mathtools,amssymb}
@@ -68,6 +68,12 @@
   {-0.5ex}
   {\titlerule[0.8pt]\vspace{0.8ex}\Huge\bfseries\color{Navy}}
   [\vspace{0.7ex}\color{BoardDark}\titlerule]
+\titleformat{name=\chapter,numberless}[display]
+  {\normalfont\sffamily}
+  {}
+  {0pt}
+  {\Huge\bfseries\color{Navy}}
+  [\vspace{0.7ex}\color{BoardDark}\titlerule]
 \titleformat{\section}{\Large\sffamily\bfseries\color{Navy}}{\thesection}{0.55em}{}
 \titleformat{\subsection}{\large\sffamily\bfseries\color{Teal}}{\thesubsection}{0.5em}{}
 \titlespacing*{\chapter}{0pt}{-20pt}{18pt}
@@ -97,35 +103,35 @@
 \newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
 \newcolumntype{C}{>{\centering\arraybackslash}p{0.16\textwidth}}
 
-% Chess piece glyphs from Unicode, rendered with DejaVu Sans.
-\newcommand{\WKing}{\symbol{"2654}}
-\newcommand{\WQueen}{\symbol{"2655}}
-\newcommand{\WRook}{\symbol{"2656}}
-\newcommand{\WBishop}{\symbol{"2657}}
-\newcommand{\WKnight}{\symbol{"2658}}
-\newcommand{\WPawn}{\symbol{"2659}}
-\newcommand{\BKing}{\symbol{"265A}}
-\newcommand{\BQueen}{\symbol{"265B}}
-\newcommand{\BRook}{\symbol{"265C}}
-\newcommand{\BBishop}{\symbol{"265D}}
-\newcommand{\BKnight}{\symbol{"265E}}
-\newcommand{\BPawn}{\symbol{"265F}}
+% Chess piece glyphs from Unicode.
+\newcommand{\WKing}{\char"2654}
+\newcommand{\WQueen}{\char"2655}
+\newcommand{\WRook}{\char"2656}
+\newcommand{\WBishop}{\char"2657}
+\newcommand{\WKnight}{\char"2658}
+\newcommand{\WPawn}{\char"2659}
+\newcommand{\BKing}{\char"265A}
+\newcommand{\BQueen}{\char"265B}
+\newcommand{\BRook}{\char"265C}
+\newcommand{\BBishop}{\char"265D}
+\newcommand{\BKnight}{\char"265E}
+\newcommand{\BPawn}{\char"265F}
 
 \newcommand{\DrawBoard}{%
-  \foreach \x/\file in {0/a,1/b,2/c,3/d,4/e,5/f,6/g,7/h}{%
-    \foreach \y/\rank in {0/1,1/2,2/3,3/4,4/5,5/6,6/7,7/8}{%
+  \foreach \x/\fl in {0/a,1/b,2/c,3/d,4/e,5/f,6/g,7/h}{%
+    \foreach \y/\rk in {0/1,1/2,2/3,3/4,4/5,5/6,6/7,7/8}{%
       \pgfmathtruncatemacro{\shadeindex}{mod(\x+\y,2)}%
       \ifnum\shadeindex=0\relax
         \fill[BoardDark] (\x,\y) rectangle ++(1,1);%
       \else
         \fill[BoardLight] (\x,\y) rectangle ++(1,1);%
       \fi
-      \coordinate (sq-\file\rank) at (\x+0.5,\y+0.5);%
+      \coordinate (sq-\fl\rk) at (\x+0.5,\y+0.5);%
     }%
-    \node[font=\sffamily\scriptsize,text=Ink] at (\x+0.5,-0.24) {\file};%
+    \node[font=\sffamily\scriptsize,text=Ink] at (\x+0.5,-0.24) {\fl};%
   }%
-  \foreach \y/\rank in {0/1,1/2,2/3,3/4,4/5,5/6,6/7,7/8}{%
-    \node[font=\sffamily\scriptsize,text=Ink] at (-0.24,\y+0.5) {\rank};%
+  \foreach \y/\rk in {0/1,1/2,2/3,3/4,4/5,5/6,6/7,7/8}{%
+    \node[font=\sffamily\scriptsize,text=Ink] at (-0.24,\y+0.5) {\rk};%
   }%
   \draw[Ink,line width=0.9pt] (0,0) rectangle (8,8);%
 }
@@ -152,49 +158,26 @@
 
 \mainmatter
 \part{Model the Decision}
-\input{chapters/ch01}
-\input{chapters/ch02}
-\input{chapters/ch03}
-\input{chapters/ch04}
-\input{chapters/ch05}
+\input{part1}
 
 \part{Reason Through the Tree}
-\input{chapters/ch06}
-\input{chapters/ch07}
-\input{chapters/ch08}
-\input{chapters/ch09}
-\input{chapters/ch10}
+\input{part2}
 
 \part{Choose Under Risk and Limits}
-\input{chapters/ch11}
-\input{chapters/ch12}
-\input{chapters/ch13}
-\input{chapters/ch14}
+\input{part3}
 
 \part{Think About Minds}
-\input{chapters/ch15}
-\input{chapters/ch16}
-\input{chapters/ch17}
-\input{chapters/ch18}
-\input{chapters/ch19}
+\input{part4}
 
 \part{Apply the Framework}
-\input{chapters/ch20}
-\input{chapters/ch21}
-\input{chapters/ch22}
-\input{chapters/ch23}
-\input{chapters/ch24}
+\input{part5}
 
 \part{Practice Until It Is Automatic}
-\input{chapters/ch25}
-\input{chapters/ch26}
+\input{part6}
 
 \appendix
 \part{Reference and Solutions}
-\input{appendices/appA}
-\input{appendices/appB}
-\input{appendices/appC}
-\input{appendices/appD}
+\input{appendices}
 
 \backmatter
 \input{backmatter}
