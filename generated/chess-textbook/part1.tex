@@ -1,0 +1,459 @@
+\chapter{What kind of game is chess?}
+\begin{learningbox}
+You will be able to describe chess as a sequential, deterministic, two-player, largely zero-sum game of perfect information; separate the formal game from the human problem; and use the MODEL--REPLY--VALUE--DECIDE--UPDATE loop.
+\end{learningbox}
+\chapterquestion{Why can a game with no hidden pieces still feel uncertain?}
+
+\section{The formal answer}
+A chess position is a decision state. One player chooses a legal move, the board changes, and the other player chooses. The process continues until checkmate, resignation, or a draw rule ends the game. Nothing random moves a piece. Both players see the same board. If we assign utilities $+1$ to a win, $0$ to a draw, and $-1$ to a loss, one player's gain is the other's loss.
+
+That description gives chess four formal properties:
+
+\begin{description}[style=nextline,leftmargin=0pt]
+\item[Sequential.] Players act one after another, so order matters.
+\item[Deterministic.] A move has a fixed legal consequence; there are no dice.
+\item[Perfect information.] The relevant board state and prior moves are observable.
+\item[Constant-sum at the result level.] A win for one side is a loss for the other, while a draw gives neither side the win.
+\end{description}
+
+\begin{formalbox}
+Let $s$ denote a position and $A(s)$ its legal moves. A move $a\in A(s)$ produces a new state $T(s,a)$. A complete strategy is not one move; it is a rule that specifies an action at every state the player might face.
+
+For a terminal state $z$, a simple result utility for White is
+\[
+u_W(z)\in\{-1,0,+1\}, \qquad u_B(z)=-u_W(z).
+\]
+\end{formalbox}
+
+\section{The human answer}
+If chess were only the formal game, the entire problem would be ``play perfectly.'' Human beings cannot inspect the full tree. We have clocks, incomplete memories, uneven calculation, emotions, opening knowledge, and beliefs about one another. The board is public; the computations are private.
+
+This creates two layers:
+
+\begin{center}
+\begin{tabularx}{.92\textwidth}{p{.22\textwidth}YY}
+\toprule
+& \textbf{Formal chess} & \textbf{Practical chess}\\
+\midrule
+Uncertainty & None about the board's transition & Much about future choices and errors\\
+Goal & Maximize game-theoretic result & Maximize result under time and cognitive limits\\
+Opponent & An optimal responder & A particular person with tendencies\\
+Move quality & Value under best play & Value under best play plus usability\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+A move can therefore be objectively best yet practically poor for you. Imagine two continuations. Move A preserves a tiny advantage but requires ten precise only-moves. Move B gives an equal position with a clear plan and little danger. In an analysis room, A may rank first. With thirty seconds on the clock, B may maximize your actual chance of scoring.
+
+\begin{intuitionbox}
+The board tells you what is true. The clock and the players tell you what is usable.
+\end{intuitionbox}
+
+\section{The five-step loop}
+Every chapter elaborates one stage of the same loop.
+
+\paragraph{MODEL.} State the facts before inventing a move. Count material. Locate loose pieces. Compare king safety, activity, pawn structure, space, and time. Name whose move it is and what changed.
+
+\paragraph{REPLY.} Treat the opponent as an active decision maker. For each serious candidate, ask for the most annoying legal response. This single habit cures much ``hope chess.''
+
+\paragraph{VALUE.} Compare the resulting branches, not the beauty of the first move. A sacrifice is not valuable because it looks brave; it is valuable if its continuation yields sufficient utility.
+
+\paragraph{DECIDE.} Choose using the right standard. In a forcing tactical line, protect against the strongest reply. In a quiet practical choice, include complexity, time, and opponent tendencies.
+
+\paragraph{UPDATE.} After every move, rebuild the model. A move is evidence. It changes the board and may reveal preparation, fear, misunderstanding, or a plan.
+
+\begin{workedbox}[title={Worked example: the attractive move}]
+You see a queen move that attacks h7. MODEL: your back rank is weak and your queen currently defends a rook. REPLY: after the queen leaves, the opponent has a forcing rook invasion. VALUE: your attack is a possibility; the rook loss is immediate. DECIDE: reject the queen move. UPDATE: search for an attacking move that preserves the defensive function.
+
+The lesson is not ``never attack h7.'' It is ``evaluate a move as a bundle of changed relationships.''
+\end{workedbox}
+
+\section{A first equilibrium intuition}
+An equilibrium is a pair of strategies from which neither player benefits by changing alone. In chess, this idea is less a position you can point to than a standard of mutual resistance: your move must make sense after the opponent replies well, not merely after the reply you hope to see.
+
+When a puzzle says ``White to move and win,'' it asserts that White has a strategy that forces a winning terminal outcome against every defense. The solution is not the first move alone. It is the complete contingent plan.
+
+\begin{memorybox}
+\textbf{Move quality lives one reply later.} Before approving a candidate, say aloud: ``And then what is their best response?''
+\end{memorybox}
+
+\begin{exercise}[Classify the game]
+Explain why chess can be perfect-information and still require beliefs about an opponent. Give one board fact and one hidden human fact.
+\end{exercise}
+
+\begin{exercise}[Use the loop]
+Choose any recent blunder. Rewrite the decision using MODEL, REPLY, VALUE, DECIDE, UPDATE. At which stage did the process fail?
+\end{exercise}
+
+\oneminute{Formal chess has no hidden board state and no chance moves. Practical chess is uncertain because people cannot search the full tree. Your universal loop is MODEL, REPLY, VALUE, DECIDE, UPDATE.}
+
+\chapter{Rules are the game frame}
+\begin{learningbox}
+You will distinguish a game frame from preferences; recognize which details belong in the state; and understand why legal moves, clocks, draw rules, and side to move are strategic facts rather than bookkeeping.
+\end{learningbox}
+\chapterquestion{What must be specified before ``the best move'' is even a meaningful phrase?}
+
+\section{Skeleton before personality}
+A \term{game frame} tells us who acts, what actions are available, how actions change the state, and what terminal outcomes can occur. It does not yet tell us how a player ranks those outcomes. In chess, the frame includes more than the placement of pieces.
+
+A complete practical frame records:
+
+\begin{itemize}[leftmargin=1.4em]
+\item piece locations and side to move;
+\item castling and en-passant rights;
+\item repetition and move-count history when relevant;
+\item legal end conditions and scoring rules;
+\item clock times, increment or delay, and time-control stage;
+\item match context if it changes the value of a draw or loss.
+\end{itemize}
+
+A diagram without side to move is not a complete decision problem. The same arrangement can be winning for one side to move and losing for the other because a forcing action or zugzwang is available now.
+
+\begin{positiondiagram}{The initial board is only a frame. Preferences, clocks, and context turn it into a practical decision problem.}
+\StartingPieces
+\end{positiondiagram}
+
+\section{Why tiny rules change large strategies}
+Rules determine incentives. Consider three settings:
+
+\begin{enumerate}[label=\alph*)]
+\item a casual game where a draw is acceptable;
+\item the last round of a tournament where only a win earns a prize;
+\item a match where the player with White advances with a draw.
+\end{enumerate}
+
+The legal board can be identical while the preferred continuation changes. In the second setting, a safe forced draw may have almost no practical utility. In the third, taking unnecessary risk may be irrational even if an engine reports a small advantage.
+
+Similarly, a five-second increment rewards moves that preserve clock solvency. A sudden-death finish makes a technically winning but mechanically difficult ending less attractive. The rules do not merely surround the game; they shape the utility of branches.
+
+\begin{formalbox}
+A frame can be written as
+\[
+\mathcal{F}=(N,S,A,T,Z),
+\]
+where $N$ is the set of players, $S$ the states, $A(s)$ the legal actions at state $s$, $T$ the transition rule, and $Z$ the terminal states. Adding each player's preference ordering over $Z$ turns the frame into a game.
+\end{formalbox}
+
+\section{Rules refresher as strategic language}
+This is not a full beginner's manual, but four rules deserve strategic emphasis.
+
+\paragraph{Check restricts choice.} A checked player may choose only moves that remove check. This shrinks the action set and explains why checks are forcing.
+
+\paragraph{Pins restrict effective choice.} A pinned piece may be legally or practically unable to move. A legal action that loses the king or queen has low utility, so the effective action set can be much smaller than the legal set.
+
+\paragraph{Promotion changes future utility.} A pawn near promotion is not ``worth one'' in the ordinary sense. Its option to transform makes its state-dependent value much larger.
+
+\paragraph{Draw rules create terminal exits.} Repetition, stalemate, insufficient mating material, and move-count rules can convert a lost material position into a drawable game. They are resources, not technical footnotes.
+
+\begin{workedbox}[title={Worked example: side to move is part of the state}]
+Suppose each side has a king and White has one pawn. The piece placement alone does not determine the result. If the side to move must yield opposition, the value can flip. Therefore a position is not a photograph; it is a photograph plus the right to act.
+\end{workedbox}
+
+\section{The state test}
+Before analysis, ask whether a missing fact could change the legal moves or your ranking of outcomes. If yes, it belongs in the model.
+
+\begin{center}
+\begin{tabularx}{.9\textwidth}{YY}
+\toprule
+\textbf{Missing fact} & \textbf{Possible consequence}\\
+\midrule
+Side to move & Tactic or zugzwang reverses\\
+Castling rights & King-safety plan changes\\
+Last pawn move & En-passant may exist\\
+Repetition count & A draw claim may be available\\
+Clock time & Complexity changes practical value\\
+Tournament need & Draw utility changes\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{warningbox}
+Do not analyze an under-specified diagram as though it were a full game. Ask: whose move, what rights, what clock, what score?
+\end{warningbox}
+
+\begin{exercise}[Frame or preference?]
+Classify each item as part of the frame or a preference: White has 42 seconds; White dislikes queenless endings; castling rights are lost; a draw wins the match; Black enjoys complications.
+\end{exercise}
+
+\begin{exercise}[Missing state]
+Find a chess diagram online or in a book. List four facts you would need before recommending a practical move in a tournament.
+\end{exercise}
+
+\oneminute{The board is not the whole game. The frame includes legal rights, history, clocks, rules, and context. The game begins when preferences rank the possible outcomes.}
+
+\chapter{States, actions, outcomes, and strategies}
+\begin{learningbox}
+You will separate a move from a strategy, read chess as an extensive-form tree, and build candidate sets small enough for a human to analyze.
+\end{learningbox}
+\chapterquestion{Why is ``I plan to attack'' not yet a strategy?}
+
+\section{Four objects, four different jobs}
+Chess language often mixes terms that game theory keeps separate.
+
+\begin{description}[style=nextline,leftmargin=0pt]
+\item[State.] Everything currently relevant: board, rights, clocks, history, context.
+\item[Action.] One legal move chosen now.
+\item[Outcome.] A terminal result, or a future position used as a temporary evaluation point.
+\item[Strategy.] A contingent rule for what to do at every state you might reach.
+\end{description}
+
+``Play on the kingside'' is an intention. ``After \move{...h6}, retreat the bishop to h4; after \move{...g6}, prepare h5; after central counterplay, close the center only if it does not lose d5'' begins to resemble a strategy because it specifies responses to alternatives.
+
+\section{The tree, not the line}
+A common calculation error is to imagine one attractive continuation. A game tree branches because the opponent chooses too.
+
+\begin{center}
+\begin{tikzpicture}[>=Latex,level 1/.style={sibling distance=47mm,level distance=15mm},level 2/.style={sibling distance=22mm,level distance=15mm},every node/.style={font=\sffamily\small}]
+\node[draw=Navy,fill=SoftGray,rounded corners] {Position $s$}
+ child {node[draw=Teal,fill=PaleTeal,rounded corners] {Candidate A}
+   child {node[draw=BoardDark,fill=white,rounded corners] {Best reply A1}}
+   child {node[draw=BoardDark,fill=white,rounded corners] {Reply A2}}}
+ child {node[draw=Teal,fill=PaleTeal,rounded corners] {Candidate B}
+   child {node[draw=BoardDark,fill=white,rounded corners] {Best reply B1}}
+   child {node[draw=BoardDark,fill=white,rounded corners] {Reply B2}}};
+\end{tikzpicture}
+\captionof{figure}{Calculation must branch at the opponent's decision.}
+\end{center}
+
+Humans cannot expand every legal move. The first skill is not calculation depth; it is \term{candidate discipline}. Build a compact menu that covers the important strategic functions.
+
+\section{The candidate menu}
+Use \textbf{CCT+I}:
+
+\begin{description}[style=multiline,leftmargin=2.4em,labelwidth=1.9em]
+\item[C] Checks: forcing because the reply set is restricted.
+\item[C] Captures: alter material and lines immediately.
+\item[T] Threats: create a future loss the opponent must address.
+\item[I] Improvements: develop the worst piece, prevent a break, improve structure, or create an option.
+\end{description}
+
+CCT is a search order, not a command to play violently. Most positions are decided by quiet improvements. The purpose is to avoid missing forcing resources before spending time on plans.
+
+A robust candidate set usually contains three to five moves:
+
+\begin{enumerate}[label=\arabic*.,leftmargin=1.4em]
+\item the most forcing move;
+\item the most natural positional move;
+\item the opponent's feared move played by you, if legal;
+\item one move that changes the pawn structure;
+\item one defensive or simplifying move when under pressure.
+\end{enumerate}
+
+\section{Information sets and human blindness}
+In formal chess, each player knows the exact state, so every decision node is its own information set. In human thought, attention creates a shadow version of incomplete information: you may fail to notice that a square is defended or that a tactic exists. The fact is visible but not represented in your mental model.
+
+That distinction matters. A surprise tactic is not random. It was a branch you failed to include. The cure is not ``be luckier'' but ``improve state reconstruction and candidate generation.''
+
+\begin{workedbox}[title={Worked example: plan versus strategy}]
+Plan: ``Trade queens because I am ahead.''
+
+Contingent strategy: ``Offer the queen trade if it preserves the extra pawn and prevents counterplay. If the opponent avoids the trade by moving the queen to an active square, use the gained tempo to double rooks. If the trade enters a pawn ending where the king is cut off, keep queens instead.''
+
+The strategy survives different replies; the slogan does not.
+\end{workedbox}
+
+\section{Cutting the tree honestly}
+Every analysis stops before checkmate. A \term{horizon} is the leaf at which you stop and evaluate. Good calculation stops at a quiet, understandable position: the forcing sequence is over, loose pieces are accounted for, and the next plan can be described. Stopping immediately after winning a pawn is dangerous if the opponent then traps your queen.
+
+\begin{memorybox}
+A line is what you hope happens. A tree is what the opponent is allowed to choose.
+\end{memorybox}
+
+\begin{exercise}[Action or strategy?]
+Rewrite ``I will attack the isolated pawn'' as a contingent strategy containing at least three possible opponent responses.
+\end{exercise}
+
+\begin{exercise}[Build candidates]
+From any middlegame position, list one check, one capture, one threat, and two improving moves. Eliminate illegal or obviously losing moves only after listing them.
+\end{exercise}
+
+\oneminute{A move is one action; a strategy is a complete contingent plan. Search a tree, not a fantasy line. Generate candidates with CCT+I and stop calculation only at a stable horizon.}
+
+\chapter{Preferences and practical utility}
+\begin{learningbox}
+You will understand utility as a ranking rather than money; distinguish objective result utility from practical utility; and choose risk according to score, clock, and personal error profile.
+\end{learningbox}
+\chapterquestion{When can a draw be more valuable than a small objective advantage?}
+
+\section{Utility ranks outcomes}
+Utility numbers are labels that preserve preferences. If you assign 10 to a win, 6 to a draw, and 0 to a loss in a match situation, the numbers say a draw is preferred to a loss and a win to a draw. They do not prove that a win creates exactly ten units of happiness.
+
+For pure chess result, the standard ranking is
+\[
+\text{win} \succ \text{draw} \succ \text{loss}.
+\]
+But practical decisions often include more detail. A player may prefer an easy draw to a technically equal but dangerous ending, or a complex equal position to a sterile one when only a win matters.
+
+\begin{intuitionbox}
+Utility is a scoreboard for choices, not a thermometer for feelings.
+\end{intuitionbox}
+
+\section{Four layers of utility}
+Use four nested layers rather than one magic evaluation.
+
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2.0em]
+\item \textbf{Result utility:} win, draw, or loss.
+\item \textbf{Event utility:} match advancement, tournament points, tie-breaks, prize goals.
+\item \textbf{Practical utility:} ease, clock demand, error asymmetry, familiarity.
+\item \textbf{Learning utility:} whether a choice helps develop skill when result is not the only goal.
+\end{enumerate}
+
+These layers can conflict. In training, entering a difficult rook ending may have high learning utility. In a must-draw final round, the same choice may have poor event utility.
+
+\section{Risk attitude changes with context}
+Suppose two moves have these rough practical distributions:
+
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+& Win & Draw & Loss\\
+\midrule
+Move A: sharp & $45\%$ & $20\%$ & $35\%$\\
+Move B: stable & $25\%$ & $65\%$ & $10\%$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+If standard scoring gives 1 for a win, $\tfrac12$ for a draw, and 0 for a loss, the rough expected scores are
+\[
+EU(A)=.45+.5(.20)=.55,
+\qquad
+EU(B)=.25+.5(.65)=.575.
+\]
+B is slightly better by expected score. But if a draw eliminates you and only a win matters, the win probability may dominate; A becomes attractive. If a draw guarantees first place, B is strongly preferred.
+
+The percentages are estimates, not objective facts. Their value lies in forcing you to make the tradeoff explicit.
+
+\section{Rational does not mean timid or selfish}
+A sacrifice can be rational. A draw offer can be rational. Playing a quiet move against an attacking player can be rational. Rationality means choosing consistently with your preferences and beliefs, not following a universal personality.
+
+Problems arise when momentary emotion silently rewrites utility. After missing a win, players often reject a draw because they feel ``entitled'' to the earlier advantage. The past position is gone. Utility should be assigned to current future outcomes, not to recovering a vanished story.
+
+\begin{warningbox}[title={Sunk-position fallacy}]
+Do not take extra risk merely to get back the advantage you had ten moves ago. The current state is the only launch point for future utility.
+\end{warningbox}
+
+\section{A practical utility card}
+Before a critical game, write one sentence for each:
+
+\begin{itemize}[leftmargin=1.4em]
+\item \textbf{Result need:} ``A draw is enough'' or ``I need winning chances.''
+\item \textbf{Clock preference:} ``Avoid a line requiring repeated only-moves.''
+\item \textbf{Position preference:} ``I understand closed structures better than open king hunts.''
+\item \textbf{Emotional guardrail:} ``After a mistake, I will rebuild the model before changing risk.''
+\end{itemize}
+
+This is not an excuse to avoid objective chess. It is a way to translate objective options into the utility relevant to this game.
+
+\begin{workedbox}[title={Worked example: equal is not identical}]
+Two continuations are evaluated as equal. One leads to opposite-side castling with attacks against both kings. The other trades queens into a symmetrical minor-piece ending. The formal result value may be equal under perfect play. Their practical utilities differ by clock, skill, event need, and opponent type. ``Equal'' does not mean interchangeable.
+\end{workedbox}
+
+\begin{exercise}[Rank outcomes]
+Create utility rankings for three contexts: a casual training game, a must-draw match game, and a must-win final round. Include at least four outcomes, such as easy draw, difficult draw, sharp winning chance, and low-risk edge.
+\end{exercise}
+
+\begin{exercise}[Detect emotional utility]
+Describe a time anger, fear, or pride changed the value you assigned to an option. What would a pre-game guardrail have said?
+\end{exercise}
+
+\oneminute{Utility ranks what matters now. Separate result, event, practical, and learning utility. Context changes rational risk; emotion should not secretly change it after the fact.}
+
+\chapter{Evaluation without a magic number}
+\begin{learningbox}
+You will evaluate a position as a vector of resources, understand context-dependent piece value, and convert static features into plans and candidate moves.
+\end{learningbox}
+\chapterquestion{What does an engine's ``+0.8'' hide?}
+
+\section{Evaluation is compression}
+The full future tree is too large, so players compress a position into features. An engine number is one summary of the estimated future result under strong play. Human evaluation should begin with a vector:
+
+\[
+E(s)=\bigl(M,K,A,P,S,T,O\bigr),
+\]
+where $M$ is material, $K$ king safety, $A$ activity, $P$ pawn structure, $S$ space, $T$ time or initiative, and $O$ option value.
+
+The components interact. An extra pawn matters less if your king is being mated. A bishop matters more when the center opens. Space matters when you can use it without creating targets. Option value matters because a flexible move preserves several future actions.
+
+\section{Seven questions}
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=2em]
+\item \textbf{Material:} What is present, attacked, loose, overloaded, or trapped?
+\item \textbf{King safety:} Which checks, open lines, weak colors, and defenders matter?
+\item \textbf{Activity:} Which piece has the fewest useful squares? Which piece invades?
+\item \textbf{Pawn structure:} What fixed weaknesses, passed pawns, breaks, and chains exist?
+\item \textbf{Space:} Who controls useful territory, and can the cramped side break free?
+\item \textbf{Time:} Who is making threats? Who must respond?
+\item \textbf{Options:} Which irreversible choices can be delayed? Which moves keep plans alive?
+\end{enumerate}
+
+Answering all seven prevents one-dimensional thinking. ``I am up a pawn'' is not an evaluation. It is one coordinate.
+
+\section{Nominal value and functional value}
+The familiar scale---pawn 1, knight 3, bishop 3, rook 5, queen 9---is a starting prior. Functional value depends on the state.
+
+\begin{center}
+\begin{tabularx}{.94\textwidth}{p{.22\textwidth}YY}
+\toprule
+\textbf{Piece} & \textbf{Value rises when} & \textbf{Value falls when}\\
+\midrule
+Knight & stable outpost, closed center, local targets & board is open, no central squares\\
+Bishop & open diagonals, targets on both wings & own pawns block it, wrong-color duties\\
+Rook & open file, seventh rank, active king cut-off & no entry squares, defensive passivity\\
+Queen & exposed kings, many coordinated threats & vulnerable to tempo, simplification favored\\
+Pawn & passed, protected, near promotion, space-gaining & fixed, isolated, blockaded, overextended\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+A trade should therefore compare future functions, not labels. Exchanging a ``three-point bishop'' for a ``three-point knight'' can be excellent or disastrous depending on the remaining pawn structure and squares.
+
+\section{From feature to plan}
+An evaluation is useful only if it generates actions. Translate nouns into verbs:
+
+\begin{center}
+\begin{tabularx}{.9\textwidth}{YY}
+\toprule
+\textbf{Feature} & \textbf{Planning verbs}\\
+\midrule
+Unsafe enemy king & open, remove defender, bring attacker, restrict flight\\
+Weak pawn & fix, attack, overload defender, create second weakness\\
+Bad piece & reroute, exchange, free with pawn break\\
+Space advantage & restrict, improve, switch wings, avoid premature release\\
+Passed pawn & support, advance, distract, clear promotion square\\
+Opponent initiative & trade attackers, return material, close lines, create counter-threat\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{workedbox}[title={Worked example: a pawn is not a plan}]
+You have an extra queenside pawn but your rook is passive and the opponent's pieces surround your king. Static phrase: ``up a pawn.'' Vector evaluation: $M+$, $K--$, $A-$, $P+$, $T-$, $O$ uncertain. Plan: neutralize checks, offer a queen trade, activate the rook even at the cost of returning the pawn. The material edge is a resource that can be spent to improve the more urgent coordinates.
+\end{workedbox}
+
+\section{Option value and irreversibility}
+Pawn moves, exchanges, and king commitments often remove future choices. A move with slightly less immediate gain may be superior because it preserves multiple plans. Call this \term{option value}.
+
+A useful test is:
+
+\begin{quote}
+If my opponent waits, what plans remain after this move? What plans disappear forever?
+\end{quote}
+
+Flexible does not mean passive. A forcing move may have enormous value. The point is to charge irreversible actions for the options they destroy.
+
+\begin{formalbox}
+A practical evaluation can be viewed as a weighted function
+\[
+U(s)=w_M M+w_K K+w_A A+w_P P+w_S S+w_T T+w_O O,
+\]
+but the weights $w_i$ depend on the position. In a mating attack, $w_K$ becomes dominant. In a quiet pawn ending, pawn structure and king activity dominate. The formula is a reminder of dependence, not a calculator.
+\end{formalbox}
+
+\begin{exercise}[Vector evaluation]
+Choose a current position from one of your games. Rate each component $M,K,A,P,S,T,O$ as favorable, equal, or unfavorable. Name one candidate produced by each unfavorable component.
+\end{exercise}
+
+\begin{exercise}[Functional trade]
+Find an exchange from a recent game. Compare the pieces before and after using mobility, targets, defensive duties, and future pawn structure rather than nominal values alone.
+\end{exercise}
+
+\oneminute{Evaluation is a compressed vector, not a single adjective. Inspect material, king safety, activity, structure, space, time, and options. Then turn features into verbs and candidates.}
